@@ -1,0 +1,1 @@
+export const ADD_USER_LOCATION = 'ADD_USER_LOCATION';
