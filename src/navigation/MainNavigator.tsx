@@ -2,10 +2,10 @@ import React from 'react';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 
 // SCREENS
-import HomeScreen from '../screens/home/HomeScreen';
+import WelcomeScreen from '../screens/welcome/WelcomeScreen';
 
 export type MainNavigatorParamsList = {
-  Home: undefined;
+  Welcome: undefined;
 };
 
 export type MainNavigatorScreen<T extends keyof MainNavigatorParamsList> = React.FC<{
@@ -17,7 +17,7 @@ const MainStack = createStackNavigator<MainNavigatorParamsList>();
 const MainNavigator = () => {
   return (
     <MainStack.Navigator>
-      <MainStack.Screen name="Home" component={HomeScreen} />
+      <MainStack.Screen name="Welcome" component={WelcomeScreen} />
     </MainStack.Navigator>
   );
 };
