@@ -1,14 +1,12 @@
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
+import { I18nextProvider } from 'react-i18next';
 import MainNavigator from './src/navigation/MainNavigator';
+import i18n from './src/assets/translations';
 
 function App() {
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <MainNavigator />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <I18nextProvider i18n={i18n}>
+      <MainNavigator />
+    </I18nextProvider>
   );
 }
 

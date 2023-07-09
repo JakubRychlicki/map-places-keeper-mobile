@@ -1,14 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useAppSelector } from '../../hooks/useAppDispatch';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { MainNavigatorScreen } from '../../navigation/MainNavigator';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
+import * as actions from '../../store/actions';
 
-const HomeScreen = () => {
+const HomeScreen: MainNavigatorScreen<'HomeScreen'> = ({ navigation, route }) => {
+  const dispatch = useAppDispatch();
   const { locations } = useAppSelector((state) => state.user);
-  console.log(locations);
+
+  const signout = () => {
+    dispatch(actions.logout());
+  };
 
   return (
     <View style={styles.container}>
       <Text>HomeScreen</Text>
+      <Button title="sign out" onPress={signout} />
     </View>
   );
 };

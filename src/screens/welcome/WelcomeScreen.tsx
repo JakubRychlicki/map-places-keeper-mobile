@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { MainNavigatorScreen } from '../../navigation/MainNavigator';
+import { useTranslation } from 'react-i18next';
 
 // Theme
 import Fonts from '../../constants/Fonts';
@@ -7,8 +9,11 @@ import Colors from '../../constants/Colors';
 
 // Svg
 import WorldDrawSvg from '../../assets/svg/graphics/WorldDrawSvg';
+import Typography, { TypographyType } from '../../components/controls/Typography';
 
-const WelcomeScreen = () => {
+const WelcomeScreen: MainNavigatorScreen<'WelcomeScreen'> = ({ navigation, route }) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <View style={styles.illustrationBox}>
@@ -17,18 +22,25 @@ const WelcomeScreen = () => {
       </View>
       <View style={styles.content}>
         <View>
-          <Text style={styles.title}>{'Keep your\n favorite places'}</Text>
-          <Text style={styles.desc}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever.
-          </Text>
+          <Typography type={TypographyType.BigHeader} style={styles.title}>
+            {t('welcomeScreen:title')}
+          </Typography>
+          <Typography type={TypographyType.Text} style={styles.desc}>
+            {t('welcomeScreen:desc')}
+          </Typography>
         </View>
         <View style={styles.buttons}>
-          <TouchableOpacity style={[styles.button, styles.buttonRegister]}>
-            <Text style={styles.buttonText}>Register</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('RegisterScreen')}
+            style={[styles.button, styles.buttonRegister]}
+          >
+            <Text style={styles.buttonText}>{t('buttons:register')}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.buttonSignIn]}>
-            <Text style={styles.buttonText}>Sign In</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('LoginScreen')}
+            style={[styles.button, styles.buttonSignIn]}
+          >
+            <Text style={styles.buttonText}>{t('buttons:login')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -63,16 +75,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    fontSize: 36,
-    fontFamily: Fonts.NunitoMedium,
-    color: Colors.black,
     textAlign: 'center',
     marginBottom: 30,
   },
   desc: {
-    fontSize: 14,
-    fontFamily: Fonts.RobotoRegular,
-    color: Colors.black,
     textAlign: 'center',
   },
   buttons: {
