@@ -1,10 +1,19 @@
-import * as actions from '../../actions';
+import * as actionTypes from '../../actions/actionTypes';
+import { Storage } from '../../../services/Storage';
+import { User } from '../../types/User.model';
 
 export type UserState = {
+  token?: string;
+  user?: User;
+  isLoginLoading?: boolean;
+  loginErrors?: string[];
+  isRegisterLoading?: boolean;
+  registerErrors?: string[];
   locations: any[];
 };
 
 const initialState: UserState = {
+  token: Storage.getString('token') || undefined,
   locations: [
     {
       id: 1,
@@ -139,9 +148,44 @@ const initialState: UserState = {
 
 const userReducer = (state: UserState = initialState, action: any): UserState => {
   switch (action.type) {
-    case actions.addUserLocation:
+    case actionTypes.RegisterActionTypes.REGISTER:
       return {
-        locations: [...state.locations, action.payload],
+        ...state,
+        isRegisterLoading: true,
+      };
+    case actionTypes.RegisterActionTypes.REGISTER_SUCCESS:
+      return {
+        ...state,
+        token: action.token,
+        user: action.user,
+        isRegisterLoading: false,
+      };
+    case actionTypes.RegisterActionTypes.REGISTER_FAILURE:
+      return {
+        ...state,
+        isRegisterLoading: false,
+      };
+    case actionTypes.LoginActionTypes.LOGIN:
+      return {
+        ...state,
+        isLoginLoading: true,
+      };
+    case actionTypes.LoginActionTypes.LOGIN_SUCCESS:
+      return {
+        ...state,
+        token: action.token,
+        user: action.user,
+        isLoginLoading: false,
+      };
+    case actionTypes.LoginActionTypes.LOGIN_FAILURE:
+      return {
+        ...state,
+        isRegisterLoading: false,
+      };
+    case actionTypes.LOGOUT_SUCCESS:
+      return {
+        ...state,
+        token: undefined,
       };
     default:
       return state;
