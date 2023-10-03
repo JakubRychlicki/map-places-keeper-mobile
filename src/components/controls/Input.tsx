@@ -10,6 +10,7 @@ import {
   ViewStyle,
   Text,
 } from 'react-native';
+import Colors from '../../constants/Colors';
 
 export type InputProps = {
   value?: string;
@@ -76,7 +77,7 @@ const Input: React.FC<InputProps> = ({
             style={[styles.container, multiline && styles.multiline, inputStyle]}
             value={value}
             onChangeText={onChangeText}
-            selectionColor={'blue'}
+            selectionColor={Colors.black}
             placeholder={placeholder}
             placeholderTextColor={'rgba(0,0,0,0.3)'}
             maxLength={maxLength}
@@ -102,7 +103,7 @@ export default Input;
 
 const styles = StyleSheet.create({
   asterisk: {
-    color: 'red',
+    color: Colors.red,
   },
   charNumber: {
     position: 'absolute',
@@ -111,25 +112,29 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'flex-start',
-    color: 'black',
+    color: Colors.black,
     flex: 1,
     fontSize: 16,
-    height: 40,
+    height: 50,
     padding: 0,
     paddingHorizontal: 10,
+    borderColor: Colors.orange,
+    borderWidth: 1,
+    borderRadius: 10
   },
   errorText: {
-    color: 'red',
+    color: Colors.red,
     marginBottom: 6,
     marginTop: 4,
   },
   inputContainer: {
     flexDirection: 'row',
-    height: 40,
+    height: 50,
   },
   label: {
     marginBottom: 6,
     marginTop: 10,
+    color: Colors.color1
   },
   mainContainer: {
     backgroundColor: 'white',

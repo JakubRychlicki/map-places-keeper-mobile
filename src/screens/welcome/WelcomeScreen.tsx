@@ -9,6 +9,8 @@ import Colors from '../../constants/Colors';
 
 // Svg
 import WorldDrawSvg from '../../assets/svg/graphics/WorldDrawSvg';
+
+// Components
 import Typography, { TypographyType } from '../../components/controls/Typography';
 
 const WelcomeScreen: MainNavigatorScreen<'WelcomeScreen'> = ({ navigation, route }) => {
@@ -22,7 +24,7 @@ const WelcomeScreen: MainNavigatorScreen<'WelcomeScreen'> = ({ navigation, route
       </View>
       <View style={styles.content}>
         <View>
-          <Typography type={TypographyType.BigHeader} style={styles.title}>
+          <Typography type={TypographyType.BigHeaderN} style={styles.title}>
             {t('welcomeScreen:title')}
           </Typography>
           <Typography type={TypographyType.Text} style={styles.desc}>
@@ -66,12 +68,12 @@ const styles = StyleSheet.create({
     width: 700,
     height: 700,
     borderRadius: 350,
-    backgroundColor: '#FDA286',
+    backgroundColor: Colors.orange,
   },
   content: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingVertical: 40,
     justifyContent: 'space-between',
   },
   title: {

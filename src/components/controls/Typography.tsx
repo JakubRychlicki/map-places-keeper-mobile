@@ -15,7 +15,9 @@ type TypographyProps = {
 export enum TypographyType {
   Title = 'title',
   Text = 'text',
-  BigHeader = 'bigHeader',
+  TextM = 'textM',
+  BigHeaderN = 'bigHeaderNunito',
+  BigHeaderR = 'bigHeaderRoboto',
 }
 
 const Typography: React.FC<TypographyProps> = ({
@@ -54,8 +56,16 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.RobotoRegular,
     fontSize: 14,
   },
-  bigHeader: {
+  textM: {
+    fontFamily: Fonts.RobotoRegular,
+    fontSize: 18,
+  },
+  bigHeaderNunito: {
     fontSize: 36,
     fontFamily: Fonts.NunitoSemiBold,
+  },
+  bigHeaderRoboto: {
+    fontSize: 36,
+    fontFamily: Fonts.RobotoMedium,
   },
 });

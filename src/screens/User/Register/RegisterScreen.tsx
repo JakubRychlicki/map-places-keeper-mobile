@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { MainNavigatorScreen } from '../../../navigation/MainNavigator';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
@@ -10,6 +10,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Colors from '../../../constants/Colors';
 import Input from '../../../components/controls/Input';
 import * as actions from '../../../store/actions';
+import Typography, { TypographyType } from '../../../components/controls/Typography';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, route }) => {
   const { t } = useTranslation();
@@ -32,7 +34,11 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
         keyboardShouldPersistTaps="handled"
         enableOnAndroid
       >
-        <Text>{t('register:createAccount')}</Text>
+        <Typography type={TypographyType.BigHeaderR} style={styles.title}>
+          {t('register:createAccount')}
+        </Typography>
+
+        <View style={styles.formInputs}>
         <Input
           id="username"
           value={values.username}
@@ -79,10 +85,20 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
           isPassword
           required
         />
+        </View>
 
-        <Button title={t('register:submit')} onPress={handleSubmit} />
+        <View style={styles.bottomContainer}>
+          <View style={styles.haveAccountContainer}>
+            <Typography type={TypographyType.TextM} style={styles.haveAccountText}>{t('register:haveAccount')}</Typography>
+            <Typography type={TypographyType.TextM} style={styles.haveAccountButton} onPress={() => navigation.navigate('LoginScreen')}>{t('register:login')}</Typography>
+          </View>
+          <TouchableOpacity style={styles.signUpButton} onPress={handleSubmit}>
+          <Typography type={TypographyType.TextM}>{t('register:submit')}</Typography>
+          </TouchableOpacity>
+        </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    
   );
 };
 
@@ -90,11 +106,48 @@ export default RegisterScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
     flex: 1,
+    backgroundColor: Colors.background,
   },
   contentContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
+  title: {
+    color: Colors.black,
+    marginBottom: 30,
+    marginTop: 40,
+  },
+  formInputs: {
+    flexGrow: 1,
+    marginBottom: 30,
+  },
+  bottomContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    marginBottom: 40,
+  },
+  haveAccountContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 5
+  },
+  haveAccountText: {
+    color: Colors.black,
+  },
+  haveAccountButton: {
+    color: Colors.purple
+  },
+  signUpButton: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 15,
+    borderColor: Colors.border,
+    borderWidth: 1,
+    borderRadius: 20,
+  }
 });

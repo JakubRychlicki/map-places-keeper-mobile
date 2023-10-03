@@ -3,6 +3,7 @@ export default {
   black: '#161716',
   orange: '#FDA286',
   purple: '#2921AD',
+  red: '#961728',
   lightGray: '#F5F5F5',
   border: '#CBC6C6',
   background: '#F7F8F8',
