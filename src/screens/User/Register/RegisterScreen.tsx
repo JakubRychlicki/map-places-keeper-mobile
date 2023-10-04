@@ -12,6 +12,7 @@ import Input from '../../../components/controls/Input';
 import * as actions from '../../../store/actions';
 import Typography, { TypographyType } from '../../../components/controls/Typography';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import ScreenTopBar from '../../../components/ScreenTopBar';
 
 const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, route }) => {
   const { t } = useTranslation();
@@ -28,6 +29,8 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
+      <ScreenTopBar />
+      
       <KeyboardAwareScrollView
         contentContainerStyle={styles.contentContainer}
         style={styles.container}

@@ -44,8 +44,8 @@ const MainNavigator = () => {
                   headerShown: false,
                 }}
               />
-              <MainStack.Screen name="RegisterScreen" component={RegisterScreen} />
-              <MainStack.Screen name="LoginScreen" component={LoginScreen} />
+              <MainStack.Screen name="RegisterScreen" component={RegisterScreen} options={{headerShown: false}} />
+              <MainStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}} />
             </>
           ) : (
             <MainStack.Screen name="HomeScreen" component={HomeScreen} />

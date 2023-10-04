@@ -11,6 +11,7 @@ import Colors from '../../../constants/Colors';
 import Input from '../../../components/controls/Input';
 import * as actions from '../../../store/actions';
 import Typography, { TypographyType } from '../../../components/controls/Typography';
+import ScreenTopBar from '../../../components/ScreenTopBar';
 
 const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) => {
   const { t } = useTranslation();
@@ -27,6 +28,8 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
+      <ScreenTopBar />
+      
       <KeyboardAwareScrollView
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
@@ -90,7 +93,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.black,
-    marginBottom: 30
+    marginBottom: 30,
+    marginTop: 40,
   },
   formInputs:  {
     flexGrow: 1,
