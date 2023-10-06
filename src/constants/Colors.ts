@@ -7,6 +7,7 @@ export default {
   lightGray: '#F5F5F5',
   border: '#CBC6C6',
   background: '#F7F8F8',
+  backgroundTransparent: 'rgba(22, 23, 22, 0.7)',
   text: '#505050',
   color1: '#505050',
   color2: '#E3E3E1',

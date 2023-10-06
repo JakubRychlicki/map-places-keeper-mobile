@@ -34,4 +34,7 @@ export default {
     invalidPassword: 'Invalid password',
     passwordsMustMatch: "Passwords don't match",
   },
+  internet: {
+    noInternet: 'No internet connection was found. Check your connection or try restart application.',
+  }
 };

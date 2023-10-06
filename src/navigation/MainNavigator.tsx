@@ -4,6 +4,7 @@ import { createStackNavigator, StackNavigationProp } from '@react-navigation/sta
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useAppSelector } from '../hooks/useAppDispatch';
+import { useInternetStatus } from '../hooks/useInternetStatus';
 
 // THEME
 import Colors from '../constants/Colors';
@@ -13,6 +14,7 @@ import WelcomeScreen from '../screens/Welcome/WelcomeScreen';
 import RegisterScreen from '../screens/User/Register/RegisterScreen';
 import LoginScreen from '../screens/User/Login/LoginScreen';
 import HomeScreen from '../screens/Home/HomeScreen';
+import InternetConnectionScreen from '../screens/Helpers/InternetConnectionScreen';
 
 export type MainNavigatorScreen<T extends keyof MainStackParamList> = React.FC<{
   navigation: StackNavigationProp<MainStackParamList, T>;
@@ -30,9 +32,13 @@ const MainStack = createStackNavigator<MainStackParamList>();
 
 const MainNavigator = () => {
   const { token } = useAppSelector((state) => state.user);
-
+  const isInternet = useInternetStatus();
+  
   return (
     <SafeAreaProvider>
+      {!isInternet ? (
+        <InternetConnectionScreen />
+      ) : null}
       <NavigationContainer>
         <MainStack.Navigator>
           {!token ? (
