@@ -25,7 +25,7 @@ export type MainStackParamList = {
   WelcomeScreen: undefined;
   RegisterScreen: undefined;
   LoginScreen: undefined;
-  HomeScreen: undefined;
+  RootScreen: undefined
 };
 
 const MainStack = createStackNavigator<MainStackParamList>();
@@ -40,21 +40,18 @@ const MainNavigator = () => {
         <InternetConnectionScreen />
       ) : null}
       <NavigationContainer>
-        <MainStack.Navigator>
+        <MainStack.Navigator screenOptions={
+          {
+            headerShown: false
+          }}>
           {!token ? (
             <>
-              <MainStack.Screen
-                name="WelcomeScreen"
-                component={WelcomeScreen}
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <MainStack.Screen name="RegisterScreen" component={RegisterScreen} options={{headerShown: false}} />
-              <MainStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown: false}} />
+              <MainStack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+              <MainStack.Screen name="RegisterScreen" component={RegisterScreen} />
+              <MainStack.Screen name="LoginScreen" component={LoginScreen} />
             </>
           ) : (
-            <MainStack.Screen name="HomeScreen" component={HomeScreen} />
+            <MainStack.Screen name="RootScreen" component={HomeScreen} />
           )}
         </MainStack.Navigator>
       </NavigationContainer>

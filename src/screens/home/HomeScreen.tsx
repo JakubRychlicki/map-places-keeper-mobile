@@ -1,28 +1,82 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button, Dimensions } from 'react-native';
-import { MainNavigatorScreen } from '../../navigation/MainNavigator';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
-import * as actions from '../../store/actions';
-import Mapbox from '@rnmapbox/maps';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Dimensions, PermissionsAndroid, Platform } from 'react-native';
+import Geolocation, {GeolocationResponse} from '@react-native-community/geolocation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const { width } = Dimensions.get('window');
+// COMPONENTS
+import Map from '../../components/map/Map';
+import ScreenTopBar from '../../components/ScreenTopBar';
 
-const HomeScreen: MainNavigatorScreen<'HomeScreen'> = ({ navigation, route }) => {
-  const dispatch = useAppDispatch();
-  const { locations } = useAppSelector((state) => state.user);
+const widthScreen = Dimensions.get('window').width;
 
-  const signout = () => {
-    dispatch(actions.logout());
+Geolocation.setRNConfiguration({skipPermissionRequests: true, locationProvider: 'playServices'});
+
+const HomeScreen = () => {
+  const [position, setPosition] = useState<GeolocationResponse | null>(null);
+  const [subscriptionId, setSubscriptionId] = useState<number | null>(null);
+
+  const watchPosition = () => {
+    try {
+      const watchID = Geolocation.watchPosition(
+        (position) => {
+          setPosition(position);
+        },
+        (error) => console.log('WatchPosition Error')
+      );
+      setSubscriptionId(watchID);
+    } catch (error) {
+      console.log('WatchPosition Error');
+    }
   };
 
+  const clearWatch = () => {
+    subscriptionId !== null && Geolocation.clearWatch(subscriptionId);
+    setSubscriptionId(null);
+    setPosition(null);
+  };
+
+  useEffect(() => {
+    if(Platform.OS === 'android'){
+      const requestLocationPermission = async () => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Device current location permission',
+              message: 'Allow app to get your current location',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
+          
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            watchPosition();
+          } else {
+            console.log('Location permission denied')
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      requestLocationPermission();
+    }
+
+    return () => {
+      clearWatch();
+    };
+
+  },[]);
+  
   return (
-    <View style={styles.container}>
-      <Text>HomeScreen</Text>
-      <View style={styles.mapContainer}>
-        <Mapbox.MapView style={styles.map} />
-      </View>
-      <Button title="sign out" onPress={signout} />
-    </View>
+      <SafeAreaView edges={['top']} style={styles.container}>
+        <ScreenTopBar  />
+        
+        <View style={styles.mapContainer}>
+          {/* <Map /> */}
+        </View>
+      </SafeAreaView>
   );
 };
 
@@ -31,12 +85,10 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff'
   },
   mapContainer: {
-    width: width,
+    width: widthScreen,
     height: 300,
-  },
-  map: {
-    flex: 1,
   },
 });
