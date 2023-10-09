@@ -43,7 +43,7 @@ export default Typography;
 
 const styles = StyleSheet.create({
   mainText: {
-    color: Colors.text,
+    color: Colors.primaryText,
   },
   opacity: {
     opacity: 0.5,

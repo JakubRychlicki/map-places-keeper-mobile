@@ -35,14 +35,20 @@ const WelcomeScreen: MainNavigatorScreen<'WelcomeScreen'> = ({ navigation, route
           <TouchableOpacity
             onPress={() => navigation.navigate('RegisterScreen')}
             style={[styles.button, styles.buttonRegister]}
+            activeOpacity={0.6}
           >
-            <Text style={styles.buttonText}>{t('buttons:register')}</Text>
+            <Typography type={TypographyType.TextM} style={[styles.buttonText, styles.buttonRegisterText]}>
+              {t('buttons:register')}
+            </Typography>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('LoginScreen')}
             style={[styles.button, styles.buttonSignIn]}
+            activeOpacity={0.6}
           >
-            <Text style={styles.buttonText}>{t('buttons:login')}</Text>
+            <Typography type={TypographyType.TextM} style={[styles.buttonText, styles.buttonLoginText]}>
+              {t('buttons:login')}
+            </Typography>
           </TouchableOpacity>
         </View>
       </View>
@@ -68,7 +74,7 @@ const styles = StyleSheet.create({
     width: 700,
     height: 700,
     borderRadius: 350,
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.primary,
   },
   content: {
     flex: 1,
@@ -87,7 +93,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     borderColor: Colors.border,
-    borderWidth: 1,
+    borderWidth: 2,
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -99,15 +105,18 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   buttonRegister: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.lightBlue,
   },
   buttonSignIn: {
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.primary,
   },
   buttonText: {
-    fontSize: 18,
-    fontFamily: Fonts.RobotoRegular,
-    color: Colors.black,
     textAlign: 'center',
+  },
+  buttonRegisterText: {
+    color: Colors.primary,
+  },
+  buttonLoginText: {
+    color: Colors.white,
   },
 });

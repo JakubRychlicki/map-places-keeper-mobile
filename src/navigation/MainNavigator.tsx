@@ -13,8 +13,10 @@ import Colors from '../constants/Colors';
 import WelcomeScreen from '../screens/Welcome/WelcomeScreen';
 import RegisterScreen from '../screens/User/Register/RegisterScreen';
 import LoginScreen from '../screens/User/Login/LoginScreen';
-import HomeScreen from '../screens/Home/HomeScreen';
 import InternetConnectionScreen from '../screens/Helpers/InternetConnectionScreen';
+
+// NAVIGATORS
+import RootNavigator from './RootNavigator';
 
 export type MainNavigatorScreen<T extends keyof MainStackParamList> = React.FC<{
   navigation: StackNavigationProp<MainStackParamList, T>;
@@ -25,7 +27,7 @@ export type MainStackParamList = {
   WelcomeScreen: undefined;
   RegisterScreen: undefined;
   LoginScreen: undefined;
-  RootScreen: undefined
+  RootScreen: undefined;
 };
 
 const MainStack = createStackNavigator<MainStackParamList>();
@@ -33,17 +35,16 @@ const MainStack = createStackNavigator<MainStackParamList>();
 const MainNavigator = () => {
   const { token } = useAppSelector((state) => state.user);
   const isInternet = useInternetStatus();
-  
+
   return (
     <SafeAreaProvider>
-      {!isInternet ? (
-        <InternetConnectionScreen />
-      ) : null}
+      {!isInternet ? <InternetConnectionScreen /> : null}
       <NavigationContainer>
-        <MainStack.Navigator screenOptions={
-          {
-            headerShown: false
-          }}>
+        <MainStack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
           {!token ? (
             <>
               <MainStack.Screen name="WelcomeScreen" component={WelcomeScreen} />
@@ -51,7 +52,7 @@ const MainNavigator = () => {
               <MainStack.Screen name="LoginScreen" component={LoginScreen} />
             </>
           ) : (
-            <MainStack.Screen name="RootScreen" component={HomeScreen} />
+            <MainStack.Screen name="RootScreen" component={RootNavigator} />
           )}
         </MainStack.Navigator>
       </NavigationContainer>

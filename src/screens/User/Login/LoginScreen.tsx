@@ -12,6 +12,7 @@ import Input from '../../../components/controls/Input';
 import * as actions from '../../../store/actions';
 import Typography, { TypographyType } from '../../../components/controls/Typography';
 import ScreenTopBar from '../../../components/ScreenTopBar';
+import Button from '../../../components/controls/Button';
 
 const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) => {
   const { t } = useTranslation();
@@ -29,7 +30,7 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar />
-      
+
       <KeyboardAwareScrollView
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
@@ -68,12 +69,18 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
 
         <View style={styles.bottomContainer}>
           <View style={styles.haveAccountContainer}>
-            <Typography type={TypographyType.TextM} style={styles.haveAccountText}>{t('login:dontHaveAccount')}</Typography>
-            <Typography type={TypographyType.TextM} style={styles.haveAccountButton} onPress={() => navigation.navigate('RegisterScreen')}>{t('login:register')}</Typography>
+            <Typography type={TypographyType.TextM} style={styles.haveAccountText}>
+              {t('login:dontHaveAccount')}
+            </Typography>
+            <Typography
+              type={TypographyType.TextM}
+              style={styles.haveAccountButton}
+              onPress={() => navigation.navigate('RegisterScreen')}
+            >
+              {t('login:register')}
+            </Typography>
           </View>
-          <TouchableOpacity style={styles.signInButton} onPress={handleSubmit}>
-            <Typography type={TypographyType.TextM} >{t('login:submit')}</Typography>
-          </TouchableOpacity>
+          <Button title={t('login:submit')} onPress={handleSubmit} />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
@@ -96,9 +103,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     marginTop: 40,
   },
-  formInputs:  {
+  formInputs: {
     flexGrow: 1,
-    marginBottom: 30
+    marginBottom: 30,
   },
   bottomContainer: {
     display: 'flex',
@@ -109,13 +116,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 5
+    gap: 5,
   },
   haveAccountText: {
     color: Colors.black,
   },
   haveAccountButton: {
-    color: Colors.purple
+    color: Colors.secondary,
   },
   signInButton: {
     display: 'flex',
@@ -126,5 +133,5 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     borderWidth: 1,
     borderRadius: 20,
-  }
+  },
 });

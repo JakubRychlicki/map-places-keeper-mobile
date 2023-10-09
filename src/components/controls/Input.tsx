@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 0,
     paddingHorizontal: 10,
-    borderColor: Colors.orange,
-    borderWidth: 1,
-    borderRadius: 10
+    borderColor: Colors.border,
+    borderWidth: 2,
+    borderRadius: 10,
   },
   errorText: {
     color: Colors.red,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 6,
     marginTop: 10,
-    color: Colors.color1
+    color: Colors.color1,
   },
   mainContainer: {
     backgroundColor: 'white',

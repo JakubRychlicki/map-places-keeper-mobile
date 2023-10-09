@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle, Text } from 'react-native';
+import Colors from '../constants/Colors';
 
 type TopbarProps = {
   leftIcon?: React.ReactNode;
@@ -15,9 +16,7 @@ const Topbar: React.FC<TopbarProps> = ({ leftIcon, rightIcon, title, description
       <View style={styles.sideContainer}>{leftIcon}</View>
       {!!title && (
         <View style={styles.textContainer}>
-          <Text style={styles.text}>
-            {title}
-          </Text>
+          <Text style={styles.text}>{title}</Text>
         </View>
       )}
       <View style={[styles.sideContainer, styles.rightSide]}>{rightIcon}</View>
@@ -35,6 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     width: '100%',
+    backgroundColor: Colors.primary,
   },
   description: {
     marginTop: 3,

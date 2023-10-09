@@ -13,6 +13,7 @@ import * as actions from '../../../store/actions';
 import Typography, { TypographyType } from '../../../components/controls/Typography';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ScreenTopBar from '../../../components/ScreenTopBar';
+import Button from '../../../components/controls/Button';
 
 const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, route }) => {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar />
-      
+
       <KeyboardAwareScrollView
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
@@ -42,66 +43,71 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
         </Typography>
 
         <View style={styles.formInputs}>
-        <Input
-          id="username"
-          value={values.username}
-          error={errors.username}
-          label={t('register:username')}
-          onChange={setFieldValue}
-          setFieldError={setFieldError}
-          maxLength={255}
-          required
-        />
+          <Input
+            id="username"
+            value={values.username}
+            error={errors.username}
+            label={t('register:username')}
+            onChange={setFieldValue}
+            setFieldError={setFieldError}
+            maxLength={255}
+            required
+          />
 
-        <Input
-          id="email"
-          value={values.email}
-          error={errors.email}
-          label={t('register:email')}
-          onChange={setFieldValue}
-          setFieldError={setFieldError}
-          maxLength={255}
-          keyboardType="email-address"
-          required
-        />
+          <Input
+            id="email"
+            value={values.email}
+            error={errors.email}
+            label={t('register:email')}
+            onChange={setFieldValue}
+            setFieldError={setFieldError}
+            maxLength={255}
+            keyboardType="email-address"
+            required
+          />
 
-        <Input
-          id="password"
-          value={values.password}
-          error={errors.password}
-          label={t('register:password')}
-          onChange={setFieldValue}
-          setFieldError={setFieldError}
-          maxLength={255}
-          isPassword
-          required
-        />
+          <Input
+            id="password"
+            value={values.password}
+            error={errors.password}
+            label={t('register:password')}
+            onChange={setFieldValue}
+            setFieldError={setFieldError}
+            maxLength={255}
+            isPassword
+            required
+          />
 
-        <Input
-          id="confirmPassword"
-          value={values.confirmPassword}
-          error={errors.confirmPassword}
-          label={t('register:confirmPassword')}
-          onChange={setFieldValue}
-          setFieldError={setFieldError}
-          maxLength={255}
-          isPassword
-          required
-        />
+          <Input
+            id="confirmPassword"
+            value={values.confirmPassword}
+            error={errors.confirmPassword}
+            label={t('register:confirmPassword')}
+            onChange={setFieldValue}
+            setFieldError={setFieldError}
+            maxLength={255}
+            isPassword
+            required
+          />
         </View>
 
         <View style={styles.bottomContainer}>
           <View style={styles.haveAccountContainer}>
-            <Typography type={TypographyType.TextM} style={styles.haveAccountText}>{t('register:haveAccount')}</Typography>
-            <Typography type={TypographyType.TextM} style={styles.haveAccountButton} onPress={() => navigation.navigate('LoginScreen')}>{t('register:login')}</Typography>
+            <Typography type={TypographyType.TextM} style={styles.haveAccountText}>
+              {t('register:haveAccount')}
+            </Typography>
+            <Typography
+              type={TypographyType.TextM}
+              style={styles.haveAccountButton}
+              onPress={() => navigation.navigate('LoginScreen')}
+            >
+              {t('register:login')}
+            </Typography>
           </View>
-          <TouchableOpacity style={styles.signUpButton} onPress={handleSubmit}>
-          <Typography type={TypographyType.TextM}>{t('register:submit')}</Typography>
-          </TouchableOpacity>
+          <Button title={t('register:submit')} onPress={handleSubmit} />
         </View>
       </KeyboardAwareScrollView>
-      </SafeAreaView>
-    
+    </SafeAreaView>
   );
 };
 
@@ -135,13 +141,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 5
+    gap: 5,
   },
   haveAccountText: {
     color: Colors.black,
   },
   haveAccountButton: {
-    color: Colors.purple
+    color: Colors.secondary,
   },
   signUpButton: {
     display: 'flex',
@@ -150,7 +156,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 15,
     borderColor: Colors.border,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 20,
-  }
+    backgroundColor: Colors.primary,
+  },
 });
