@@ -11,8 +11,10 @@ import MapSvg from '../assets/svg/icons/MapSvg';
 import ProfileSvg from '../assets/svg/icons/ProfileSvg';
 
 // SCREENS
-import HomeScreen from '../screens/Home/HomeScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
+
+// NAVIGATORS
+import MapNavigator from './MapNavigator';
 
 export type RootNavigatorParamsList = {
   Map: undefined;
@@ -39,7 +41,7 @@ const RootNavigator = () => {
     >
       <BottomTab.Screen
         name="Map"
-        component={HomeScreen}
+        component={MapNavigator}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <View style={{ width: size, height: size }}>

@@ -25,16 +25,23 @@ export default {
   buttons: {
     register: 'Sign Up',
     login: 'Sign In',
+    tryAgain: 'Try again',
+    next: 'NEXT',
+  },
+  addPlace: {
+    userCurrentPosition: 'Your current position:',
   },
   errors: {
+    name: 'ERROR',
     emailUsed: 'Email is already taken',
     requiredField: 'This field is required',
     invalidUsername: 'Invalid username',
     invalidEmail: 'Invalid email',
     invalidPassword: 'Invalid password',
     passwordsMustMatch: "Passwords don't match",
+    failToGetLocation: 'Failed to get location of device. Make sure you have location enabled on your phone.',
   },
   internet: {
     noInternet: 'No internet connection was found. Check your connection or try restart application.',
-  }
+  },
 };

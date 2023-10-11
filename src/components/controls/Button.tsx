@@ -1,23 +1,33 @@
 import React, { FC } from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+
+// THEME
+import Colors from '../../constants/Colors';
+
+// COMPONENTS
 import Typography, { TypographyType } from './Typography';
 
 interface Props {
   title: string;
   onPress: () => void;
   backgroundColor?: string;
+  loading?: boolean;
 }
 
-const Button: FC<Props> = ({ title, onPress, backgroundColor }) => {
+const Button: FC<Props> = ({ title, onPress, backgroundColor, loading }) => {
   return (
     <TouchableOpacity
-      style={[styles.container, { backgroundColor: backgroundColor || '#0077B6' }]}
+      style={[styles.container, { backgroundColor: backgroundColor || Colors.primary }]}
       activeOpacity={0.6}
       onPress={onPress}
     >
-      <Typography type={TypographyType.TextM} style={styles.text}>
-        {title}
-      </Typography>
+      {loading ? (
+        <ActivityIndicator size="small" color={Colors.white} />
+      ) : (
+        <Typography type={TypographyType.TextM} style={styles.text}>
+          {title}
+        </Typography>
+      )}
     </TouchableOpacity>
   );
 };
@@ -29,7 +39,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 14,
+    height: 56,
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#48CAE4',

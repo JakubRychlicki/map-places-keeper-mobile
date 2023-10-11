@@ -1,7 +1,11 @@
-import { View, Text, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Dimensions, StyleSheet } from 'react-native';
 import { FC } from 'react';
 import { Modal } from 'react-native-paper';
-import Typography, { TypographyType } from '../controls/Typography';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MapStackParamList } from '../../navigation/MapNavigator';
+
+// CONPONENTS
+import Typography from '../controls/Typography';
 import Button from '../controls/Button';
 
 const widthScreen = Dimensions.get('window').width;
@@ -9,14 +13,21 @@ const widthScreen = Dimensions.get('window').width;
 interface Props {
   visible: boolean;
   hideModal: () => void;
+  navigation: StackNavigationProp<MapStackParamList, 'MainMap'>;
 }
 
-const ModalAddPlace: FC<Props> = ({ visible, hideModal }) => {
+const ModalAddPlace: FC<Props> = ({ visible, hideModal, navigation }) => {
   return (
     <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
       <Typography style={styles.title}>Choose how you want to add{'\n'} a place on the map?</Typography>
       <View style={styles.options}>
-        <Button title="Device location" onPress={() => console.log('device')} />
+        <Button
+          title="Device location"
+          onPress={() => {
+            navigation.navigate('AddPlace', { type: 'device location' });
+            hideModal();
+          }}
+        />
         <Button title="Search for a place" onPress={() => console.log('search')} backgroundColor="#0096C7" />
         <Button title="Click on the map" onPress={() => console.log('map')} backgroundColor="#00B4D8" />
       </View>

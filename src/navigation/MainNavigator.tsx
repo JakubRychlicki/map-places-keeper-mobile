@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -37,7 +37,7 @@ const MainNavigator = () => {
   const isInternet = useInternetStatus();
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={styles.container}>
       {!isInternet ? <InternetConnectionScreen /> : null}
       <NavigationContainer>
         <MainStack.Navigator
@@ -63,3 +63,9 @@ const MainNavigator = () => {
 };
 
 export default MainNavigator;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.background,
+  },
+});

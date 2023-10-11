@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 // THEME
 import Colors from '../../constants/Colors';
@@ -14,9 +13,6 @@ interface Props {
 }
 
 const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace }) => {
-  const tabBarHeight = useBottomTabBarHeight();
-  const marginBottom = Math.floor(tabBarHeight) + 20;
-
   return (
     <FAB.Group
       open={isOpen}
@@ -24,7 +20,7 @@ const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace }) => {
       icon={isOpen ? 'arrow-down-thin' : 'arrow-up-thin'}
       backdropColor={Colors.backgroundTransparent}
       style={styles.container}
-      fabStyle={[styles.button, { marginBottom }]}
+      fabStyle={styles.button}
       color={Colors.primary}
       rippleColor={Colors.secondary}
       actions={[
@@ -60,6 +56,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: Colors.lightBlue,
+    marginBottom: 20,
   },
   actionLabel: {
     fontFamily: Fonts.NunitoMedium,
