@@ -29,11 +29,14 @@ export const getReverseGeocoding = async (longitude: number, latitude: number) =
       {
         params: {
           access_token: MAPBOX_TOKEN,
+          limit: 1,
+          language: 'PL',
+          types: 'district,place,locality,neighborhood,address',
         },
       },
     );
 
-    return response.data.features;
+    return response.data.features[0];
   } catch (error) {
     console.log(error);
   }

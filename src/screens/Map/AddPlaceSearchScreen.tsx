@@ -1,27 +1,14 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
-import {
-  View,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-  TextInput as RNTextInput,
-  Keyboard,
-  ViewStyle,
-} from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, Keyboard, FlatList, TouchableOpacity, StyleSheet, TextInput as RNTextInput } from 'react-native';
 import { Searchbar } from 'react-native-paper';
-import Typography from '../controls/Typography';
+import Typography from '../../components/controls/Typography';
 import { MapboxPlace } from '../../store/types/Map.model';
-import { getForwardGeocoding } from '../../services/MapboxAPI';
+import ScreenTopBar from '../../components/ScreenTopBar';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import SearchInput from '../../components/controls/SearchInput';
+import Colors from '../../constants/Colors';
 
-const widthScreen = Dimensions.get('window').width;
-
-interface Props {
-  moveTo: (value: number[]) => void;
-}
-
-const SearchAddress: FC<Props> = ({ moveTo }) => {
-  const searchBarRef = useRef<RNTextInput | null>(null);
+const AddPlaceSearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<MapboxPlace[]>([
     {
@@ -85,7 +72,6 @@ const SearchAddress: FC<Props> = ({ moveTo }) => {
       },
     },
   ]);
-  const [isSearchListVisible, setIsSearchListVisible] = useState(false);
 
   const onChangeSearch = (query: string) => {
     setSearchQuery(query);
@@ -97,35 +83,16 @@ const SearchAddress: FC<Props> = ({ moveTo }) => {
     // }
   };
 
-  const keyboardDidHide = () => {
-    Keyboard.dismiss();
-    setIsSearchListVisible(false);
-  };
-
-  useEffect(() => {
-    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-      keyboardDidHide();
-    });
-
-    () => {
-      keyboardDidHideListener.remove();
-    };
-  }, []);
-
   return (
-    <View style={styles.searchContainer}>
-      <Searchbar
-        ref={searchBarRef}
-        placeholder="Search"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-        onClearIconPress={() => setSearchResults([])}
-        onFocus={() => {
-          setIsSearchListVisible(true);
-        }}
-        style={styles.searchBar}
-      />
-      {isSearchListVisible && searchResults.length > 0 && (
+    <SafeAreaView edges={['top']} style={styles.container}>
+      <ScreenTopBar />
+      <View style={styles.content}>
+        <SearchInput
+          placeholder="Search for a place"
+          onChange={onChangeSearch}
+          onReset={() => setSearchResults([])}
+          containerStyle={styles.searchBar}
+        />
         <FlatList
           data={searchResults}
           keyExtractor={(item) => item.id}
@@ -135,42 +102,38 @@ const SearchAddress: FC<Props> = ({ moveTo }) => {
             <TouchableOpacity
               style={styles.searchItem}
               onPress={() => {
-                keyboardDidHide();
-                moveTo(item.bbox);
+                console.log(item);
               }}
             >
               <Typography>{item.place_name}</Typography>
             </TouchableOpacity>
           )}
         />
-      )}
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
-export default SearchAddress;
+export default AddPlaceSearchScreen;
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    position: 'absolute',
-    top: 20,
-    paddingHorizontal: 20,
-    width: widthScreen,
+  container: {
+    flex: 1,
   },
-  searchBar: {
-    backgroundColor: '#F5F5F5',
+  content: {
+    paddingHorizontal: 20,
+  },
+  searchBar: {},
+  searchInput: {
+    backgroundColor: 'blue',
   },
   searchList: {
-    marginTop: 10,
-    backgroundColor: '#F5F5F5',
-    borderRadius: 20,
-    paddingHorizontal: 15,
     paddingTop: 15,
-    paddingBottom: 20,
+    //paddingHorizontal: 15,
   },
   searchItem: {
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: Colors.border,
   },
 });

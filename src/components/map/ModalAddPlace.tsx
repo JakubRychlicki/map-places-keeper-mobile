@@ -24,12 +24,26 @@ const ModalAddPlace: FC<Props> = ({ visible, hideModal, navigation }) => {
         <Button
           title="Device location"
           onPress={() => {
-            navigation.navigate('AddPlace', { type: 'device location' });
+            navigation.navigate('AddPlace', { type: 'device_location' });
             hideModal();
           }}
         />
-        <Button title="Search for a place" onPress={() => console.log('search')} backgroundColor="#0096C7" />
-        <Button title="Click on the map" onPress={() => console.log('map')} backgroundColor="#00B4D8" />
+        <Button
+          title="Search for a place"
+          onPress={() => {
+            navigation.navigate('AddPlaceSearch');
+            hideModal();
+          }}
+          backgroundColor="#0096C7"
+        />
+        <Button
+          title="Click on the map"
+          onPress={() => {
+            navigation.navigate('AddPlace', { type: 'press_on_the_map' });
+            hideModal();
+          }}
+          backgroundColor="#00B4D8"
+        />
       </View>
     </Modal>
   );

@@ -6,6 +6,7 @@ import { RouteProp } from '@react-navigation/native';
 import MainMapScreen from '../screens/Map/MainMapScreen';
 import AddPlaceScreen from '../screens/Map/AddPlaceScreen';
 import AddPlaceFormScreen from '../screens/Map/AddPlaceFormScreen';
+import AddPlaceSearchScreen from '../screens/Map/AddPlaceSearchScreen';
 
 export type MapNavigatorScreen<T extends keyof MapStackParamList> = React.FC<{
   navigation: StackNavigationProp<MapStackParamList, T>;
@@ -15,6 +16,7 @@ export type MapNavigatorScreen<T extends keyof MapStackParamList> = React.FC<{
 export type MapStackParamList = {
   MainMap: undefined;
   AddPlace: { type: string };
+  AddPlaceSearch: undefined;
   AddPlaceForm: undefined;
 };
 
@@ -30,6 +32,7 @@ const MapNavigator = () => {
     >
       <MapStack.Screen name="MainMap" component={MainMapScreen} />
       <MapStack.Screen name="AddPlace" component={AddPlaceScreen} />
+      <MapStack.Screen name="AddPlaceSearch" component={AddPlaceSearchScreen} />
       <MapStack.Screen name="AddPlaceForm" component={AddPlaceFormScreen} />
     </MapStack.Navigator>
   );

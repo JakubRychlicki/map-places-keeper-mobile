@@ -11,6 +11,8 @@ import Colors from '../../constants/Colors';
 import NextSvg from '../../assets/svg/icons/NextSvg';
 import { useTranslation } from 'react-i18next';
 import ModalLocationWarning from '../../components/controls/ModalLocationWarning';
+import { Feature, GeoJsonProperties, Geometry, Point, Polygon } from 'geojson';
+import { getReverseGeocoding } from '../../services/MapboxAPI';
 
 Geolocation.setRNConfiguration({ skipPermissionRequests: false, locationProvider: 'auto' });
 
@@ -20,11 +22,14 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
   const cameraRef = useRef<Camera | null>(null);
   const [userPosition, setUserPosition] = useState<number[] | null>(null);
   const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
+  const [userPoint, setUserPoint] = useState<Feature<Point> | null>(null);
+  const [userAddress, setUserAddress] = useState('');
 
   const getCurrentPosition = () => {
     Geolocation.getCurrentPosition(
       (pos) => {
         setUserPosition([pos.coords.longitude, pos.coords.latitude]);
+        getAddressLocation(pos.coords.longitude, pos.coords.latitude);
         setIsModalErrorOpen(false);
         setTimeout(() => {
           if (cameraRef.current) {
@@ -39,20 +44,62 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
     );
   };
 
+  const addFeature = (feature: Feature<Geometry>) => {
+    const [longitude, latitude] = (feature as Feature<Point>).geometry.coordinates;
+
+    const _feature: Feature<Point> = {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: (feature as Feature<Point>).geometry.coordinates,
+      },
+      properties: null,
+    };
+
+    setUserPoint(_feature);
+    getAddressLocation(longitude, latitude);
+  };
+
+  const getAddressLocation = async (longitude: number, latitude: number) => {
+    const location = await getReverseGeocoding(longitude, latitude);
+    if (location) {
+      setUserAddress(location.place_name);
+    }
+  };
+
   useEffect(() => {
-    getCurrentPosition();
+    if (type === 'device_location') {
+      getCurrentPosition();
+    }
   }, []);
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar />
-      <View style={styles.positionInfo}>
-        <Text style={styles.positionHeader}>{t('addPlace:userCurrentPosition')}</Text>
-        <Text style={styles.positionText}>{userPosition ? `${userPosition[0]}, ${userPosition[1]}` : 'Undefined'}</Text>
-      </View>
-      <Mapbox.MapView scaleBarEnabled={false} style={styles.map}>
+      {type === 'device_location' && (
+        <View style={styles.positionInfo}>
+          <Text style={styles.positionHeader}>{t('addPlace:userCurrentPosition')}</Text>
+          <Text style={styles.positionText}>{userAddress || ''}</Text>
+        </View>
+      )}
+      {type === 'press_on_the_map' && (
+        <View style={styles.positionInfo}>
+          <Text style={styles.positionHeader}>{t('addPlace:userCurrentPosition')}</Text>
+          <Text style={styles.positionText}>{userAddress || ''}</Text>
+          <Text style={styles.hint}>Click on the map to select a location.</Text>
+        </View>
+      )}
+      <Mapbox.MapView
+        scaleBarEnabled={false}
+        style={styles.map}
+        onPress={(_feature: Feature<Geometry, GeoJsonProperties>) => {
+          if (type === 'press_on_the_map') {
+            addFeature(_feature);
+          }
+        }}
+      >
         <Mapbox.Camera ref={cameraRef} allowUpdates={true} />
-        {userPosition && (
+        {type === 'device_location' && userPosition && (
           <Mapbox.ShapeSource
             id="source-1"
             shape={{
@@ -62,6 +109,11 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
             }}
           >
             <Mapbox.CircleLayer id="layer-1" />
+          </Mapbox.ShapeSource>
+        )}
+        {type === 'press_on_the_map' && userPoint && (
+          <Mapbox.ShapeSource id="source-2" shape={userPoint}>
+            <Mapbox.CircleLayer id="layer-2" />
           </Mapbox.ShapeSource>
         )}
       </Mapbox.MapView>
@@ -128,5 +180,12 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.RobotoMedium,
     fontSize: 18,
     color: Colors.white,
+  },
+  hint: {
+    fontFamily: Fonts.RobotoRegular,
+    fontSize: 14,
+    color: Colors.black,
+    textAlign: 'center',
+    marginTop: 20,
   },
 });

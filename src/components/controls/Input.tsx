@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 6,
     marginTop: 10,
-    color: Colors.color1,
+    color: Colors.black,
   },
   mainContainer: {
     backgroundColor: 'white',
