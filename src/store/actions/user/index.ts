@@ -1,18 +1,9 @@
-import { Action, ActionCreator } from '@reduxjs/toolkit';
-import * as actionTypes from '../actionTypes';
 import { Api } from '../../../services/API';
 import { AppThunk } from '../../configureStore';
 import { Endpoint } from '../../../services/Enpoints';
 import { LoginPayload, RegisterPayload } from '../../types/User.model';
-import { LOGOUT_SUCCESS, LoginActionTypes, RegisterActionTypes } from '../actionTypes';
+import { LOGOUT_SUCCESS, LoginActionTypes, RegisterActionTypes, GetUserProfileActionTypes } from '../actionTypes';
 import { Storage } from '../../../services/Storage';
-
-export const addUserLocation: ActionCreator<Action> = (location: any) => {
-  return {
-    type: actionTypes.ADD_USER_LOCATION,
-    payload: location,
-  };
-};
 
 export const register = (userData: RegisterPayload): AppThunk => {
   return async (dispatch) => {
@@ -46,5 +37,17 @@ export const logout = (): AppThunk => {
   return async (dispatch) => {
     Storage.delete('token');
     dispatch({ type: LOGOUT_SUCCESS });
+  };
+};
+
+export const getUserProfile = (): AppThunk => {
+  return async (dispatch) => {
+    dispatch({ type: GetUserProfileActionTypes.GET_USER_PROFILE });
+    try {
+      const { data } = await Api.get(Endpoint.Profile);
+      dispatch({ type: GetUserProfileActionTypes.GET_USER_PROFILE_SUCCESS, user: data });
+    } catch (e: any) {
+      dispatch({ type: GetUserProfileActionTypes.GET_USER_PROFILE_FAILURE });
+    }
   };
 };

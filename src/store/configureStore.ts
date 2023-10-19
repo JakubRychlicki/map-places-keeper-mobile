@@ -3,8 +3,12 @@ import ReduxThunk, { ThunkAction } from 'redux-thunk';
 
 // REDUCERS
 import userReducer from './reducers/user';
+import mapReducer from './reducers/map';
 
-const rootReducer = combineReducers({ user: userReducer });
+const rootReducer = combineReducers({
+  user: userReducer,
+  map: mapReducer,
+});
 
 const middlewares = [ReduxThunk];
 

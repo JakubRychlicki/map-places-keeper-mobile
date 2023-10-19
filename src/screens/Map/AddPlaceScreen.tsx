@@ -57,6 +57,7 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
     };
 
     setUserPoint(_feature);
+    setUserPosition([longitude, latitude]);
     getAddressLocation(longitude, latitude);
   };
 
@@ -122,7 +123,7 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
           activeOpacity={0.6}
           style={[styles.nextButton, !userPosition && styles.nextButtonDisabled]}
           disabled={!userPosition}
-          onPress={() => navigation.navigate('AddPlaceForm')}
+          onPress={() => navigation.navigate('AddPlaceForm', { address: userAddress, coordinates: userPosition })}
         >
           <Text style={styles.nextButtonText}>{t('buttons:next')}</Text>
           <NextSvg color={Colors.white} />

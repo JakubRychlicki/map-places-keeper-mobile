@@ -77,9 +77,7 @@ const Input: React.FC<InputProps> = ({
             style={[styles.container, multiline && styles.multiline, inputStyle]}
             value={value}
             onChangeText={onChangeText}
-            selectionColor={Colors.black}
             placeholder={placeholder}
-            placeholderTextColor={'rgba(0,0,0,0.3)'}
             maxLength={maxLength}
             multiline={multiline}
             onBlur={onBlur}
@@ -118,9 +116,6 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 0,
     paddingHorizontal: 10,
-    borderColor: Colors.border,
-    borderWidth: 2,
-    borderRadius: 10,
   },
   errorText: {
     color: Colors.red,
@@ -138,8 +133,10 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     backgroundColor: 'white',
-    borderRadius: 10,
     flex: 1,
+    borderColor: Colors.border,
+    borderWidth: 2,
+    borderRadius: 10,
   },
   mainMultiline: {
     height: 100,

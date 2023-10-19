@@ -17,7 +17,7 @@ export type MapStackParamList = {
   MainMap: undefined;
   AddPlace: { type: string };
   AddPlaceSearch: undefined;
-  AddPlaceForm: undefined;
+  AddPlaceForm: { address: string; coordinates: number[] | null };
 };
 
 const MapStack = createStackNavigator<MapStackParamList>();

@@ -13,6 +13,8 @@ import { Searchbar } from 'react-native-paper';
 import Typography from '../controls/Typography';
 import { MapboxPlace } from '../../store/types/Map.model';
 import { getForwardGeocoding } from '../../services/MapboxAPI';
+import SearchSvg from '../../assets/svg/icons/SearchSvg';
+import CloseSvg from '../../assets/svg/icons/CloseSvg';
 
 const widthScreen = Dimensions.get('window').width;
 
@@ -119,6 +121,8 @@ const SearchAddress: FC<Props> = ({ moveTo }) => {
         placeholder="Search"
         onChangeText={onChangeSearch}
         value={searchQuery}
+        icon={({ size, color }) => <SearchSvg width={size} height={size} stroke={color} />}
+        clearIcon={({ size, color }) => <CloseSvg width={size} height={size} stroke={color} />}
         onClearIconPress={() => setSearchResults([])}
         onFocus={() => {
           setIsSearchListVisible(true);

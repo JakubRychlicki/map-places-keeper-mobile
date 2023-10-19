@@ -1,3 +1,5 @@
+import { Feature, Point } from 'geojson';
+
 export interface GeocodingResponse {
   type: string;
   query: string[];
@@ -15,5 +17,32 @@ export interface MapboxPlace {
   geometry: {
     type: string;
     coordinates: number[];
+  };
+}
+
+export interface AddPlacePayload {
+  place: PlaceData;
+  file: File;
+}
+
+export interface PlaceData {
+  name: string;
+  description: string;
+  address: string;
+  feature: Feature<Point>;
+}
+
+export interface File {
+  uri: string;
+  name: string;
+  type: string;
+}
+
+export interface UserPlace {
+  id: number;
+  attributes: {
+    name: string;
+    description: string;
+    address: string;
   };
 }

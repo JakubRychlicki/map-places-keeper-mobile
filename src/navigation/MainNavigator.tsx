@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useAppSelector } from '../hooks/useAppDispatch';
+import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { useInternetStatus } from '../hooks/useInternetStatus';
+import * as actions from '../store/actions';
+import Loader from '../components/controls/Loader';
 
 // THEME
 import Colors from '../constants/Colors';
@@ -33,8 +35,19 @@ export type MainStackParamList = {
 const MainStack = createStackNavigator<MainStackParamList>();
 
 const MainNavigator = () => {
-  const { token } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const { token, isUserProfileLoading } = useAppSelector((state) => state.user);
   const isInternet = useInternetStatus();
+
+  useEffect(() => {
+    if (token) {
+      dispatch(actions.getUserProfile());
+    }
+  }, [token]);
+
+  if (isUserProfileLoading) {
+    return <Loader />;
+  }
 
   return (
     <SafeAreaProvider style={styles.container}>
