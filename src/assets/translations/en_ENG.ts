@@ -29,7 +29,10 @@ export default {
     next: 'NEXT',
   },
   addPlace: {
-    userCurrentPosition: 'Your current position:',
+    locationInformation: 'Location Information',
+    country: 'Country',
+    address: 'Address',
+    place: 'Place',
   },
   errors: {
     name: 'ERROR',

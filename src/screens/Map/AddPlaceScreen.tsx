@@ -1,18 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { MapNavigatorScreen } from '../../navigation/MapNavigator';
 import Mapbox, { Camera } from '@rnmapbox/maps';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import ScreenTopBar from '../../components/ScreenTopBar';
 import Geolocation from '@react-native-community/geolocation';
-import Typography from '../../components/controls/Typography';
+import { Feature, GeoJsonProperties, Geometry, Point } from 'geojson';
+import { getReverseGeocoding } from '../../services/MapboxAPI';
+import { LocationInfo as LocationInfoType } from '../../store/types/Map.model';
+
+// THEME
 import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
+
+// ICONS
 import NextSvg from '../../assets/svg/icons/NextSvg';
-import { useTranslation } from 'react-i18next';
+import MapPointSvg from '../../assets/svg/icons/MapPointSvg';
+
+// COMPONENTS
+import ScreenTopBar from '../../components/ScreenTopBar';
+import LocationInfo from '../../components/map/LocationInfo';
 import ModalLocationWarning from '../../components/controls/ModalLocationWarning';
-import { Feature, GeoJsonProperties, Geometry, Point, Polygon } from 'geojson';
-import { getReverseGeocoding } from '../../services/MapboxAPI';
 
 Geolocation.setRNConfiguration({ skipPermissionRequests: false, locationProvider: 'auto' });
 
@@ -20,10 +28,13 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
   const { type } = route.params;
   const { t } = useTranslation();
   const cameraRef = useRef<Camera | null>(null);
-  const [userPosition, setUserPosition] = useState<number[] | null>(null);
   const [isModalErrorOpen, setIsModalErrorOpen] = useState(false);
-  const [userPoint, setUserPoint] = useState<Feature<Point> | null>(null);
-  const [userAddress, setUserAddress] = useState('');
+  const [userPosition, setUserPosition] = useState<number[] | null>(null);
+  const [userLocation, setUserLocation] = useState<LocationInfoType>({
+    address: '',
+    place: '...',
+    country: '...',
+  });
 
   const getCurrentPosition = () => {
     Geolocation.getCurrentPosition(
@@ -47,24 +58,15 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
   const addFeature = (feature: Feature<Geometry>) => {
     const [longitude, latitude] = (feature as Feature<Point>).geometry.coordinates;
 
-    const _feature: Feature<Point> = {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: (feature as Feature<Point>).geometry.coordinates,
-      },
-      properties: null,
-    };
-
-    setUserPoint(_feature);
     setUserPosition([longitude, latitude]);
     getAddressLocation(longitude, latitude);
   };
 
   const getAddressLocation = async (longitude: number, latitude: number) => {
     const location = await getReverseGeocoding(longitude, latitude);
+
     if (location) {
-      setUserAddress(location.place_name);
+      setUserLocation(location);
     }
   };
 
@@ -77,57 +79,37 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar />
-      {type === 'device_location' && (
-        <View style={styles.positionInfo}>
-          <Text style={styles.positionHeader}>{t('addPlace:userCurrentPosition')}</Text>
-          <Text style={styles.positionText}>{userAddress || ''}</Text>
-        </View>
-      )}
-      {type === 'press_on_the_map' && (
-        <View style={styles.positionInfo}>
-          <Text style={styles.positionHeader}>{t('addPlace:userCurrentPosition')}</Text>
-          <Text style={styles.positionText}>{userAddress || ''}</Text>
-          <Text style={styles.hint}>Click on the map to select a location.</Text>
-        </View>
-      )}
-      <Mapbox.MapView
-        scaleBarEnabled={false}
-        style={styles.map}
-        onPress={(_feature: Feature<Geometry, GeoJsonProperties>) => {
-          if (type === 'press_on_the_map') {
-            addFeature(_feature);
-          }
-        }}
-      >
-        <Mapbox.Camera ref={cameraRef} allowUpdates={true} />
-        {type === 'device_location' && userPosition && (
-          <Mapbox.ShapeSource
-            id="source-1"
-            shape={{
-              type: 'Feature',
-              geometry: { type: 'Point', coordinates: userPosition },
-              properties: null,
-            }}
-          >
-            <Mapbox.CircleLayer id="layer-1" />
-          </Mapbox.ShapeSource>
-        )}
-        {type === 'press_on_the_map' && userPoint && (
-          <Mapbox.ShapeSource id="source-2" shape={userPoint}>
-            <Mapbox.CircleLayer id="layer-2" />
-          </Mapbox.ShapeSource>
-        )}
-      </Mapbox.MapView>
-      <View style={styles.nextButtonContainer}>
-        <TouchableOpacity
-          activeOpacity={0.6}
-          style={[styles.nextButton, !userPosition && styles.nextButtonDisabled]}
-          disabled={!userPosition}
-          onPress={() => navigation.navigate('AddPlaceForm', { address: userAddress, coordinates: userPosition })}
+      <LocationInfo address={userLocation?.address} place={userLocation?.place} country={userLocation?.country} />
+      <View style={styles.mapContainer}>
+        <Mapbox.MapView
+          scaleBarEnabled={false}
+          style={styles.map}
+          onPress={(_feature: Feature<Geometry, GeoJsonProperties>) => {
+            if (type === 'press_on_the_map') {
+              addFeature(_feature);
+            }
+          }}
         >
-          <Text style={styles.nextButtonText}>{t('buttons:next')}</Text>
-          <NextSvg color={Colors.white} />
-        </TouchableOpacity>
+          <Mapbox.Camera ref={cameraRef} allowUpdates={true} />
+          {userPosition && (
+            <Mapbox.MarkerView coordinate={userPosition}>
+              <View style={styles.point}>
+                <MapPointSvg fill={Colors.primary} stroke={Colors.black} />
+              </View>
+            </Mapbox.MarkerView>
+          )}
+        </Mapbox.MapView>
+        <View style={styles.nextButtonContainer}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={[styles.nextButton, !userPosition && styles.nextButtonDisabled]}
+            disabled={!userPosition}
+            onPress={() => navigation.navigate('AddPlaceForm', { address: '', coordinates: userPosition })}
+          >
+            <Text style={styles.nextButtonText}>{t('buttons:next')}</Text>
+            <NextSvg color={Colors.white} />
+          </TouchableOpacity>
+        </View>
       </View>
       <ModalLocationWarning visible={isModalErrorOpen} tryAgainFcn={getCurrentPosition} />
     </SafeAreaView>
@@ -140,23 +122,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  mapContainer: {
+    flex: 1,
+    position: 'relative',
+  },
   map: {
     flex: 1,
-  },
-  positionInfo: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-  },
-  positionHeader: {
-    fontFamily: Fonts.RobotoMedium,
-    fontSize: 24,
-    color: Colors.black,
-    marginBottom: 10,
-  },
-  positionText: {
-    fontFamily: Fonts.RobotoMedium,
-    fontSize: 14,
-    color: Colors.black,
   },
   nextButtonContainer: {
     position: 'absolute',
@@ -182,11 +153,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.white,
   },
-  hint: {
-    fontFamily: Fonts.RobotoRegular,
-    fontSize: 14,
-    color: Colors.black,
-    textAlign: 'center',
-    marginTop: 20,
+  point: {
+    width: 25,
+    height: 25,
   },
 });

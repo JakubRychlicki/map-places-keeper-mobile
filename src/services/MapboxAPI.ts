@@ -1,6 +1,7 @@
 import { MAPBOX_TOKEN } from '@env';
 import axios, { AxiosResponse } from 'axios';
-import { GeocodingResponse } from '../store/types/Map.model';
+import { GeocodingResponse, ReverseGeocodingResponse } from '../store/types/Map.model';
+import { formatLocationData } from '../utils/formatLocationData';
 
 export const getForwardGeocoding = async (query: string) => {
   try {
@@ -24,19 +25,18 @@ export const getForwardGeocoding = async (query: string) => {
 
 export const getReverseGeocoding = async (longitude: number, latitude: number) => {
   try {
-    const response: AxiosResponse<GeocodingResponse> = await axios.get(
+    const response: AxiosResponse<ReverseGeocodingResponse> = await axios.get(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json`,
       {
         params: {
           access_token: MAPBOX_TOKEN,
-          limit: 1,
           language: 'PL',
-          types: 'district,place,locality,neighborhood,address',
+          types: 'address,place,country',
         },
       },
     );
 
-    return response.data.features[0];
+    return formatLocationData(response.data.features);
   } catch (error) {
     console.log(error);
   }

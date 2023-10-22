@@ -7,6 +7,16 @@ export interface GeocodingResponse {
   attribution: string;
 }
 
+export interface ReverseGeocodingResponse {
+  type: string;
+  query: string[];
+  features: {
+    place_type: string[];
+    place_name: string;
+  }[];
+  attribution: string;
+}
+
 export interface MapboxPlace {
   id: string;
   type: string;
@@ -45,4 +55,10 @@ export interface UserPlace {
     description: string;
     address: string;
   };
+}
+
+export interface LocationInfo {
+  address: string;
+  place: string;
+  country: string;
 }
