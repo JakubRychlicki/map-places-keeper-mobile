@@ -33,6 +33,11 @@ export default {
     country: 'Country',
     address: 'Address',
     place: 'Place',
+    form: {
+      name: 'Name of place',
+      description: 'Description',
+      submit: 'SAVE',
+    },
   },
   errors: {
     name: 'ERROR',

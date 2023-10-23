@@ -1,4 +1,5 @@
 import { Feature, Point } from 'geojson';
+import { Photo } from './Utils.model';
 
 export interface GeocodingResponse {
   type: string;
@@ -32,20 +33,17 @@ export interface MapboxPlace {
 
 export interface AddPlacePayload {
   place: PlaceData;
-  file: File;
+  file: Photo | null;
 }
 
 export interface PlaceData {
   name: string;
   description: string;
-  address: string;
+  locality: string;
+  street_address: string;
+  country: string;
+  category: string;
   feature: Feature<Point>;
-}
-
-export interface File {
-  uri: string;
-  name: string;
-  type: string;
 }
 
 export interface UserPlace {
@@ -53,12 +51,19 @@ export interface UserPlace {
   attributes: {
     name: string;
     description: string;
-    address: string;
+    locality: string;
+    street_address: string;
+    country: string;
+    category: string;
+    feature: Feature<Point>;
+    graphics?: any;
+    user?: any;
   };
 }
 
-export interface LocationInfo {
+export interface LocationDetails {
   address: string;
   place: string;
   country: string;
+  coordinates: number[];
 }

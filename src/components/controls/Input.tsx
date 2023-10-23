@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 6,
     marginTop: 10,
-    color: Colors.black,
+    color: Colors.primaryText,
   },
   mainContainer: {
     backgroundColor: 'white',

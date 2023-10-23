@@ -1,22 +1,27 @@
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { MainNavigatorScreen } from '../../../navigation/MainNavigator';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { MainNavigatorScreen } from '../../../navigation/MainNavigator';
 import { useFormik } from 'formik';
 import { LoginForm, defaultValuesLoginForm, loginFormValidationSchema } from './Login.utils';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Colors from '../../../constants/Colors';
-import Input from '../../../components/controls/Input';
+import { useAppDispatch, useAppSelector } from '../../../hooks/useAppDispatch';
 import * as actions from '../../../store/actions';
-import Typography, { TypographyType } from '../../../components/controls/Typography';
+
+// THEME
+import Colors from '../../../constants/Colors';
+
+// COMPONENTS
 import ScreenTopBar from '../../../components/ScreenTopBar';
 import Button from '../../../components/controls/Button';
+import Input from '../../../components/controls/Input';
+import Typography, { TypographyType } from '../../../components/controls/Typography';
 
 const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { isLoginLoading } = useAppSelector((state) => state.user);
 
   const { values, errors, dirty, setFieldValue, handleSubmit, setFieldError } = useFormik<LoginForm>({
     initialValues: defaultValuesLoginForm,
@@ -80,7 +85,7 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
               {t('login:register')}
             </Typography>
           </View>
-          <Button title={t('login:submit')} onPress={handleSubmit} />
+          <Button title={t('login:submit')} onPress={handleSubmit} loading={isLoginLoading} />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>

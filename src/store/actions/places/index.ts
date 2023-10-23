@@ -17,7 +17,9 @@ export const addPlace = ({ place, file }: AddPlacePayload): AppThunk => {
         user: state.user.user?.id,
       };
       const formData = new FormData();
-      formData.append('files.graphics', file);
+      if (file) {
+        formData.append('files.graphics', file);
+      }
       formData.append('data', JSON.stringify(placeData));
 
       const { data }: AxiosResponse<{ data: UserPlace }> = await Api({

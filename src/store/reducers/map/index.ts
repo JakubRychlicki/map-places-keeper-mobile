@@ -3,12 +3,12 @@ import { UserPlace } from '../../types/Map.model';
 
 export type MapState = {
   userPlaces: UserPlace[];
-  isUserPlacesLoading: boolean;
+  isAddPlaceLoading: boolean;
 };
 
 const initialState: MapState = {
   userPlaces: [],
-  isUserPlacesLoading: false,
+  isAddPlaceLoading: false,
 };
 
 const mapReducer = (state: MapState = initialState, action: any): MapState => {
@@ -16,18 +16,18 @@ const mapReducer = (state: MapState = initialState, action: any): MapState => {
     case actionTypes.AddUserPlaceTypes.ADD_USER_PLACE:
       return {
         ...state,
-        isUserPlacesLoading: true,
+        isAddPlaceLoading: true,
       };
     case actionTypes.AddUserPlaceTypes.ADD_USER_PLACE_SUCCESS:
       return {
         ...state,
         userPlaces: [...state.userPlaces, action.place],
-        isUserPlacesLoading: false,
+        isAddPlaceLoading: false,
       };
     case actionTypes.AddUserPlaceTypes.ADD_USER_PLACE_FAILURE:
       return {
         ...state,
-        isUserPlacesLoading: false,
+        isAddPlaceLoading: false,
       };
     default:
       return state;

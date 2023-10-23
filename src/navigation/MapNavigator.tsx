@@ -1,11 +1,12 @@
 import React from 'react';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import { LocationDetails } from '../store/types/Map.model';
 
 // SCREENS
 import MainMapScreen from '../screens/Map/MainMapScreen';
 import AddPlaceScreen from '../screens/Map/AddPlaceScreen';
-import AddPlaceFormScreen from '../screens/Map/AddPlaceFormScreen';
+import AddPlaceFormScreen from '../screens/Map/AddPlaceFormScreen/AddPlaceFormScreen';
 import AddPlaceSearchScreen from '../screens/Map/AddPlaceSearchScreen';
 
 export type MapNavigatorScreen<T extends keyof MapStackParamList> = React.FC<{
@@ -17,7 +18,7 @@ export type MapStackParamList = {
   MainMap: undefined;
   AddPlace: { type: string };
   AddPlaceSearch: undefined;
-  AddPlaceForm: { address: string; coordinates: number[] | null };
+  AddPlaceForm: { location: LocationDetails };
 };
 
 const MapStack = createStackNavigator<MapStackParamList>();
