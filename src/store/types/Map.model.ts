@@ -1,5 +1,6 @@
 import { Feature, Point } from 'geojson';
-import { Photo } from './Utils.model';
+import { Photo, StrapiPhoto } from './Utils.model';
+import { User } from './User.model';
 
 export interface GeocodingResponse {
   type: string;
@@ -56,8 +57,8 @@ export interface UserPlace {
     country: string;
     category: string;
     feature: Feature<Point>;
-    graphics?: any;
-    user?: any;
+    graphics?: StrapiPhoto;
+    user?: User;
   };
 }
 
