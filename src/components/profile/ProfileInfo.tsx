@@ -4,7 +4,7 @@ import { View, Dimensions, StyleSheet } from 'react-native';
 // THEME
 import Colors from '../../constants/Colors';
 
-// ICONS
+// ASSETS
 import UserSvg from '../../assets/svg/icons/UserSvg';
 import PlaceSvg from '../../assets/svg/icons/Place';
 

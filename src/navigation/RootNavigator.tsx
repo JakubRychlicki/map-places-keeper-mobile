@@ -6,7 +6,7 @@ import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-naviga
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
-// ICONS
+// ASSETS
 import MapSvg from '../assets/svg/icons/MapSvg';
 import ProfileSvg from '../assets/svg/icons/ProfileSvg';
 

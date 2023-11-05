@@ -5,7 +5,7 @@ import { View, TextInput, StyleSheet, TouchableOpacity, StyleProp, ViewStyle, Ke
 import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
 
-// ICONS
+// ASSETS
 import CloseSvg from '../../assets/svg/icons/CloseSvg';
 import SearchSvg from '../../assets/svg/icons/SearchSvg';
 

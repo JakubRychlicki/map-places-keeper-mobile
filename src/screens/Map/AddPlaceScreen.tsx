@@ -13,7 +13,7 @@ import { LocationDetails } from '../../store/types/Map.model';
 import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
 
-// ICONS
+// ASSETS
 import NextSvg from '../../assets/svg/icons/NextSvg';
 import MapPointSvg from '../../assets/svg/icons/MapPointSvg';
 
@@ -90,7 +90,12 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar />
-      <LocationInfo address={location.address} place={location.place} country={location.country} />
+      <LocationInfo
+        title={t('addPlace:locationInformation')}
+        address={location.address}
+        place={location.place}
+        country={location.country}
+      />
       <View style={styles.mapContainer}>
         <Mapbox.MapView
           scaleBarEnabled={false}

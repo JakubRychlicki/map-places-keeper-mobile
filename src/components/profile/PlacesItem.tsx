@@ -1,5 +1,9 @@
 import React, { FC } from 'react';
 import { View, Text, Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { API_URL } from '@env';
+
+// ASSETS
+import PlaceholderImage from '../../assets/images/placeholder.jpg';
 
 // THEME
 import Fonts from '../../constants/Fonts';
@@ -11,7 +15,7 @@ const SIZE = (width - 80) / 2;
 interface Props {
   name: string;
   locality: string;
-  imageURL: string;
+  imageURL?: string;
   onPress: () => void;
 }
 
@@ -19,7 +23,11 @@ const PlacesItem: FC<Props> = ({ name, locality, imageURL, onPress }) => {
   return (
     <TouchableOpacity activeOpacity={0.6} onPress={onPress}>
       <View style={styles.container}>
-        <Image source={{ uri: imageURL }} style={styles.image} />
+        {imageURL ? (
+          <Image source={{ uri: `${API_URL}${imageURL}` }} style={styles.image} />
+        ) : (
+          <Image source={PlaceholderImage} style={styles.image} />
+        )}
         <View style={styles.descContainer}>
           <Text style={styles.nameText} numberOfLines={1}>
             {name}

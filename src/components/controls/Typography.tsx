@@ -18,6 +18,7 @@ export enum TypographyType {
   Text = 'text',
   TextM = 'textM',
   TextL = 'textL',
+  SmallHeaderR = 'smallHeaderRoboto',
   BigHeaderN = 'bigHeaderNunito',
   BigHeaderR = 'bigHeaderRoboto',
 }
@@ -67,6 +68,10 @@ const styles = StyleSheet.create({
   bigHeaderNunito: {
     fontSize: 36,
     fontFamily: Fonts.NunitoSemiBold,
+  },
+  smallHeaderRoboto: {
+    fontSize: 14,
+    fontFamily: Fonts.RobotoMedium,
   },
   bigHeaderRoboto: {
     fontSize: 36,

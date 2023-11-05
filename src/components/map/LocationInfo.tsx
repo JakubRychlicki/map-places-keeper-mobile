@@ -5,43 +5,54 @@ import { useTranslation } from 'react-i18next';
 // THEME
 import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
+import Typography, { TypographyType } from '../controls/Typography';
 
 interface Props {
+  title: string;
   address: string;
   place: string;
   country: string;
 }
 
-const LocationInfo: FC<Props> = ({ address, place, country }) => {
+const LocationInfo: FC<Props> = ({ title, address, place, country }) => {
   const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('addPlace:locationInformation')}</Text>
+      <Typography type={TypographyType.TextM} style={styles.title}>
+        {title}
+      </Typography>
       <View style={[styles.content, { flexDirection: address ? 'column' : 'row' }]}>
         {address ? (
           <View style={styles.row}>
             <View style={styles.column}>
-              <Text style={styles.label}>{t('addPlace:address')}</Text>
-              <Text style={styles.value}>{address}</Text>
+              <Typography type={TypographyType.SmallHeaderR}>{t('addPlace:address')}</Typography>
+              <Typography type={TypographyType.Text} color={Colors.secondary}>
+                {address}
+              </Typography>
             </View>
             <View style={styles.column}>
-              <Text style={styles.label}>{t('addPlace:place')}</Text>
-              <Text style={styles.value}>{place}</Text>
+              <Typography type={TypographyType.SmallHeaderR}>{t('addPlace:place')}</Typography>
+              <Typography type={TypographyType.Text} color={Colors.secondary}>
+                {place}
+              </Typography>
             </View>
           </View>
         ) : (
           <View style={styles.column}>
-            <Text style={styles.label}>{t('addPlace:place')}</Text>
-            <Text style={styles.value}>{place}</Text>
+            <Typography type={TypographyType.SmallHeaderR}>{t('addPlace:place')}</Typography>
+            <Typography type={TypographyType.Text} color={Colors.secondary}>
+              {place}
+            </Typography>
           </View>
         )}
         <View>
-          <Text style={styles.label}>{t('addPlace:country')}</Text>
-          <Text style={styles.value}>{country}</Text>
+          <Typography type={TypographyType.SmallHeaderR}>{t('addPlace:country')}</Typography>
+          <Typography type={TypographyType.Text} color={Colors.secondary}>
+            {country}
+          </Typography>
         </View>
       </View>
-      <View style={styles.bottomLine}></View>
     </View>
   );
 };
@@ -54,13 +65,9 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   title: {
-    fontFamily: Fonts.RobotoMedium,
-    fontSize: 18,
-    color: Colors.primaryText,
     paddingVertical: 20,
   },
   content: {
-    paddingBottom: 30,
     gap: 10,
   },
   row: {
@@ -69,21 +76,5 @@ const styles = StyleSheet.create({
   },
   column: {
     width: '50%',
-  },
-  label: {
-    fontFamily: Fonts.RobotoMedium,
-    fontSize: 14,
-    color: Colors.primaryText,
-  },
-  value: {
-    fontFamily: Fonts.RobotoRegular,
-    fontSize: 14,
-    color: Colors.secondary,
-  },
-  bottomLine: {
-    alignSelf: 'center',
-    width: '100%',
-    height: 1,
-    backgroundColor: Colors.lightBlue,
   },
 });

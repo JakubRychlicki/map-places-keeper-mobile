@@ -8,7 +8,7 @@ import * as actions from '../../store/actions';
 // THEME
 import Colors from '../../constants/Colors';
 
-// ICONS
+// ASSETS
 import LogoutSvg from '../../assets/svg/icons/LogoutSvg';
 
 // COMPONENTS

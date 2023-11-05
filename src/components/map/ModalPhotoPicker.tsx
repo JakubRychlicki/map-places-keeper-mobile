@@ -3,7 +3,7 @@ import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import { Modal } from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
 
-// ICONS
+// ASSETS
 import CameraSvg from '../../assets/svg/icons/CameraSvg';
 import GallerySvg from '../../assets/svg/icons/GallerySvg';
 

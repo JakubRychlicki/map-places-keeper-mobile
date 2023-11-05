@@ -42,6 +42,10 @@ export default {
   profile: {
     myPlaces: 'My Places',
   },
+  placeDetails: {
+    addressHeader: 'Address Details',
+    mapHeader: 'Map',
+  },
   errors: {
     name: 'ERROR',
     emailUsed: 'Email is already taken',

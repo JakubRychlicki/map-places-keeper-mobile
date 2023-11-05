@@ -14,7 +14,7 @@ import { PlaceForm, defaultValuesPlaceForm, placeFormValidationSchema } from './
 // THEME
 import Colors from '../../../constants/Colors';
 
-// ICONS
+// ASSETS
 import PhotoSvg from '../../../assets/svg/icons/PhotoSvg';
 import PlusSvg from '../../../assets/svg/icons/PlusSvg';
 

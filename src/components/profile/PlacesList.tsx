@@ -4,7 +4,6 @@ import { useAppSelector } from '../../hooks/useAppDispatch';
 import { UserPlace } from '../../store/types/Map.model';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../../navigation/ProfileNavigator';
-import { API_URL } from '@env';
 
 // COMPONENTS
 import PlacesItem from './PlacesItem';
@@ -19,13 +18,12 @@ const PlacesList: FC<Props> = ({ navigation }) => {
   const renderItem: ListRenderItem<UserPlace> = ({ item }) => {
     const { name, locality, graphics } = item.attributes;
     const imageURL = graphics?.data.attributes.formats.medium.url || graphics?.data.attributes.url;
-    const fullImageURL = `${API_URL}${imageURL}`;
 
     return (
       <PlacesItem
         name={name}
         locality={locality}
-        imageURL={fullImageURL}
+        imageURL={imageURL}
         onPress={() => navigation.navigate('PlaceDetails', { id: item.id })}
       />
     );
