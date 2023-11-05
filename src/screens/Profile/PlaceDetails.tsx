@@ -3,6 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileNavigatorScreen } from '../../navigation/ProfileNavigator';
 import { useAppSelector } from '../../hooks/useAppDispatch';
+
+// COMPONENTS
 import Loader from '../../components/controls/Loader';
 import ScreenTopBar from '../../components/ScreenTopBar';
 

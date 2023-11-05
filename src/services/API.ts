@@ -15,7 +15,7 @@ Api.interceptors.request.use(
     const token = store?.getState().user.token;
     const config: any = {
       ...axiosConfig,
-      baseURL: API_URL,
+      baseURL: API_URL + '/api',
       headers: {
         ...axiosConfig.headers,
         Authorization: token ? `Bearer ${token}` : '',

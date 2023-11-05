@@ -24,7 +24,7 @@ export const addPlace = ({ place, file }: AddPlacePayload): AppThunk => {
 
       const { data }: AxiosResponse<{ data: UserPlace }> = await Api({
         method: 'post',
-        url: `${API_URL}${Endpoint.Places}`,
+        url: `${API_URL}/api/${Endpoint.Places}`,
         data: formData,
         headers: {
           Authorization: 'Bearer ' + state.user.token,
