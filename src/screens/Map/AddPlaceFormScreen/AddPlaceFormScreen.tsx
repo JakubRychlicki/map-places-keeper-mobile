@@ -43,7 +43,8 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
           street_address: location.address,
           country: location.country,
           category: 'General',
-          feature: createPointFeature(location.coordinates),
+          longitude: location.coordinates[0],
+          latitude: location.coordinates[1],
         },
         file: photo,
       };

@@ -10,11 +10,9 @@ import Fonts from '../constants/Fonts';
 import MapSvg from '../assets/svg/icons/MapSvg';
 import ProfileSvg from '../assets/svg/icons/ProfileSvg';
 
-// SCREENS
-import ProfileScreen from '../screens/Profile/ProfileScreen';
-
 // NAVIGATORS
 import MapNavigator from './MapNavigator';
+import ProfileNavigator from './ProfileNavigator';
 
 export type RootNavigatorParamsList = {
   Map: undefined;
@@ -52,7 +50,7 @@ const RootNavigator = () => {
       />
       <BottomTab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileNavigator}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <View style={{ width: size, height: size }}>

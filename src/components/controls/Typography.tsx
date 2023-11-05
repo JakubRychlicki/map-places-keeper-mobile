@@ -10,12 +10,14 @@ type TypographyProps = {
   children?: React.ReactNode;
   onPress?: () => void;
   opacity?: boolean;
+  color?: string;
 };
 
 export enum TypographyType {
   Title = 'title',
   Text = 'text',
   TextM = 'textM',
+  TextL = 'textL',
   BigHeaderN = 'bigHeaderNunito',
   BigHeaderR = 'bigHeaderRoboto',
 }
@@ -26,11 +28,12 @@ const Typography: React.FC<TypographyProps> = ({
   style,
   numberOfLines,
   opacity,
+  color,
   onPress,
 }) => {
   return (
     <TextComponent
-      style={[styles.mainText, opacity && styles.opacity, styles[type], style]}
+      style={[opacity && styles.opacity, { color: color || Colors.primaryText }, styles[type], style]}
       numberOfLines={numberOfLines}
       onPress={onPress}
     >
@@ -42,9 +45,6 @@ const Typography: React.FC<TypographyProps> = ({
 export default Typography;
 
 const styles = StyleSheet.create({
-  mainText: {
-    color: Colors.primaryText,
-  },
   opacity: {
     opacity: 0.5,
   },
@@ -59,6 +59,10 @@ const styles = StyleSheet.create({
   textM: {
     fontFamily: Fonts.RobotoRegular,
     fontSize: 18,
+  },
+  textL: {
+    fontFamily: Fonts.RobotoRegular,
+    fontSize: 24,
   },
   bigHeaderNunito: {
     fontSize: 36,

@@ -1,15 +1,18 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Mapbox, { Camera } from '@rnmapbox/maps';
+import { Camera, MapView } from '@rnmapbox/maps';
 import { MapNavigatorScreen } from '../../navigation/MapNavigator';
+import { useAppSelector } from '../../hooks/useAppDispatch';
 
 // COMPONENTS
 import SearchAddress from '../../components/map/SearchAddress';
 import FabGroup from '../../components/map/FabGroup';
 import ModalAddPlace from '../../components/map/ModalAddPlace';
+import MapPoints from '../../components/map/MapPoints';
 
 const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
+  const { userPlaces } = useAppSelector((state) => state.map);
   const cameraRef = useRef<Camera | null>(null);
   const [isOpenFAB, setIsOpenFAB] = useState(false);
   const [isModalAddPlaceOpen, setIsModalAddPlaceOpen] = useState(false);
@@ -22,9 +25,10 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <Mapbox.MapView scaleBarEnabled={false} style={styles.map}>
-        <Mapbox.Camera ref={cameraRef} />
-      </Mapbox.MapView>
+      <MapView scaleBarEnabled={false} style={styles.map}>
+        <Camera ref={cameraRef} defaultSettings={{ centerCoordinate: [22.5673331, 51.249687], zoomLevel: 14 }} />
+        <MapPoints data={userPlaces.data} />
+      </MapView>
 
       <SearchAddress moveTo={moveToSpecificLocation} />
       <FabGroup

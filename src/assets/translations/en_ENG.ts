@@ -39,6 +39,9 @@ export default {
       submit: 'SAVE',
     },
   },
+  profile: {
+    myPlaces: 'My Places',
+  },
   errors: {
     name: 'ERROR',
     emailUsed: 'Email is already taken',

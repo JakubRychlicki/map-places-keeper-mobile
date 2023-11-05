@@ -44,7 +44,8 @@ export interface PlaceData {
   street_address: string;
   country: string;
   category: string;
-  feature: Feature<Point>;
+  longitude: number;
+  latitude: number;
 }
 
 export interface UserPlace {
@@ -56,7 +57,8 @@ export interface UserPlace {
     street_address: string;
     country: string;
     category: string;
-    feature: Feature<Point>;
+    longitude: number;
+    latitude: number;
     graphics?: StrapiPhoto;
     user?: User;
   };
