@@ -51,6 +51,8 @@ const mapReducer = (state: MapState = initialState, action: any): MapState => {
         ...state,
         isUserPlacesLoading: false,
       };
+    case actionTypes.LOGOUT_SUCCESS:
+      return initialState;
     default:
       return state;
   }

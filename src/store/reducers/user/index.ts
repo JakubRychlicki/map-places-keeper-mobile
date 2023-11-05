@@ -53,11 +53,6 @@ const userReducer = (state: UserState = initialState, action: any): UserState =>
         ...state,
         isRegisterLoading: false,
       };
-    case actionTypes.LOGOUT_SUCCESS:
-      return {
-        ...state,
-        token: undefined,
-      };
     case actionTypes.GetUserProfileActionTypes.GET_USER_PROFILE:
       return {
         ...state,
@@ -73,6 +68,11 @@ const userReducer = (state: UserState = initialState, action: any): UserState =>
       return {
         ...state,
         isUserProfileLoading: false,
+      };
+    case actionTypes.LOGOUT_SUCCESS:
+      return {
+        ...initialState,
+        token: undefined,
       };
     default:
       return state;
