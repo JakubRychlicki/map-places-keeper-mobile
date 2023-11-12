@@ -46,6 +46,12 @@ export default {
     addressHeader: 'Address Details',
     mapHeader: 'Map',
   },
+  selectArea: {
+    createdPoints: 'Created points({{value}}/{{max}}):',
+    hint: 'To create a search area, place at least 4 points on the map.',
+    searchButton: 'Search',
+    resetButton: 'Reset',
+  },
   errors: {
     name: 'ERROR',
     emailUsed: 'Email is already taken',

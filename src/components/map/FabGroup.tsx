@@ -10,9 +10,10 @@ interface Props {
   isOpen: boolean;
   handleChange: (value: boolean) => void;
   onAddPlace: () => void;
+  onSelectArea: () => void;
 }
 
-const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace }) => {
+const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace, onSelectArea }) => {
   return (
     <FAB.Group
       open={isOpen}
@@ -38,7 +39,7 @@ const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace }) => {
           label: 'Select area',
           labelStyle: styles.actionLabel,
           style: styles.actionContainer,
-          onPress: () => console.log('Pressed star'),
+          onPress: onSelectArea,
         },
       ]}
       onStateChange={({ open }) => handleChange(open)}

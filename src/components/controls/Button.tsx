@@ -12,14 +12,16 @@ interface Props {
   onPress: () => void;
   backgroundColor?: string;
   loading?: boolean;
+  disabled?: boolean;
 }
 
-const Button: FC<Props> = ({ title, onPress, backgroundColor, loading }) => {
+const Button: FC<Props> = ({ title, onPress, backgroundColor, loading, disabled }) => {
   return (
     <TouchableOpacity
-      style={[styles.container, { backgroundColor: backgroundColor || Colors.primary }]}
+      style={[styles.container, disabled && styles.disabled, { backgroundColor: backgroundColor || Colors.primary }]}
       activeOpacity={0.6}
       onPress={onPress}
+      disabled={disabled}
     >
       {loading ? (
         <ActivityIndicator size="small" color={Colors.white} />
@@ -42,9 +44,12 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#48CAE4',
+    borderColor: Colors.border,
   },
   text: {
-    color: '#fff',
+    color: Colors.white,
+  },
+  disabled: {
+    opacity: 0.6,
   },
 });
