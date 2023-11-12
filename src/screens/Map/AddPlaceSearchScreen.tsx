@@ -7,6 +7,7 @@ import ScreenTopBar from '../../components/ScreenTopBar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchInput from '../../components/controls/SearchInput';
 import Colors from '../../constants/Colors';
+import { getForwardGeocoding } from '../../services/MapboxAPI';
 
 const AddPlaceSearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -76,11 +77,11 @@ const AddPlaceSearchScreen = () => {
   const onChangeSearch = (query: string) => {
     setSearchQuery(query);
     const formattedQuery = query.toLowerCase();
-    // if (formattedQuery.length > 2) {
-    //   getForwardGeocoding(formattedQuery);
-    // } else {
-    //   setSearchResults([]);
-    // }
+    if (formattedQuery.length > 2) {
+      getForwardGeocoding(formattedQuery);
+    } else {
+      setSearchResults([]);
+    }
   };
 
   return (
@@ -129,7 +130,6 @@ const styles = StyleSheet.create({
   },
   searchList: {
     paddingTop: 15,
-    //paddingHorizontal: 15,
   },
   searchItem: {
     paddingVertical: 10,

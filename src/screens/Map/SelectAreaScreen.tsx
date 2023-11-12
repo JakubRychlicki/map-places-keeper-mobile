@@ -6,6 +6,7 @@ import { Feature, GeoJsonProperties, Geometry, Point, Polygon } from 'geojson';
 import { Position } from '@rnmapbox/maps/lib/typescript/types/Position';
 import { useAppSelector } from '../../hooks/useAppDispatch';
 import { useTranslation } from 'react-i18next';
+import { MapNavigatorScreen } from '../../navigation/MapNavigator';
 import uuid from 'react-native-uuid';
 
 // THEME
@@ -33,7 +34,7 @@ type SelectedPoint = {
   color: string;
 };
 
-const SelectAreaScreen = () => {
+const SelectAreaScreen: MapNavigatorScreen<'SelectArea'> = ({ navigation }) => {
   const { t } = useTranslation();
   const { userPlaces } = useAppSelector((state) => state.map);
   const [features, setFeatures] = useState<SelectedPoint[]>([]);
@@ -82,7 +83,8 @@ const SelectAreaScreen = () => {
   };
 
   const searchPlaces = () => {
-    console.log('Search Places');
+    const test = features.map((f) => f.coordinates) as number[][];
+    navigation.navigate('Places', { area: test });
   };
 
   useEffect(() => {

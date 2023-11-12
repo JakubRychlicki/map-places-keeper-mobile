@@ -9,6 +9,7 @@ import AddPlaceScreen from '../screens/Map/AddPlaceScreen';
 import AddPlaceFormScreen from '../screens/Map/AddPlaceFormScreen/AddPlaceFormScreen';
 import AddPlaceSearchScreen from '../screens/Map/AddPlaceSearchScreen';
 import SelectAreaScreen from '../screens/Map/SelectAreaScreen';
+import PlacesScreen from '../screens/Map/PlacesScreen';
 
 export type MapNavigatorScreen<T extends keyof MapStackParamList> = React.FC<{
   navigation: StackNavigationProp<MapStackParamList, T>;
@@ -21,6 +22,7 @@ export type MapStackParamList = {
   AddPlaceSearch: undefined;
   AddPlaceForm: { location: LocationDetails };
   SelectArea: undefined;
+  Places: { area: number[][] };
 };
 
 const MapStack = createStackNavigator<MapStackParamList>();
@@ -38,6 +40,7 @@ const MapNavigator = () => {
       <MapStack.Screen name="AddPlaceSearch" component={AddPlaceSearchScreen} />
       <MapStack.Screen name="AddPlaceForm" component={AddPlaceFormScreen} />
       <MapStack.Screen name="SelectArea" component={SelectAreaScreen} />
+      <MapStack.Screen name="Places" component={PlacesScreen} />
     </MapStack.Navigator>
   );
 };
