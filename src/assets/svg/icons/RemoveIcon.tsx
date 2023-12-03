@@ -4,7 +4,7 @@ import Svg, { SvgProps, Path } from 'react-native-svg';
 const RemoveSvg = (props: SvgProps) => (
   <Svg height="100%" width="100%" viewBox="0 0 32 32" fill="none" {...props}>
     <Path
-      stroke={props.stroke || '#000'}
+      stroke={props.stroke || '#F7F8F8'}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}

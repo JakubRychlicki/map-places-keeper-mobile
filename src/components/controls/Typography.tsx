@@ -19,6 +19,7 @@ export enum TypographyType {
   TextM = 'textM',
   TextL = 'textL',
   SmallHeaderR = 'smallHeaderRoboto',
+  MediumHeaderR = 'mediumHeaderRoboto',
   BigHeaderN = 'bigHeaderNunito',
   BigHeaderR = 'bigHeaderRoboto',
 }
@@ -71,6 +72,10 @@ const styles = StyleSheet.create({
   },
   smallHeaderRoboto: {
     fontSize: 14,
+    fontFamily: Fonts.RobotoMedium,
+  },
+  mediumHeaderRoboto: {
+    fontSize: 18,
     fontFamily: Fonts.RobotoMedium,
   },
   bigHeaderRoboto: {

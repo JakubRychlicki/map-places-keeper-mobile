@@ -1,22 +1,24 @@
 import React from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle, Text } from 'react-native';
 import Colors from '../constants/Colors';
+import Typography, { TypographyType } from './controls/Typography';
 
 type TopbarProps = {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   title?: string;
-  description?: string;
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-const Topbar: React.FC<TopbarProps> = ({ leftIcon, rightIcon, title, description, containerStyle }) => {
+const Topbar: React.FC<TopbarProps> = ({ leftIcon, rightIcon, title, containerStyle }) => {
   return (
     <View style={[styles.container, containerStyle]}>
       <View style={styles.sideContainer}>{leftIcon}</View>
       {!!title && (
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{title}</Text>
+          <Typography type={TypographyType.TextM} numberOfLines={1} style={styles.text}>
+            {title}
+          </Typography>
         </View>
       )}
       <View style={[styles.sideContainer, styles.rightSide]}>{rightIcon}</View>
@@ -36,18 +38,14 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.primary,
   },
-  description: {
-    marginTop: 3,
-    textAlign: 'center',
-  },
   rightSide: {
     alignItems: 'flex-end',
   },
   sideContainer: {
-    width: 70,
+    width: 60,
   },
   text: {
-    textAlign: 'center',
+    color: Colors.white,
   },
   textContainer: {
     flex: 1,

@@ -5,12 +5,14 @@ import { List, emptyList } from '../../types/Utils.model';
 export type MapState = {
   userPlaces: List<UserPlace>;
   isAddPlaceLoading: boolean;
+  isDeletePlaceLoading: boolean;
   isUserPlacesLoading: boolean;
 };
 
 const initialState: MapState = {
   userPlaces: emptyList,
   isAddPlaceLoading: false,
+  isDeletePlaceLoading: false,
   isUserPlacesLoading: false,
 };
 
@@ -34,6 +36,25 @@ const mapReducer = (state: MapState = initialState, action: any): MapState => {
       return {
         ...state,
         isAddPlaceLoading: false,
+      };
+    case actionTypes.DeleteUserPlaceTypes.DELETE_USER_PLACE:
+      return {
+        ...state,
+        isDeletePlaceLoading: true,
+      };
+    case actionTypes.DeleteUserPlaceTypes.DELETE_USER_PLACE_SUCCESS:
+      return {
+        ...state,
+        userPlaces: {
+          ...state.userPlaces,
+          data: state.userPlaces.data.filter((place) => place.id !== action.placeId),
+        },
+        isDeletePlaceLoading: false,
+      };
+    case actionTypes.DeleteUserPlaceTypes.DELETE_USER_PLACE_FAILURE:
+      return {
+        ...state,
+        isDeletePlaceLoading: false,
       };
     case actionTypes.GetUserPlacesActionTypes.GET_USER_PLACES:
       return {

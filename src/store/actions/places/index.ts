@@ -1,7 +1,7 @@
 import { Api } from '../../../services/API';
 import { AppThunk } from '../../configureStore';
 import { Endpoint } from '../../../services/Enpoints';
-import { AddUserPlaceTypes, GetUserPlacesActionTypes } from '../actionTypes';
+import { AddUserPlaceTypes, DeleteUserPlaceTypes, GetUserPlacesActionTypes } from '../actionTypes';
 import { AddPlacePayload, UserPlace } from '../../types/Map.model';
 import { API_URL } from '@env';
 import { AxiosResponse } from 'axios';
@@ -60,6 +60,19 @@ export const getUserPlaces = (): AppThunk => {
       dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_SUCCESS, places: places });
     } catch (e: any) {
       dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_FAILURE });
+    }
+  };
+};
+
+export const deletePlace = (placeId: number): AppThunk => {
+  return async (dispatch) => {
+    dispatch({ type: DeleteUserPlaceTypes.DELETE_USER_PLACE });
+    try {
+      const response = await Api.delete(`${Endpoint.Places}/${placeId}`);
+
+      dispatch({ type: DeleteUserPlaceTypes.DELETE_USER_PLACE_SUCCESS, placeId: placeId });
+    } catch (e: any) {
+      dispatch({ type: DeleteUserPlaceTypes.DELETE_USER_PLACE_FAILURE });
     }
   };
 };

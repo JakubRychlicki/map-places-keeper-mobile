@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import { createStackNavigator, StackNavigationProp, TransitionPresets } from '@react-navigation/stack';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
@@ -58,6 +58,7 @@ const MainNavigator = () => {
         <MainStack.Navigator
           screenOptions={{
             headerShown: false,
+            ...TransitionPresets.SlideFromRightIOS,
           }}
         >
           {!token ? (

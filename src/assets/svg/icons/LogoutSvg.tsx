@@ -2,19 +2,19 @@ import * as React from 'react';
 import Svg, { SvgProps, Path } from 'react-native-svg';
 
 const LogoutSvg = (props: SvgProps) => (
-  <Svg width={36} height={27} fill="none" {...props}>
+  <Svg height="100%" width="100%" viewBox="0 0 32 32" fill="none" {...props}>
     <Path
-      stroke="#0077B6"
+      stroke="#F7F8F8"
+      strokeLinecap="round"
+      strokeWidth={2}
+      d="M10 9.75c.017-2.936.15-4.526 1.214-5.564C12.431 3 14.39 3 18.306 3h1.385c3.917 0 5.876 0 7.092 1.186C28 5.373 28 7.282 28 11.101v10.8c0 3.82 0 5.729-1.217 6.915-1.064 1.037-2.695 1.168-5.707 1.184M10 23.252c.017 2.936.15 4.527 1.214 5.564.888.866 2.171 1.1 4.322 1.163"
+    />
+    <Path
+      stroke="#F7F8F8"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M17.625 14.375H3m0 0L6.938 11M3 14.375l3.938 3.375"
-    />
-    <Path
-      stroke="#0077B6"
-      strokeLinecap="round"
-      strokeWidth={2}
-      d="M12 8.625c.014-2.447.122-3.772.987-4.636C13.975 3 15.567 3 18.748 3h1.125c3.182 0 4.773 0 5.761.989.989.988.989 2.579.989 5.761v9c0 3.182 0 4.773-.989 5.762-.864.864-2.19.973-4.636.986M12 19.875c.014 2.447.122 3.772.987 4.637.721.72 1.763.916 3.51.968"
+      d="M17.625 16.375H3m0 0L6.938 13M3 16.375l3.938 3.375"
     />
   </Svg>
 );

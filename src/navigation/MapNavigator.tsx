@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import { createStackNavigator, StackNavigationProp, TransitionPresets } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { LocationDetails } from '../store/types/Map.model';
 
@@ -33,6 +33,7 @@ const MapNavigator = () => {
       initialRouteName="MainMap"
       screenOptions={{
         headerShown: false,
+        ...TransitionPresets.SlideFromRightIOS,
       }}
     >
       <MapStack.Screen name="MainMap" component={MainMapScreen} />

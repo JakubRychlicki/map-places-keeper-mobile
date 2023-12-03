@@ -1,7 +1,6 @@
 import React from 'react';
 import { debounce } from 'ts-debounce';
-import { TouchableOpacity, StyleSheet, ViewStyle, StyleProp } from 'react-native';
-import Colors from '../../constants/Colors';
+import { View, TouchableOpacity, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 
 type RoundButtonProps = {
   icon?: React.ReactNode;
@@ -31,7 +30,7 @@ const RoundButton: React.FC<RoundButtonProps> = ({
       disabled={disabled}
       onPress={() => press?.()}
     >
-      {icon}
+      <View style={styles.icon}>{icon}</View>
     </TouchableOpacity>
   );
 };
@@ -41,13 +40,16 @@ export default RoundButton;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: Colors.lightBlue,
     borderRadius: 15,
     justifyContent: 'center',
   },
   medium: {
     height: 45,
     width: 45,
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
   opacity: {
     opacity: 0.2,

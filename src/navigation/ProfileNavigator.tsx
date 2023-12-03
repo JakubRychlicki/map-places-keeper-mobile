@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import { createStackNavigator, StackNavigationProp, TransitionPresets } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 // SCREENS
@@ -24,6 +24,7 @@ const ProfileNavigator = () => {
       initialRouteName="MainProfile"
       screenOptions={{
         headerShown: false,
+        ...TransitionPresets.SlideFromRightIOS,
       }}
     >
       <ProfileStack.Screen name="MainProfile" component={ProfileScreen} />

@@ -7,26 +7,18 @@ import BackSvg from '../assets/svg/icons/BackSvg';
 
 type ScreenTopBarProps = {
   title?: string;
-  description?: string;
   containerStyle?: StyleProp<ViewStyle>;
   rightIcon?: React.ReactNode;
   hideBackButton?: boolean;
 };
 
-const ScreenTopBar: React.FC<ScreenTopBarProps> = ({
-  title,
-  description,
-  rightIcon,
-  containerStyle,
-  hideBackButton,
-}) => {
+const ScreenTopBar: React.FC<ScreenTopBarProps> = ({ title, rightIcon, containerStyle, hideBackButton }) => {
   const navigation = useAppNavigation();
 
   return (
     <Topbar
       leftIcon={!hideBackButton ? <RoundButton icon={<BackSvg />} onPress={navigation.goBack} /> : null}
       title={title}
-      description={description}
       rightIcon={rightIcon}
       containerStyle={containerStyle}
     />
