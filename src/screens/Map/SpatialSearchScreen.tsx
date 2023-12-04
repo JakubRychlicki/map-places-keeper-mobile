@@ -34,7 +34,7 @@ type SelectedPoint = {
   color: string;
 };
 
-const SelectAreaScreen: MapNavigatorScreen<'SelectArea'> = ({ navigation }) => {
+const SpatialSearchScreen: MapNavigatorScreen<'SpatialSearch'> = ({ navigation }) => {
   const { t } = useTranslation();
   const { userPlaces } = useAppSelector((state) => state.map);
   const [features, setFeatures] = useState<SelectedPoint[]>([]);
@@ -110,10 +110,11 @@ const SelectAreaScreen: MapNavigatorScreen<'SelectArea'> = ({ navigation }) => {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar
+        title={t('screens:spatialSearch:title')}
         rightIcon={
           <TouchableOpacity onPress={() => setFeatures([])}>
             <Typography type={TypographyType.SmallHeaderR} color={Colors.white}>
-              {t('selectArea:resetButton')}
+              {t('screens:spatialSearch:reset')}
             </Typography>
           </TouchableOpacity>
         }
@@ -162,7 +163,7 @@ const SelectAreaScreen: MapNavigatorScreen<'SelectArea'> = ({ navigation }) => {
         <PointsControl features={features} removePoint={removePoint} />
         <View style={styles.panelButtons}>
           <View style={styles.searchButton}>
-            <Button title={t('selectArea:searchButton')} onPress={searchPlaces} disabled={features.length < 4} />
+            <Button title={t('screens:spatialSearch:search')} onPress={searchPlaces} disabled={features.length < 4} />
           </View>
           <IconButton
             onPress={() => setDraggableMode(!draggableMode)}
@@ -184,7 +185,7 @@ const SelectAreaScreen: MapNavigatorScreen<'SelectArea'> = ({ navigation }) => {
   );
 };
 
-export default SelectAreaScreen;
+export default SpatialSearchScreen;
 
 const styles = StyleSheet.create({
   container: {

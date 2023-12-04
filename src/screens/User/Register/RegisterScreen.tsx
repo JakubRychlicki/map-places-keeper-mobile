@@ -43,7 +43,7 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
         enableOnAndroid
       >
         <Typography type={TypographyType.BigHeaderR} style={styles.title}>
-          {t('register:createAccount')}
+          {t('screens:register:createAccount')}
         </Typography>
 
         <View style={styles.formInputs}>
@@ -51,7 +51,7 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
             id="username"
             value={values.username}
             error={errors.username}
-            label={t('register:username')}
+            label={t('screens:register:username')}
             onChange={setFieldValue}
             setFieldError={setFieldError}
             maxLength={255}
@@ -62,7 +62,7 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
             id="email"
             value={values.email}
             error={errors.email}
-            label={t('register:email')}
+            label={t('screens:register:email')}
             onChange={setFieldValue}
             setFieldError={setFieldError}
             maxLength={255}
@@ -74,7 +74,7 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
             id="password"
             value={values.password}
             error={errors.password}
-            label={t('register:password')}
+            label={t('screens:register:password')}
             onChange={setFieldValue}
             setFieldError={setFieldError}
             maxLength={255}
@@ -86,7 +86,7 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
             id="confirmPassword"
             value={values.confirmPassword}
             error={errors.confirmPassword}
-            label={t('register:confirmPassword')}
+            label={t('screens:register:confirmPassword')}
             onChange={setFieldValue}
             setFieldError={setFieldError}
             maxLength={255}
@@ -97,18 +97,16 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
 
         <View style={styles.bottomContainer}>
           <View style={styles.haveAccountContainer}>
-            <Typography type={TypographyType.TextM} style={styles.haveAccountText}>
-              {t('register:haveAccount')}
-            </Typography>
+            <Typography type={TypographyType.TextM}>{t('screens:register:haveAccount')}</Typography>
             <Typography
               type={TypographyType.TextM}
               style={styles.haveAccountButton}
               onPress={() => navigation.navigate('LoginScreen')}
             >
-              {t('register:login')}
+              {t('screens:register:login')}
             </Typography>
           </View>
-          <Button title={t('register:submit')} onPress={handleSubmit} loading={isRegisterLoading} />
+          <Button title={t('screens:register:submit')} onPress={handleSubmit} loading={isRegisterLoading} />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
@@ -120,14 +118,12 @@ export default RegisterScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
   },
   contentContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
   title: {
-    color: Colors.black,
     marginBottom: 30,
     marginTop: 40,
   },
@@ -147,21 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 5,
   },
-  haveAccountText: {
-    color: Colors.black,
-  },
   haveAccountButton: {
-    color: Colors.secondary,
-  },
-  signUpButton: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 15,
-    borderColor: Colors.border,
-    borderWidth: 2,
-    borderRadius: 20,
-    backgroundColor: Colors.primary,
+    color: Colors.primary,
   },
 });

@@ -89,9 +89,11 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <ScreenTopBar />
+      <ScreenTopBar
+        title={type === 'device_location' ? t('screens:addPlace:type:device') : t('screens:addPlace:type:map')}
+      />
       <LocationInfo
-        title={t('addPlace:locationInformation')}
+        title={t('screens:addPlace:locationInformation')}
         address={location.address}
         place={location.place}
         country={location.country}
@@ -122,7 +124,7 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
             disabled={!location.coordinates.length}
             onPress={() => navigation.navigate('AddPlaceForm', { location: location })}
           >
-            <Text style={styles.nextButtonText}>{t('buttons:next')}</Text>
+            <Text style={styles.nextButtonText}>{t('screens:addPlace:next')}</Text>
             <NextSvg color={Colors.white} />
           </TouchableOpacity>
         </View>

@@ -43,7 +43,7 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
         enableOnAndroid
       >
         <Typography type={TypographyType.BigHeaderR} style={styles.title}>
-          {t('login:letsSignIn')}
+          {t('screens:login:letsSignIn')}
         </Typography>
 
         <View style={styles.formInputs}>
@@ -51,7 +51,7 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
             id="email"
             value={values.email}
             error={errors.email}
-            label={t('login:email')}
+            label={t('screens:login:email')}
             onChange={setFieldValue}
             setFieldError={setFieldError}
             maxLength={255}
@@ -63,7 +63,7 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
             id="password"
             value={values.password}
             error={errors.password}
-            label={t('login:password')}
+            label={t('screens:login:password')}
             onChange={setFieldValue}
             setFieldError={setFieldError}
             maxLength={255}
@@ -74,18 +74,16 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
 
         <View style={styles.bottomContainer}>
           <View style={styles.haveAccountContainer}>
-            <Typography type={TypographyType.TextM} style={styles.haveAccountText}>
-              {t('login:dontHaveAccount')}
-            </Typography>
+            <Typography type={TypographyType.TextM}>{t('screens:login:dontHaveAccount')}</Typography>
             <Typography
               type={TypographyType.TextM}
               style={styles.haveAccountButton}
               onPress={() => navigation.navigate('RegisterScreen')}
             >
-              {t('login:register')}
+              {t('screens:login:register')}
             </Typography>
           </View>
-          <Button title={t('login:submit')} onPress={handleSubmit} loading={isLoginLoading} />
+          <Button title={t('screens:login:submit')} onPress={handleSubmit} loading={isLoginLoading} />
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
@@ -97,14 +95,12 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
   },
   contentContainer: {
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
   title: {
-    color: Colors.black,
     marginBottom: 30,
     marginTop: 40,
   },
@@ -123,20 +119,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 5,
   },
-  haveAccountText: {
-    color: Colors.black,
-  },
   haveAccountButton: {
-    color: Colors.secondary,
-  },
-  signInButton: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 15,
-    borderColor: Colors.border,
-    borderWidth: 1,
-    borderRadius: 20,
+    color: Colors.primary,
   },
 });

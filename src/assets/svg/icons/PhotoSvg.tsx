@@ -4,7 +4,7 @@ import Svg, { SvgProps, Path } from 'react-native-svg';
 const PhotoSvg = (props: SvgProps) => (
   <Svg height="100%" width="100%" viewBox="0 0 102 102" fill="none" {...props}>
     <Path
-      stroke="#48CAE4"
+      stroke="#0077B6"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}

@@ -3,6 +3,10 @@ import { FC } from 'react';
 import { Modal } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MapStackParamList } from '../../navigation/MapNavigator';
+import { useTranslation } from 'react-i18next';
+
+// THEME
+import Colors from '../../constants/Colors';
 
 // CONPONENTS
 import Typography from '../controls/Typography';
@@ -17,32 +21,34 @@ interface Props {
 }
 
 const ModalAddPlace: FC<Props> = ({ visible, hideModal, navigation }) => {
+  const { t } = useTranslation();
+
   return (
     <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
-      <Typography style={styles.title}>Choose how you want to add{'\n'} a place on the map?</Typography>
+      <Typography style={styles.title}>{t('modals:addPlace:desc')}</Typography>
       <View style={styles.options}>
         <Button
-          title="Device location"
+          title={t('modals:addPlace:options:device')}
           onPress={() => {
             navigation.navigate('AddPlace', { type: 'device_location' });
             hideModal();
           }}
         />
         <Button
-          title="Search for a place"
+          title={t('modals:addPlace:options:search')}
           onPress={() => {
             navigation.navigate('AddPlaceSearch');
             hideModal();
           }}
-          backgroundColor="#0096C7"
+          backgroundColor={Colors.secondary}
         />
         <Button
-          title="Click on the map"
+          title={t('modals:addPlace:options:map')}
           onPress={() => {
             navigation.navigate('AddPlace', { type: 'press_on_the_map' });
             hideModal();
           }}
-          backgroundColor="#00B4D8"
+          backgroundColor={Colors.tertiary}
         />
       </View>
     </Modal>
@@ -58,9 +64,10 @@ const styles = StyleSheet.create({
   },
   content: {
     width: widthScreen * 0.8,
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 30,
+    backgroundColor: Colors.white,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+    borderRadius: 20,
   },
   title: {
     textAlign: 'center',

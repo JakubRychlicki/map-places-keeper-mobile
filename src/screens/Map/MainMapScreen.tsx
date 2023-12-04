@@ -35,7 +35,7 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
         isOpen={isOpenFAB}
         handleChange={(value) => setIsOpenFAB(value)}
         onAddPlace={() => setIsModalAddPlaceOpen(true)}
-        onSelectArea={() => navigation.navigate('SelectArea')}
+        onSelectArea={() => navigation.navigate('SpatialSearch')}
       />
       <ModalAddPlace
         visible={isModalAddPlaceOpen}

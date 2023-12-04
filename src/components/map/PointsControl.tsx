@@ -22,10 +22,10 @@ const PointsControl: FC<Props> = ({ features, removePoint }) => {
   return (
     <View style={styles.container}>
       <Typography type={TypographyType.SmallHeaderR}>
-        {t('selectArea:createdPoints', { value: features.length, max: 6 })}
+        {t('screens:spatialSearch:createdPoints', { value: features.length, max: 6 })}
       </Typography>
       <View style={styles.pointsList}>
-        {features.length === 0 && <Typography type={TypographyType.Text}>{t('selectArea:hint')}</Typography>}
+        {features.length === 0 && <Typography type={TypographyType.Text}>{t('screens:spatialSearch:hint')}</Typography>}
         {features.map((f, i) => (
           <TouchableOpacity
             key={f.id}

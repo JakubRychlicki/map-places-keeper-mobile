@@ -2,6 +2,9 @@ import React from 'react';
 import { createStackNavigator, StackNavigationProp, TransitionPresets } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
+// THEME
+import Colors from '../constants/Colors';
+
 // SCREENS
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import PlaceDetails from '../screens/Profile/PlaceDetails';
@@ -25,6 +28,7 @@ const ProfileNavigator = () => {
       screenOptions={{
         headerShown: false,
         ...TransitionPresets.SlideFromRightIOS,
+        cardStyle: { backgroundColor: Colors.background },
       }}
     >
       <ProfileStack.Screen name="MainProfile" component={ProfileScreen} />

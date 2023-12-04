@@ -6,6 +6,9 @@ import { MapNavigatorScreen } from '../../navigation/MapNavigator';
 import { getIsPointInsidePolygon } from '../../utils/map';
 import { API_URL } from '@env';
 
+// THEME
+import Colors from '../../constants/Colors';
+
 // ASSETS
 import PlaceholderImage from '../../assets/images/placeholder.jpg';
 

@@ -60,7 +60,7 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <ScreenTopBar />
+      <ScreenTopBar title={t('screens:addPlace:form:title')} />
 
       <KeyboardAwareScrollView
         contentContainerStyle={styles.contentContainer}
@@ -73,7 +73,7 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
             id="name"
             value={values.name}
             error={errors.name}
-            label={t('addPlace:form:name')}
+            label={t('screens:addPlace:form:name')}
             onChange={setFieldValue}
             setFieldError={setFieldError}
             maxLength={255}
@@ -83,7 +83,7 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
             id="desc"
             value={values.desc}
             error={errors.desc}
-            label={t('addPlace:form:description')}
+            label={t('screens:addPlace:form:description')}
             onChange={setFieldValue}
             setFieldError={setFieldError}
             maxLength={255}
@@ -109,13 +109,13 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
             {photo ? <Image source={{ uri: photo?.uri }} style={styles.addPhotoButtonPhoto} /> : <PhotoSvg />}
             {!photo && (
               <View style={[styles.addPhotoButtonIcon, styles.addPhotoButtonIconPlus]}>
-                <PlusSvg stroke={Colors.border} />
+                <PlusSvg stroke={Colors.primary} />
               </View>
             )}
           </TouchableOpacity>
         </View>
 
-        <Button title={t('addPlace:form:submit')} onPress={handleSubmit} loading={isAddPlaceLoading} />
+        <Button title={t('screens:addPlace:form:submit')} onPress={handleSubmit} loading={isAddPlaceLoading} />
       </KeyboardAwareScrollView>
       <ModalPhotoPicker
         visible={isModalPhotoPickerOpen}
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     borderWidth: 2,
-    borderColor: Colors.border,
+    borderColor: Colors.primary,
     backgroundColor: Colors.white,
     overflow: 'hidden',
   },
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   addPhotoButtonIconPlus: {
     backgroundColor: Colors.white,
-    borderColor: Colors.border,
+    borderColor: Colors.primary,
   },
   addPhotoButtonIconRemove: {
     backgroundColor: Colors.red,

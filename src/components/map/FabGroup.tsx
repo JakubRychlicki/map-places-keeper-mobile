@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { FAB } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 // THEME
 import Colors from '../../constants/Colors';
@@ -14,6 +15,8 @@ interface Props {
 }
 
 const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace, onSelectArea }) => {
+  const { t } = useTranslation();
+
   return (
     <FAB.Group
       open={isOpen}
@@ -28,7 +31,7 @@ const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace, onSelectArea })
         {
           icon: 'plus',
           color: Colors.white,
-          label: 'Add place',
+          label: t('screens:mainMap:fab:addPlace'),
           labelStyle: styles.actionLabel,
           style: styles.actionContainer,
           onPress: onAddPlace,
@@ -36,7 +39,7 @@ const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace, onSelectArea })
         {
           icon: 'select-marker',
           color: Colors.white,
-          label: 'Select area',
+          label: t('screens:mainMap:fab:spatialSearch'),
           labelStyle: styles.actionLabel,
           style: styles.actionContainer,
           onPress: onSelectArea,

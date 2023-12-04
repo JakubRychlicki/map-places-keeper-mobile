@@ -1,56 +1,96 @@
 export default {
-  welcomeScreen: {
-    title: 'Keep your\n favorite places',
-    desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.",
-  },
-  register: {
-    createAccount: 'Create an account.',
-    username: 'Username',
-    email: 'Email',
-    password: 'Password',
-    confirmPassword: 'Confirm password',
-    haveAccount: 'Already have an account?',
-    login: 'Login',
-    submit: 'Sign Up',
-  },
-  login: {
-    letsSignIn: 'Let’s sign you in.',
-    email: 'Email',
-    password: 'Password',
-    forgotPassword: 'Forgot password?',
-    dontHaveAccount: 'Don’t have an account?',
-    register: 'Register',
-    submit: 'Sign In',
+  screens: {
+    welcome: {
+      title: 'Keep your\n favorite places',
+      desc: 'Save all the important information about your favourite places in one place. The app allows you to add details such as name, address, description, categories and photo.',
+      register: 'Sign Up',
+      login: 'Sign In',
+    },
+    login: {
+      letsSignIn: 'Let’s sign you in.',
+      email: 'Email',
+      password: 'Password',
+      forgotPassword: 'Forgot password?',
+      dontHaveAccount: 'Don’t have an account?',
+      register: 'Register',
+      submit: 'Sign In',
+    },
+    register: {
+      createAccount: 'Create an account.',
+      username: 'Username',
+      email: 'Email',
+      password: 'Password',
+      confirmPassword: 'Confirm password',
+      haveAccount: 'Already have an account?',
+      login: 'Login',
+      submit: 'Sign Up',
+    },
+    mainMap: {
+      fab: {
+        addPlace: 'Add place',
+        spatialSearch: 'Spatial search',
+      },
+    },
+    addPlace: {
+      type: {
+        device: 'Device location',
+        map: 'Click on the map',
+      },
+      next: 'NEXT',
+      locationInformation: 'Location Information',
+      country: 'Country',
+      address: 'Address',
+      place: 'Place',
+      form: {
+        title: 'Place Form',
+        name: 'Name of place',
+        description: 'Description (optional)',
+        submit: 'SAVE',
+      },
+    },
+    spatialSearch: {
+      title: 'Spatial search',
+      createdPoints: 'Created points({{value}}/{{max}}):',
+      hint: 'To create a search area, place at least 4 points on the map.',
+      reset: 'Reset',
+      search: 'Search',
+    },
+    profile: {
+      myPlaces: 'My Places',
+    },
+    placeDetails: {
+      addressHeader: 'Address Details',
+      mapHeader: 'Map',
+    },
   },
   buttons: {
-    register: 'Sign Up',
-    login: 'Sign In',
     tryAgain: 'Try again',
     next: 'NEXT',
   },
-  addPlace: {
-    locationInformation: 'Location Information',
-    country: 'Country',
-    address: 'Address',
-    place: 'Place',
-    form: {
-      name: 'Name of place',
-      description: 'Description',
-      submit: 'SAVE',
+  modals: {
+    photoPicker: {
+      desc: 'Add photo with',
+      options: {
+        gallery: 'Gallery',
+        camera: 'Camera',
+      },
     },
-  },
-  profile: {
-    myPlaces: 'My Places',
-  },
-  placeDetails: {
-    addressHeader: 'Address Details',
-    mapHeader: 'Map',
-  },
-  selectArea: {
-    createdPoints: 'Created points({{value}}/{{max}}):',
-    hint: 'To create a search area, place at least 4 points on the map.',
-    searchButton: 'Search',
-    resetButton: 'Reset',
+    addPlace: {
+      desc: 'Choose how you want to add\n a place on the map?',
+      options: {
+        device: 'Device location',
+        search: 'Search for a place',
+        map: 'Click on the map',
+      },
+    },
+    deletePlace: {
+      title: 'Delete Place',
+      desc: 'Are you sure want to delete this place?',
+      options: {
+        cancel: 'Cancel',
+        delete: 'Delete',
+      },
+    },
   },
   errors: {
     name: 'ERROR',

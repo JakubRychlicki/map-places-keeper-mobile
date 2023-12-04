@@ -34,7 +34,7 @@ const ProfileScreen: ProfileNavigatorScreen<'MainProfile'> = ({ navigation }) =>
       <ProfileInfo username={user?.username || ''} numberOfUserPlaces={userPlaces.data.length} />
       <View style={styles.listHeader}>
         <Typography type={TypographyType.TextL} color={Colors.primary}>
-          {t('profile:myPlaces')}
+          {t('screens:profile:myPlaces')}
         </Typography>
       </View>
       <PlacesList navigation={navigation} />
@@ -47,7 +47,6 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
   },
   listHeader: {
     flexDirection: 'row',

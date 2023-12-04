@@ -10,7 +10,13 @@ import {
   ViewStyle,
   Text,
 } from 'react-native';
+
+// THEME
+import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
+
+// COMPONENTS
+import Typography from './Typography';
 
 export type InputProps = {
   value?: string;
@@ -61,9 +67,9 @@ const Input: React.FC<InputProps> = ({
   return (
     <View style={containerStyle}>
       {!!label && (
-        <Text style={styles.label}>
+        <Typography style={styles.label}>
           {label} {required && <Text style={styles.asterisk}>*</Text>}
-        </Text>
+        </Typography>
       )}
 
       <View style={[styles.inputContainer, multiline && styles.mainMultiline]}>
@@ -110,12 +116,13 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'flex-start',
-    color: Colors.black,
+    color: Colors.primaryText,
+    fontFamily: Fonts.RobotoRegular,
     flex: 1,
     fontSize: 16,
-    height: 50,
+    height: 40,
     padding: 0,
-    paddingHorizontal: 10,
+    paddingRight: 10,
   },
   errorText: {
     color: Colors.red,
@@ -124,19 +131,16 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'row',
-    height: 50,
+    height: 40,
   },
   label: {
     marginBottom: 6,
-    marginTop: 10,
-    color: Colors.primaryText,
+    marginTop: 15,
   },
   mainContainer: {
-    backgroundColor: 'white',
     flex: 1,
-    borderColor: Colors.border,
-    borderWidth: 2,
-    borderRadius: 10,
+    borderBottomColor: Colors.primary,
+    borderBottomWidth: 2,
   },
   mainMultiline: {
     height: 100,

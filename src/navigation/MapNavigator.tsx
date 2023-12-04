@@ -3,12 +3,15 @@ import { createStackNavigator, StackNavigationProp, TransitionPresets } from '@r
 import { RouteProp } from '@react-navigation/native';
 import { LocationDetails } from '../store/types/Map.model';
 
+// THEME
+import Colors from '../constants/Colors';
+
 // SCREENS
 import MainMapScreen from '../screens/Map/MainMapScreen';
 import AddPlaceScreen from '../screens/Map/AddPlaceScreen';
 import AddPlaceFormScreen from '../screens/Map/AddPlaceFormScreen/AddPlaceFormScreen';
 import AddPlaceSearchScreen from '../screens/Map/AddPlaceSearchScreen';
-import SelectAreaScreen from '../screens/Map/SelectAreaScreen';
+import SpatialSearchScreen from '../screens/Map/SpatialSearchScreen';
 import PlacesScreen from '../screens/Map/PlacesScreen';
 
 export type MapNavigatorScreen<T extends keyof MapStackParamList> = React.FC<{
@@ -21,7 +24,7 @@ export type MapStackParamList = {
   AddPlace: { type: string };
   AddPlaceSearch: undefined;
   AddPlaceForm: { location: LocationDetails };
-  SelectArea: undefined;
+  SpatialSearch: undefined;
   Places: { area: number[][] };
 };
 
@@ -34,13 +37,14 @@ const MapNavigator = () => {
       screenOptions={{
         headerShown: false,
         ...TransitionPresets.SlideFromRightIOS,
+        cardStyle: { backgroundColor: Colors.background },
       }}
     >
       <MapStack.Screen name="MainMap" component={MainMapScreen} />
       <MapStack.Screen name="AddPlace" component={AddPlaceScreen} />
       <MapStack.Screen name="AddPlaceSearch" component={AddPlaceSearchScreen} />
       <MapStack.Screen name="AddPlaceForm" component={AddPlaceFormScreen} />
-      <MapStack.Screen name="SelectArea" component={SelectAreaScreen} />
+      <MapStack.Screen name="SpatialSearch" component={SpatialSearchScreen} />
       <MapStack.Screen name="Places" component={PlacesScreen} />
     </MapStack.Navigator>
   );

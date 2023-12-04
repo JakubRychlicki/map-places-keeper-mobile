@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { Modal } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 // THEME
 import Colors from '../../constants/Colors';
@@ -19,22 +20,24 @@ interface Props {
 }
 
 const PlaceDeleteModal: FC<Props> = ({ visible, isLoading, hideModal, deletePlace }) => {
+  const { t } = useTranslation();
+
   return (
     <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
       <Typography style={styles.title} type={TypographyType.MediumHeaderR}>
-        Delete Place
+        {t('modals:deletePlace:title')}
       </Typography>
-      <Typography style={styles.desc}>Are you sure want to delete this place?</Typography>
+      <Typography style={styles.desc}>{t('modals:deletePlace:desc')}</Typography>
       <View style={styles.buttons}>
         {isLoading ? (
           <Loader />
         ) : (
           <>
             <TouchableOpacity onPress={hideModal}>
-              <Typography>Cancel</Typography>
+              <Typography>{t('modals:deletePlace:options:cancel')}</Typography>
             </TouchableOpacity>
             <TouchableOpacity onPress={deletePlace}>
-              <Typography color={Colors.red}>Delete</Typography>
+              <Typography color={Colors.red}>{t('modals:deletePlace:options:delete')}</Typography>
             </TouchableOpacity>
           </>
         )}

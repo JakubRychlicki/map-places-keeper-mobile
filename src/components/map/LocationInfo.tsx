@@ -26,13 +26,13 @@ const LocationInfo: FC<Props> = ({ title, address, place, country }) => {
         {address ? (
           <View style={styles.row}>
             <View style={styles.column}>
-              <Typography type={TypographyType.SmallHeaderR}>{t('addPlace:address')}</Typography>
+              <Typography type={TypographyType.SmallHeaderR}>{t('screens:addPlace:address')}</Typography>
               <Typography type={TypographyType.Text} color={Colors.secondary}>
                 {address}
               </Typography>
             </View>
             <View style={styles.column}>
-              <Typography type={TypographyType.SmallHeaderR}>{t('addPlace:place')}</Typography>
+              <Typography type={TypographyType.SmallHeaderR}>{t('screens:addPlace:place')}</Typography>
               <Typography type={TypographyType.Text} color={Colors.secondary}>
                 {place}
               </Typography>
@@ -40,14 +40,14 @@ const LocationInfo: FC<Props> = ({ title, address, place, country }) => {
           </View>
         ) : (
           <View style={styles.column}>
-            <Typography type={TypographyType.SmallHeaderR}>{t('addPlace:place')}</Typography>
+            <Typography type={TypographyType.SmallHeaderR}>{t('screens:addPlace:place')}</Typography>
             <Typography type={TypographyType.Text} color={Colors.secondary}>
               {place}
             </Typography>
           </View>
         )}
         <View>
-          <Typography type={TypographyType.SmallHeaderR}>{t('addPlace:country')}</Typography>
+          <Typography type={TypographyType.SmallHeaderR}>{t('screens:addPlace:country')}</Typography>
           <Typography type={TypographyType.Text} color={Colors.secondary}>
             {country}
           </Typography>

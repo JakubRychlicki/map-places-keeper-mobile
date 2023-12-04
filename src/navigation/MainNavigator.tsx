@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createStackNavigator, StackNavigationProp, TransitionPresets } from '@react-navigation/stack';
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -59,6 +59,7 @@ const MainNavigator = () => {
           screenOptions={{
             headerShown: false,
             ...TransitionPresets.SlideFromRightIOS,
+            cardStyle: { backgroundColor: Colors.background },
           }}
         >
           {!token ? (
@@ -72,8 +73,6 @@ const MainNavigator = () => {
           )}
         </MainStack.Navigator>
       </NavigationContainer>
-
-      <StatusBar barStyle={'dark-content'} backgroundColor={Colors.background} />
     </SafeAreaProvider>
   );
 };
@@ -82,6 +81,6 @@ export default MainNavigator;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.red,
   },
 });

@@ -2,6 +2,12 @@ import { FC } from 'react';
 import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import { Modal } from 'react-native-paper';
 import ImagePicker from 'react-native-image-crop-picker';
+import { Photo } from '../../store/types/Utils.model';
+import { useTranslation } from 'react-i18next';
+import uuid from 'react-native-uuid';
+
+// THEME
+import Colors from '../../constants/Colors';
 
 // ASSETS
 import CameraSvg from '../../assets/svg/icons/CameraSvg';
@@ -9,7 +15,6 @@ import GallerySvg from '../../assets/svg/icons/GallerySvg';
 
 // CONPONENTS
 import Typography from '../controls/Typography';
-import { Photo } from '../../store/types/Utils.model';
 
 const widthScreen = Dimensions.get('window').width;
 
@@ -20,6 +25,8 @@ interface Props {
 }
 
 const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
+  const { t } = useTranslation();
+
   const openCamera = async () => {
     try {
       const result = await ImagePicker.openCamera({
@@ -31,7 +38,7 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
       const newImage = {
         uri: result.path,
         type: result.mime,
-        name: 'przyklad.jpg',
+        name: uuid.v4() as string,
       };
 
       handlePhoto(newImage);
@@ -52,7 +59,7 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
       const newImage = {
         uri: result.path,
         type: result.mime,
-        name: 'przyklad.jpg',
+        name: uuid.v4() as string,
       };
 
       handlePhoto(newImage);
@@ -63,17 +70,19 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
 
   return (
     <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
-      <Typography style={styles.title}>Add photo with</Typography>
+      <Typography style={styles.title}>{t('modals:photoPicker:desc')}</Typography>
       <View style={styles.options}>
         <TouchableOpacity onPress={openCamera}>
           <View style={styles.icon}>
             <CameraSvg />
           </View>
+          <Typography>{t('modals:photoPicker:options:camera')}</Typography>
         </TouchableOpacity>
         <TouchableOpacity onPress={openGallery}>
           <View style={styles.icon}>
             <GallerySvg />
           </View>
+          <Typography>{t('modals:photoPicker:options:gallery')}</Typography>
         </TouchableOpacity>
       </View>
     </Modal>
@@ -89,9 +98,10 @@ const styles = StyleSheet.create({
   },
   content: {
     width: widthScreen * 0.8,
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 30,
+    backgroundColor: Colors.white,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+    borderRadius: 20,
   },
   title: {
     textAlign: 'center',
@@ -99,7 +109,7 @@ const styles = StyleSheet.create({
   },
   options: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     gap: 16,
   },
   icon: {

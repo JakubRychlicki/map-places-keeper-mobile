@@ -1,13 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { MainNavigatorScreen } from '../../navigation/MainNavigator';
 import { useTranslation } from 'react-i18next';
 
 // Theme
-import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
 
-// Svg
+// ASSETS
 import WorldDrawSvg from '../../assets/svg/graphics/WorldDrawSvg';
 
 // Components
@@ -25,10 +24,10 @@ const WelcomeScreen: MainNavigatorScreen<'WelcomeScreen'> = ({ navigation, route
       <View style={styles.content}>
         <View>
           <Typography type={TypographyType.BigHeaderN} style={styles.title}>
-            {t('welcomeScreen:title')}
+            {t('screens:welcome:title')}
           </Typography>
           <Typography type={TypographyType.Text} style={styles.desc}>
-            {t('welcomeScreen:desc')}
+            {t('screens:welcome:desc')}
           </Typography>
         </View>
         <View style={styles.buttons}>
@@ -38,7 +37,7 @@ const WelcomeScreen: MainNavigatorScreen<'WelcomeScreen'> = ({ navigation, route
             activeOpacity={0.6}
           >
             <Typography type={TypographyType.TextM} style={[styles.buttonText, styles.buttonRegisterText]}>
-              {t('buttons:register')}
+              {t('screens:welcome:register')}
             </Typography>
           </TouchableOpacity>
           <TouchableOpacity
@@ -47,7 +46,7 @@ const WelcomeScreen: MainNavigatorScreen<'WelcomeScreen'> = ({ navigation, route
             activeOpacity={0.6}
           >
             <Typography type={TypographyType.TextM} style={[styles.buttonText, styles.buttonLoginText]}>
-              {t('buttons:login')}
+              {t('screens:welcome:login')}
             </Typography>
           </TouchableOpacity>
         </View>
@@ -61,7 +60,6 @@ export default WelcomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
   },
   illustrationBox: {
     alignItems: 'center',
@@ -92,22 +90,22 @@ const styles = StyleSheet.create({
   buttons: {
     display: 'flex',
     flexDirection: 'row',
-    borderColor: Colors.border,
-    borderWidth: 2,
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
-    overflow: 'hidden',
   },
   button: {
     flex: 1,
     paddingVertical: 15,
   },
   buttonRegister: {
-    backgroundColor: Colors.lightBlue,
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderWidth: 2,
+    borderColor: Colors.primary,
+    borderRightWidth: 0,
   },
   buttonSignIn: {
+    borderTopEndRadius: 20,
+    borderBottomEndRadius: 20,
     backgroundColor: Colors.primary,
   },
   buttonText: {

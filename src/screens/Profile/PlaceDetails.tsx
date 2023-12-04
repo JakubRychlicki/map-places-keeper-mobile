@@ -8,6 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { API_URL } from '@env';
 import * as actions from '../../store/actions';
 
+// THEME
+import Colors from '../../constants/Colors';
+
 // ASSETS
 import MapPointSvg from '../../assets/svg/icons/MapPointSvg';
 import RemoveSvg from '../../assets/svg/icons/RemoveIcon';
@@ -58,14 +61,14 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
           <Typography type={TypographyType.Text}>{description}</Typography>
         </View>
         <LocationInfo
-          title={t('placeDetails:addressHeader')}
+          title={t('screens:placeDetails:addressHeader')}
           address={street_address}
           place={locality}
           country={country}
         />
         <View style={styles.mapContainer}>
           <Typography type={TypographyType.TextM} style={styles.mapHeader}>
-            {t('placeDetails:mapHeader')}
+            {t('screens:placeDetails:mapHeader')}
           </Typography>
           <MapView
             zoomEnabled={true}
