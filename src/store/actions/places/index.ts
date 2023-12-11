@@ -1,10 +1,16 @@
 import { Api } from '../../../services/API';
 import { AppThunk } from '../../configureStore';
 import { Endpoint } from '../../../services/Enpoints';
-import { AddUserPlaceTypes, DeleteUserPlaceTypes, GetUserPlacesActionTypes } from '../actionTypes';
+import {
+  AddUserPlaceTypes,
+  DeleteUserPlaceTypes,
+  GetPlacesCategoriesActionTypes,
+  GetUserPlacesActionTypes,
+} from '../actionTypes';
 import { AddPlacePayload, UserPlace } from '../../types/Map.model';
 import { API_URL } from '@env';
 import { AxiosResponse } from 'axios';
+import { PlaceCategory } from '../../types/Categories';
 
 export const addPlace = ({ place, file }: AddPlacePayload): AppThunk => {
   return async (dispatch, getState) => {
@@ -16,6 +22,7 @@ export const addPlace = ({ place, file }: AddPlacePayload): AppThunk => {
         ...place,
         user: state.user.user?.id,
       };
+
       const formData = new FormData();
       if (file) {
         formData.append('files.graphics', file);
@@ -24,14 +31,13 @@ export const addPlace = ({ place, file }: AddPlacePayload): AppThunk => {
 
       const { data }: AxiosResponse<{ data: UserPlace }> = await Api({
         method: 'post',
-        url: `${API_URL}/api/${Endpoint.Places}`,
+        url: `${API_URL}/api${Endpoint.Places}?populate=graphics,category`,
         data: formData,
         headers: {
           Authorization: 'Bearer ' + state.user.token,
           'Content-Type': 'multipart/form-data',
         },
       });
-
       dispatch({ type: AddUserPlaceTypes.ADD_USER_PLACE_SUCCESS, place: data.data });
     } catch (e: any) {
       dispatch({ type: AddUserPlaceTypes.ADD_USER_PLACE_FAILURE });
@@ -47,17 +53,17 @@ export const getUserPlaces = (): AppThunk => {
     dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES });
     try {
       const { data }: AxiosResponse<{ data: UserPlace[] }> = await Api.get(
-        `${Endpoint.Places}?populate=graphics&pagination[start]=${userPlacesList.start}&pagination[limit]=${userPlacesList.limit}`,
+        `${Endpoint.Places}?populate=graphics,category&pagination[start]=${userPlacesList.start}&pagination[limit]=${userPlacesList.limit}`,
       );
 
-      const places = {
+      const newPlaces = {
         ...userPlacesList,
-        data: data.data,
+        data: [...userPlacesList.data, ...data.data],
         start: userPlacesList.start + data.data.length,
         reachEnd: data.data.length < userPlacesList.limit,
       };
 
-      dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_SUCCESS, places: places });
+      dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_SUCCESS, places: newPlaces });
     } catch (e: any) {
       dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_FAILURE });
     }
@@ -73,6 +79,31 @@ export const deletePlace = (placeId: number): AppThunk => {
       dispatch({ type: DeleteUserPlaceTypes.DELETE_USER_PLACE_SUCCESS, placeId: placeId });
     } catch (e: any) {
       dispatch({ type: DeleteUserPlaceTypes.DELETE_USER_PLACE_FAILURE });
+    }
+  };
+};
+
+export const getPlacesCategories = (): AppThunk => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const categoriesList = state.map.categories;
+
+    dispatch({ type: GetPlacesCategoriesActionTypes.GET_PLACES_CATEGORIES });
+    try {
+      const { data }: AxiosResponse<{ data: PlaceCategory[] }> = await Api.get(
+        `${Endpoint.DefaultCategories}?sort[0]=order&pagination[start]=${categoriesList.start}&pagination[limit]=${categoriesList.limit}`,
+      );
+
+      const newCategories = {
+        ...categoriesList,
+        data: [...categoriesList.data, ...data.data],
+        start: categoriesList.start + data.data.length,
+        reachEnd: data.data.length < categoriesList.limit,
+      };
+
+      dispatch({ type: GetPlacesCategoriesActionTypes.GET_PLACES_CATEGORIES_SUCCESS, categories: newCategories });
+    } catch (e: any) {
+      dispatch({ type: GetPlacesCategoriesActionTypes.GET_PLACES_CATEGORIES_FAILURE });
     }
   };
 };

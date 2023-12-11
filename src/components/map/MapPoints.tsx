@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { PointAnnotation } from '@rnmapbox/maps';
 import { UserPlace } from '../../store/types/Map.model';
-import MapPointSvg from '../../assets/svg/icons/MapPointSvg';
+import { SvgXml } from 'react-native-svg';
 
 interface Props {
   data: UserPlace[];
@@ -10,11 +10,14 @@ interface Props {
 
 const MapPoints: FC<Props> = ({ data }) => {
   const points = data.map((place) => {
-    const coords = [place.attributes.longitude, place.attributes.latitude];
+    const { longitude, latitude, category } = place.attributes;
+    const coords = [longitude, latitude];
+    const icon = category.data.attributes.icon;
+
     return (
       <PointAnnotation key={place.id.toString()} id={place.id.toString()} coordinate={coords}>
         <View style={styles.icon}>
-          <MapPointSvg />
+          <SvgXml xml={icon} />
         </View>
       </PointAnnotation>
     );

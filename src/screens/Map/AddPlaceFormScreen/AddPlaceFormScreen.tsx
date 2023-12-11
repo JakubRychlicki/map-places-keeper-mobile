@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -7,8 +7,8 @@ import { useFormik } from 'formik';
 import { MapNavigatorScreen } from '../../../navigation/MapNavigator';
 import { useAppDispatch, useAppSelector } from '../../../hooks/useAppDispatch';
 import * as actions from '../../../store/actions';
+import { PlaceCategory } from '../../../store/types/Categories';
 import { Photo } from '../../../store/types/Utils.model';
-import { createPointFeature } from '../../../utils/map';
 import { PlaceForm, defaultValuesPlaceForm, placeFormValidationSchema } from './AddPlaceFormScreen.utils';
 
 // THEME
@@ -23,14 +23,20 @@ import ScreenTopBar from '../../../components/ScreenTopBar';
 import Input from '../../../components/controls/Input';
 import Button from '../../../components/controls/Button';
 import ModalPhotoPicker from '../../../components/map/ModalPhotoPicker';
+import Typography from '../../../components/controls/Typography';
+import ModalCategories from '../../../components/map/ModalCategories';
 
-const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
+const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route, navigation }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { isAddPlaceLoading } = useAppSelector((state) => state.map);
+  const { isAddPlaceLoading, categories } = useAppSelector((state) => state.map);
   const { location } = route.params;
+  const [placeCategoryId, setPlaceCategoryId] = useState(1);
+  const [isModalCategoriesOpen, setIsModalCategoriesOpen] = useState(false);
   const [photo, setPhoto] = useState<Photo | null>(null);
   const [isModalPhotoPickerOpen, setIsModalPhotoPickerOpen] = useState(false);
+
+  const activeNameCategory = categories.data.find((item) => item.id === placeCategoryId)?.attributes.name || 'General';
 
   const { values, errors, dirty, setFieldValue, handleSubmit, setFieldError } = useFormik<PlaceForm>({
     initialValues: defaultValuesPlaceForm,
@@ -42,13 +48,14 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
           locality: location.place,
           street_address: location.address,
           country: location.country,
-          category: 'General',
+          category: placeCategoryId,
           longitude: location.coordinates[0],
           latitude: location.coordinates[1],
         },
         file: photo,
       };
       dispatch(actions.addPlace(newPlace));
+      navigation.navigate('MainMap');
     },
     validateOnChange: false,
     validationSchema: placeFormValidationSchema,
@@ -57,6 +64,17 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
   const handlePhoto = (image: Photo) => {
     setPhoto(image);
   };
+
+  const changeCategory = (place: PlaceCategory) => {
+    setPlaceCategoryId(place.id);
+  };
+
+  useEffect(() => {
+    if (categories.data.length > 0) {
+      const generalCategory = categories.data.find((item) => item.attributes.name === 'General');
+      if (generalCategory) setPlaceCategoryId(generalCategory.id);
+    }
+  }, []);
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
@@ -90,6 +108,19 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
             multiline
           />
         </View>
+        <View style={styles.categoryContainer}>
+          <Typography style={styles.categoryLabel}>{t('screens:addPlace:form:description')}</Typography>
+          <View style={styles.categoryInput}>
+            <Typography style={styles.categoryInputText}>{activeNameCategory}</Typography>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              style={styles.categoryChangeButton}
+              onPress={() => setIsModalCategoriesOpen(true)}
+            >
+              <Typography color={Colors.primary}>{t('screens:addPlace:form:categoryChange')}</Typography>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.photoInputContainer}>
           <TouchableOpacity
             activeOpacity={0.6}
@@ -117,6 +148,12 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route }) => {
 
         <Button title={t('screens:addPlace:form:submit')} onPress={handleSubmit} loading={isAddPlaceLoading} />
       </KeyboardAwareScrollView>
+      <ModalCategories
+        visible={isModalCategoriesOpen}
+        hideModal={() => setIsModalCategoriesOpen(false)}
+        activeCategoryId={placeCategoryId}
+        changeCategory={changeCategory}
+      />
       <ModalPhotoPicker
         visible={isModalPhotoPickerOpen}
         hideModal={() => setIsModalPhotoPickerOpen(false)}
@@ -173,5 +210,30 @@ const styles = StyleSheet.create({
   },
   photoInputContainer: {
     marginBottom: 20,
+  },
+  categoryContainer: {
+    borderBottomColor: Colors.primary,
+    borderBottomWidth: 2,
+    marginBottom: 20,
+  },
+  categoryLabel: {
+    marginBottom: 6,
+    marginTop: 15,
+  },
+  categoryInput: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 40,
+  },
+  categoryInputText: {
+    fontSize: 16,
+  },
+  categoryChangeButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    height: 40,
+    paddingHorizontal: 10,
   },
 });

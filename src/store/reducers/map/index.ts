@@ -1,19 +1,24 @@
 import * as actionTypes from '../../actions/actionTypes';
+import { PlaceCategory } from '../../types/Categories';
 import { UserPlace } from '../../types/Map.model';
 import { List, emptyList } from '../../types/Utils.model';
 
 export type MapState = {
   userPlaces: List<UserPlace>;
+  categories: List<PlaceCategory>;
   isAddPlaceLoading: boolean;
   isDeletePlaceLoading: boolean;
   isUserPlacesLoading: boolean;
+  isCategoriesLoading: boolean;
 };
 
 const initialState: MapState = {
   userPlaces: emptyList,
+  categories: emptyList,
   isAddPlaceLoading: false,
   isDeletePlaceLoading: false,
   isUserPlacesLoading: false,
+  isCategoriesLoading: false,
 };
 
 const mapReducer = (state: MapState = initialState, action: any): MapState => {
@@ -71,6 +76,22 @@ const mapReducer = (state: MapState = initialState, action: any): MapState => {
       return {
         ...state,
         isUserPlacesLoading: false,
+      };
+    case actionTypes.GetPlacesCategoriesActionTypes.GET_PLACES_CATEGORIES:
+      return {
+        ...state,
+        isCategoriesLoading: true,
+      };
+    case actionTypes.GetPlacesCategoriesActionTypes.GET_PLACES_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        categories: action.categories,
+        isCategoriesLoading: false,
+      };
+    case actionTypes.GetPlacesCategoriesActionTypes.GET_PLACES_CATEGORIES_FAILURE:
+      return {
+        ...state,
+        isCategoriesLoading: false,
       };
     case actionTypes.LOGOUT_SUCCESS:
       return initialState;

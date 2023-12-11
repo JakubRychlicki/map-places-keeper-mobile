@@ -1,6 +1,6 @@
-import { Feature, Point } from 'geojson';
 import { Photo, StrapiPhoto } from './Utils.model';
 import { User } from './User.model';
+import { StrapiCategory } from './Categories';
 
 export interface GeocodingResponse {
   type: string;
@@ -43,7 +43,7 @@ export interface PlaceData {
   locality: string;
   street_address: string;
   country: string;
-  category: string;
+  category: number;
   longitude: number;
   latitude: number;
 }
@@ -56,10 +56,10 @@ export interface UserPlace {
     locality: string;
     street_address: string;
     country: string;
-    category: string;
     longitude: number;
     latitude: number;
     graphics?: StrapiPhoto;
+    category: StrapiCategory;
     user?: User;
   };
 }

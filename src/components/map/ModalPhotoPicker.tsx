@@ -44,6 +44,7 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
       handlePhoto(newImage);
     } catch (error) {
       console.log('Error:', error);
+      hideModal();
     }
   };
 
@@ -65,6 +66,7 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
       handlePhoto(newImage);
     } catch (error) {
       console.log('Error:', error);
+      hideModal();
     }
   };
 
@@ -72,15 +74,16 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
     <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
       <Typography style={styles.title}>{t('modals:photoPicker:desc')}</Typography>
       <View style={styles.options}>
-        <TouchableOpacity onPress={openCamera}>
+        <TouchableOpacity activeOpacity={0.6} style={styles.option} onPress={openCamera}>
           <View style={styles.icon}>
-            <CameraSvg />
+            <CameraSvg fill={Colors.primary} />
           </View>
           <Typography>{t('modals:photoPicker:options:camera')}</Typography>
         </TouchableOpacity>
-        <TouchableOpacity onPress={openGallery}>
+        <Typography>{t('modals:photoPicker:or')}</Typography>
+        <TouchableOpacity activeOpacity={0.6} style={styles.option} onPress={openGallery}>
           <View style={styles.icon}>
-            <GallerySvg />
+            <GallerySvg fill={Colors.primary} />
           </View>
           <Typography>{t('modals:photoPicker:options:gallery')}</Typography>
         </TouchableOpacity>
@@ -110,10 +113,18 @@ const styles = StyleSheet.create({
   options: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 16,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    gap: 30,
+  },
+  option: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 10,
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
   },
 });

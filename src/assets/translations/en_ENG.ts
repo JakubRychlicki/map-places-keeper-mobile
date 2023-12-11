@@ -45,6 +45,8 @@ export default {
         title: 'Place Form',
         name: 'Name of place',
         description: 'Description (optional)',
+        category: 'Category',
+        categoryChange: 'Change',
         submit: 'SAVE',
       },
     },
@@ -68,13 +70,6 @@ export default {
     next: 'NEXT',
   },
   modals: {
-    photoPicker: {
-      desc: 'Add photo with',
-      options: {
-        gallery: 'Gallery',
-        camera: 'Camera',
-      },
-    },
     addPlace: {
       desc: 'Choose how you want to add\n a place on the map?',
       options: {
@@ -82,6 +77,17 @@ export default {
         search: 'Search for a place',
         map: 'Click on the map',
       },
+    },
+    photoPicker: {
+      desc: 'Add photo with',
+      options: {
+        gallery: 'GALLERY',
+        camera: 'CAMERA',
+      },
+      or: 'OR',
+    },
+    categories: {
+      title: 'Choose category',
     },
     deletePlace: {
       title: 'Delete Place',

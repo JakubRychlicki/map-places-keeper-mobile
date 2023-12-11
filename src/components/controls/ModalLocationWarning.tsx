@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import Button from './Button';
+import { View, StyleSheet, Dimensions } from 'react-native';
 import { Modal } from 'react-native-paper';
-import Fonts from '../../constants/Fonts';
-import Colors from '../../constants/Colors';
 import { useTranslation } from 'react-i18next';
+
+// COMPONENTS
+import Button from './Button';
+import Typography, { TypographyType } from './Typography';
 
 const widthScreen = Dimensions.get('window').width;
 
@@ -18,8 +19,10 @@ const ModalLocationWarning: FC<Props> = ({ visible, tryAgainFcn }) => {
 
   return (
     <Modal visible={visible} style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>{t('errors:name')}</Text>
-      <Text style={styles.desc}>{t('errors:failToGetLocation')}</Text>
+      <Typography type={TypographyType.MediumHeaderR} style={styles.title}>
+        {t('errors:name')}
+      </Typography>
+      <Typography style={styles.desc}>{t('errors:failToGetLocation')}</Typography>
 
       <View style={styles.buttons}>
         <Button title={t('buttons:tryAgain')} onPress={tryAgainFcn} />
@@ -42,16 +45,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   title: {
-    fontFamily: Fonts.RobotoMedium,
-    fontSize: 20,
     textAlign: 'center',
-    color: Colors.black,
   },
   desc: {
-    fontFamily: Fonts.RobotoRegular,
-    fontSize: 14,
     textAlign: 'center',
-    color: Colors.black,
     paddingVertical: 15,
   },
   buttons: {

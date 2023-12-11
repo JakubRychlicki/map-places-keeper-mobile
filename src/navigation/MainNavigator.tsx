@@ -37,17 +37,18 @@ const MainStack = createStackNavigator<MainStackParamList>();
 const MainNavigator = () => {
   const dispatch = useAppDispatch();
   const { token, isUserProfileLoading } = useAppSelector((state) => state.user);
-  const { isUserPlacesLoading } = useAppSelector((state) => state.map);
+  const { isUserPlacesLoading, isCategoriesLoading } = useAppSelector((state) => state.map);
   const isInternet = useInternetStatus();
 
   useEffect(() => {
     if (token) {
       dispatch(actions.getUserProfile());
       dispatch(actions.getUserPlaces());
+      dispatch(actions.getPlacesCategories());
     }
   }, [token]);
 
-  if (isUserProfileLoading && isUserPlacesLoading) {
+  if (isUserProfileLoading && isUserPlacesLoading && isCategoriesLoading) {
     return <Loader />;
   }
 
