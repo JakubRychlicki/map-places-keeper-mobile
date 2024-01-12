@@ -76,6 +76,7 @@ export default {
         polish: 'Polish',
       },
       logout: 'Logout',
+      version: 'Version',
     },
   },
   buttons: {

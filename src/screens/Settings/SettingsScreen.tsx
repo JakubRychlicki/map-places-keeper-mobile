@@ -5,6 +5,7 @@ import { ProfileNavigatorScreen } from '../../navigation/ProfileNavigator';
 import * as actions from '../../store/actions';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useTranslation } from 'react-i18next';
+import DeviceInfo from 'react-native-device-info';
 
 // THEME
 import Colors from '../../constants/Colors';
@@ -22,6 +23,8 @@ const SettingsScreen: ProfileNavigatorScreen<'Settings'> = ({ navigation }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
+  const currentVersionApp = DeviceInfo.getVersion();
+
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar />
@@ -36,6 +39,11 @@ const SettingsScreen: ProfileNavigatorScreen<'Settings'> = ({ navigation }) => {
             </View>
             <Typography type={TypographyType.TextM}>{t('screens:settings:language:title')}</Typography>
           </TouchableOpacity>
+        </View>
+        <View style={styles.versionContainer}>
+          <Typography>
+            {t('screens:settings:version')} {currentVersionApp}
+          </Typography>
         </View>
         <View style={styles.logoutContainer}>
           <Button
@@ -77,6 +85,9 @@ const styles = StyleSheet.create({
   settingPoint: {
     width: 24,
     height: 24,
+  },
+  versionContainer: {
+    alignItems: 'center',
   },
   logoutContainer: {
     paddingVertical: 15,

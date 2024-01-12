@@ -76,6 +76,7 @@ export default {
         polish: 'Polski',
       },
       logout: 'Wyloguj się',
+      version: 'Wersja',
     },
   },
   buttons: {
