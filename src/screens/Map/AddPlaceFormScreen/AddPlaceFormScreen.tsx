@@ -27,7 +27,7 @@ import Typography from '../../../components/controls/Typography';
 import ModalCategories from '../../../components/map/ModalCategories';
 
 const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route, navigation }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const { isAddPlaceLoading, categories } = useAppSelector((state) => state.map);
   const { location } = route.params;
@@ -36,7 +36,15 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route, navigat
   const [photo, setPhoto] = useState<Photo | null>(null);
   const [isModalPhotoPickerOpen, setIsModalPhotoPickerOpen] = useState(false);
 
-  const activeNameCategory = categories.data.find((item) => item.id === placeCategoryId)?.attributes.name || 'General';
+  const category = categories.data.find((item) => item.id === placeCategoryId);
+  let activeNameCategory = category?.attributes.name || t('screens:addPlace:form:defaultCategory');
+
+  if (i18n.language === 'pl') {
+    if (category) {
+      activeNameCategory = category.attributes.localizations.data.find((loc) => loc.attributes.locale === 'pl')
+        ?.attributes.name as string;
+    }
+  }
 
   const { values, errors, dirty, setFieldValue, handleSubmit, setFieldError } = useFormik<PlaceForm>({
     initialValues: defaultValuesPlaceForm,
@@ -130,12 +138,6 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route, navigat
                 setIsModalPhotoPickerOpen(true);
               }
             }}
-            onLongPress={() => {
-              if (photo) {
-                console.log('try remove photo');
-              }
-            }}
-            delayLongPress={500}
           >
             {photo ? <Image source={{ uri: photo?.uri }} style={styles.addPhotoButtonPhoto} /> : <PhotoSvg />}
             {!photo && (
@@ -144,6 +146,11 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route, navigat
               </View>
             )}
           </TouchableOpacity>
+          {photo && (
+            <TouchableOpacity style={styles.removePhotoButton} onPress={() => setPhoto(null)}>
+              <Typography color={Colors.red}>{t('screens:addPlace:form:removePhoto')}</Typography>
+            </TouchableOpacity>
+          )}
         </View>
 
         <Button title={t('screens:addPlace:form:submit')} onPress={handleSubmit} loading={isAddPlaceLoading} />
@@ -199,17 +206,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderColor: Colors.primary,
   },
-  addPhotoButtonIconRemove: {
-    backgroundColor: Colors.red,
-    borderColor: Colors.red,
-  },
   addPhotoButtonPhoto: {
     position: 'absolute',
     width: '100%',
     height: '100%',
   },
   photoInputContainer: {
-    marginBottom: 20,
+    marginBottom: 30,
+  },
+  removePhotoButton: {
+    marginTop: 10,
   },
   categoryContainer: {
     borderBottomColor: Colors.primary,

@@ -8,5 +8,16 @@ export interface PlaceCategory {
     name: string;
     icon: string;
     order: number;
+    locale: string;
+    localizations: {
+      data: {
+        attributes: {
+          name: string;
+          icon: string;
+          order: number;
+          locale: string;
+        };
+      }[];
+    };
   };
 }

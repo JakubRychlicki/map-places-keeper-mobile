@@ -50,6 +50,8 @@ export default {
         description: 'Description (optional)',
         category: 'Category',
         categoryChange: 'Change',
+        defaultCategory: 'General',
+        removePhoto: 'Remove added photo',
         submit: 'SAVE',
       },
     },

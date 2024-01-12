@@ -29,8 +29,24 @@ interface Props {
 }
 
 const ModalCategories: FC<Props> = ({ visible, hideModal, activeCategoryId, changeCategory }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { categories } = useAppSelector((state) => state.map);
+
+  let filteredCategories = categories.data;
+
+  if (i18n.language === 'pl') {
+    filteredCategories = filteredCategories.map((item) => {
+      const localizations = item.attributes.localizations.data.find((loc) => loc.attributes.locale === 'pl');
+
+      return {
+        ...item,
+        attributes: {
+          ...item.attributes,
+          name: localizations?.attributes.name || item.attributes.name,
+        },
+      } as PlaceCategory;
+    });
+  }
 
   return (
     <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
@@ -45,9 +61,9 @@ const ModalCategories: FC<Props> = ({ visible, hideModal, activeCategoryId, chan
         </TouchableOpacity>
       </View>
 
-      {categories.data.length > 0 ? (
+      {filteredCategories.length > 0 ? (
         <FlatList
-          data={categories.data}
+          data={filteredCategories}
           numColumns={3}
           columnWrapperStyle={styles.categoryListColumnWrapper}
           contentContainerStyle={styles.categoryListContentContainer}

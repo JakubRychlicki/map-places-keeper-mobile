@@ -50,6 +50,8 @@ export default {
         description: 'Opis (opcjonalnie)',
         category: 'Kategoria',
         categoryChange: 'Zmień',
+        defaultCategory: 'Ogólna',
+        removePhoto: 'Usuń dodane zdjęcie',
         submit: 'ZAPISZ',
       },
     },

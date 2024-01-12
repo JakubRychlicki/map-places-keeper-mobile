@@ -91,7 +91,7 @@ export const getPlacesCategories = (): AppThunk => {
     dispatch({ type: GetPlacesCategoriesActionTypes.GET_PLACES_CATEGORIES });
     try {
       const { data }: AxiosResponse<{ data: PlaceCategory[] }> = await Api.get(
-        `${Endpoint.DefaultCategories}?sort[0]=order&pagination[start]=${categoriesList.start}&pagination[limit]=${categoriesList.limit}`,
+        `${Endpoint.DefaultCategories}?sort[0]=order&pagination[start]=${categoriesList.start}&pagination[limit]=${categoriesList.limit}&populate=localizations`,
       );
 
       const newCategories = {
