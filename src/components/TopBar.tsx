@@ -42,12 +42,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   sideContainer: {
-    width: 60,
+    minWidth: 60,
   },
   text: {
     color: Colors.white,
   },
   textContainer: {
     flex: 1,
+    paddingRight: 15,
   },
 });

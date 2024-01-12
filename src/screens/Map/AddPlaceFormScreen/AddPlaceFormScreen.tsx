@@ -109,7 +109,7 @@ const AddPlaceFormScreen: MapNavigatorScreen<'AddPlaceForm'> = ({ route, navigat
           />
         </View>
         <View style={styles.categoryContainer}>
-          <Typography style={styles.categoryLabel}>{t('screens:addPlace:form:description')}</Typography>
+          <Typography style={styles.categoryLabel}>{t('screens:addPlace:form:category')}</Typography>
           <View style={styles.categoryInput}>
             <Typography style={styles.categoryInputText}>{activeNameCategory}</Typography>
             <TouchableOpacity

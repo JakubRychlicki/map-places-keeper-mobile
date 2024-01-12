@@ -30,6 +30,11 @@ export interface MapboxPlace {
     type: string;
     coordinates: number[];
   };
+  context: {
+    id: string;
+    text: string;
+  }[];
+  address?: any;
 }
 
 export interface AddPlacePayload {
@@ -58,7 +63,7 @@ export interface UserPlace {
     country: string;
     longitude: number;
     latitude: number;
-    graphics?: StrapiPhoto;
+    graphics: StrapiPhoto;
     category: StrapiCategory;
     user?: User;
   };

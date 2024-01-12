@@ -12,7 +12,7 @@ export const getForwardGeocoding = async (query: string) => {
           access_token: MAPBOX_TOKEN,
           limit: 5,
           language: 'PL',
-          types: 'place',
+          types: 'address',
         },
       },
     );

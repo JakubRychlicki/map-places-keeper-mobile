@@ -2,14 +2,13 @@ import { View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileNavigatorScreen } from '../../navigation/ProfileNavigator';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
-import * as actions from '../../store/actions';
+import { useAppSelector } from '../../hooks/useAppDispatch';
 
 // THEME
 import Colors from '../../constants/Colors';
 
 // ASSETS
-import LogoutSvg from '../../assets/svg/icons/LogoutSvg';
+import SettingsSvg from '../../assets/svg/icons/SettingsSvg';
 
 // COMPONENTS
 import PlacesList from '../../components/profile/PlacesList';
@@ -20,17 +19,16 @@ import Typography, { TypographyType } from '../../components/controls/Typography
 
 const ProfileScreen: ProfileNavigatorScreen<'MainProfile'> = ({ navigation }) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
   const { userPlaces } = useAppSelector((state) => state.map);
 
-  const logoutUser = () => {
-    dispatch(actions.logout());
+  const openSettings = () => {
+    navigation.navigate('Settings');
   };
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <ScreenTopBar hideBackButton rightIcon={<RoundButton icon={<LogoutSvg />} onPress={logoutUser} />} />
+      <ScreenTopBar hideBackButton rightIcon={<RoundButton icon={<SettingsSvg />} onPress={openSettings} />} />
       <ProfileInfo username={user?.username || ''} numberOfUserPlaces={userPlaces.data.length} />
       <View style={styles.listHeader}>
         <Typography type={TypographyType.TextL} color={Colors.primary}>

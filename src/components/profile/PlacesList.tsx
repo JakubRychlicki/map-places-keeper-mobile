@@ -17,7 +17,11 @@ const PlacesList: FC<Props> = ({ navigation }) => {
 
   const renderItem: ListRenderItem<UserPlace> = ({ item }) => {
     const { name, locality, graphics } = item.attributes;
-    const imageURL = graphics?.data.attributes.formats.medium.url || graphics?.data.attributes.url;
+    let imageURL = null;
+
+    if (graphics.data !== null) {
+      imageURL = graphics.data.attributes.formats.medium.url || graphics.data.attributes.url;
+    }
 
     return (
       <PlacesItem

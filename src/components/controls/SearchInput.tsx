@@ -13,10 +13,10 @@ interface Props {
   placeholder?: string;
   containerStyle?: StyleProp<ViewStyle>;
   onChange: (value: string) => void;
-  onReset?: () => void;
+  resetResults: () => void;
 }
 
-const SearchInput: FC<Props> = ({ placeholder, onChange, onReset, containerStyle }) => {
+const SearchInput: FC<Props> = ({ placeholder, onChange, resetResults, containerStyle }) => {
   const [query, setQuery] = useState('');
 
   const onChangeText = (text: string) => {
@@ -49,6 +49,7 @@ const SearchInput: FC<Props> = ({ placeholder, onChange, onReset, containerStyle
           onPress={() => {
             Keyboard.dismiss();
             setQuery('');
+            resetResults();
           }}
         >
           <View style={styles.resetIcon}>
@@ -65,10 +66,10 @@ export default SearchInput;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 50,
-    paddingBottom: 5,
+    height: 60,
+    paddingBottom: 10,
     borderBottomWidth: 2,
-    borderBottomColor: Colors.border,
+    borderBottomColor: Colors.primary,
   },
   input: {
     flex: 1,

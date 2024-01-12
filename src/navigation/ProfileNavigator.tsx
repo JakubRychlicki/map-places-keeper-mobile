@@ -8,6 +8,8 @@ import Colors from '../constants/Colors';
 // SCREENS
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import PlaceDetails from '../screens/Profile/PlaceDetails';
+import SettingsScreen from '../screens/Settings/SettingsScreen';
+import LanguagesScreen from '../screens/Settings/LanguagesScreen';
 
 export type ProfileNavigatorScreen<T extends keyof ProfileStackParamList> = React.FC<{
   navigation: StackNavigationProp<ProfileStackParamList, T>;
@@ -17,6 +19,8 @@ export type ProfileNavigatorScreen<T extends keyof ProfileStackParamList> = Reac
 export type ProfileStackParamList = {
   MainProfile: undefined;
   PlaceDetails: { id: number };
+  Settings: undefined;
+  Languages: undefined;
 };
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
@@ -33,6 +37,8 @@ const ProfileNavigator = () => {
     >
       <ProfileStack.Screen name="MainProfile" component={ProfileScreen} />
       <ProfileStack.Screen name="PlaceDetails" component={PlaceDetails} />
+      <ProfileStack.Screen name="Settings" component={SettingsScreen} />
+      <ProfileStack.Screen name="Languages" component={LanguagesScreen} />
     </ProfileStack.Navigator>
   );
 };

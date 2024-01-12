@@ -42,6 +42,7 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
       };
 
       handlePhoto(newImage);
+      hideModal();
     } catch (error) {
       console.log('Error:', error);
       hideModal();
@@ -64,6 +65,7 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
       };
 
       handlePhoto(newImage);
+      hideModal();
     } catch (error) {
       console.log('Error:', error);
       hideModal();

@@ -8,9 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { API_URL } from '@env';
 import * as actions from '../../store/actions';
 
-// THEME
-import Colors from '../../constants/Colors';
-
 // ASSETS
 import MapPointSvg from '../../assets/svg/icons/MapPointSvg';
 import RemoveSvg from '../../assets/svg/icons/RemoveIcon';
@@ -46,13 +43,18 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
 
   const { name, description, graphics, longitude, latitude, country, locality, street_address } =
     currentPlace.attributes;
-  const imageURL = graphics?.data.attributes.formats.medium.url || graphics?.data.attributes.url;
+
+  let imageURL = null;
+
+  if (graphics.data !== null) {
+    imageURL = graphics.data.attributes.formats.medium.url || graphics.data.attributes.url;
+  }
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar title={name} rightIcon={<RoundButton icon={<RemoveSvg />} onPress={showPlaceDeleteModal} />} />
       <ScrollView>
-        {graphics ? (
+        {imageURL ? (
           <Image source={{ uri: `${API_URL}${imageURL}` }} style={styles.image} />
         ) : (
           <Image source={PlaceholderImage} style={styles.image} />

@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import * as actionTypes from '../../actions/actionTypes';
 import { PlaceCategory } from '../../types/Categories';
 import { UserPlace } from '../../types/Map.model';
@@ -21,7 +22,7 @@ const initialState: MapState = {
   isCategoriesLoading: false,
 };
 
-const mapReducer = (state: MapState = initialState, action: any): MapState => {
+const mapReducer = (state: MapState = initialState, action: AnyAction): MapState => {
   switch (action.type) {
     case actionTypes.AddUserPlaceTypes.ADD_USER_PLACE:
       return {

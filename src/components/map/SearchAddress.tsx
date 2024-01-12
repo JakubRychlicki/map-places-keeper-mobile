@@ -11,6 +11,7 @@ import {
 import { Searchbar } from 'react-native-paper';
 import { MapboxPlace } from '../../store/types/Map.model';
 import { getForwardGeocoding } from '../../services/MapboxAPI';
+import { useTranslation } from 'react-i18next';
 
 // ICONS
 import SearchSvg from '../../assets/svg/icons/SearchSvg';
@@ -26,6 +27,7 @@ interface Props {
 }
 
 const SearchAddress: FC<Props> = ({ moveTo }) => {
+  const { t } = useTranslation();
   const searchBarRef = useRef<RNTextInput | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<MapboxPlace[]>([]);
@@ -63,7 +65,7 @@ const SearchAddress: FC<Props> = ({ moveTo }) => {
     <View style={styles.searchContainer}>
       <Searchbar
         ref={searchBarRef}
-        placeholder="Search"
+        placeholder={t('screens:mainMap:searchPlaceholder')}
         onChangeText={onChangeSearch}
         value={searchQuery}
         icon={({ size, color }) => <SearchSvg width={size} height={size} stroke={color} />}

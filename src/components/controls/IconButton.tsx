@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 2,
     backgroundColor: Colors.white,
-    borderColor: Colors.border,
+    borderColor: Colors.primary,
   },
   disabled: {
     opacity: 0.3,

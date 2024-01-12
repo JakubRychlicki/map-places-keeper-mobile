@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { createBottomTabNavigator, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useTranslation } from 'react-i18next';
 
 // THEME
 import Colors from '../constants/Colors';
@@ -26,6 +27,8 @@ export type RootNavigatorScreen<T extends keyof RootNavigatorParamsList> = React
 const BottomTab = createBottomTabNavigator<RootNavigatorParamsList>();
 
 const RootNavigator = () => {
+  const { t } = useTranslation();
+
   return (
     <BottomTab.Navigator
       initialRouteName="Map"
@@ -41,7 +44,8 @@ const RootNavigator = () => {
         name="Map"
         component={MapNavigator}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarLabel: t('bottomTabs:map'),
+          tabBarIcon: ({ color, size }) => (
             <View style={{ width: size, height: size }}>
               <MapSvg color={color} />
             </View>
@@ -52,7 +56,8 @@ const RootNavigator = () => {
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarLabel: t('bottomTabs:profile'),
+          tabBarIcon: ({ color, size }) => (
             <View style={{ width: size, height: size }}>
               <ProfileSvg color={color} />
             </View>

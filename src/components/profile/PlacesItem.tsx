@@ -15,7 +15,7 @@ const SIZE = (width - 80) / 2;
 interface Props {
   name: string;
   locality: string;
-  imageURL?: string;
+  imageURL: string | null;
   onPress: () => void;
 }
 

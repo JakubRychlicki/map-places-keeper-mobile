@@ -1,84 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Keyboard, FlatList, TouchableOpacity, StyleSheet, TextInput as RNTextInput } from 'react-native';
-import { Searchbar } from 'react-native-paper';
-import Typography from '../../components/controls/Typography';
-import { MapboxPlace } from '../../store/types/Map.model';
-import ScreenTopBar from '../../components/ScreenTopBar';
+import React, { useState } from 'react';
+import { View, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import SearchInput from '../../components/controls/SearchInput';
-import Colors from '../../constants/Colors';
+import { MapboxPlace } from '../../store/types/Map.model';
 import { getForwardGeocoding } from '../../services/MapboxAPI';
+import { MapNavigatorScreen } from '../../navigation/MapNavigator';
+import { useTranslation } from 'react-i18next';
 
-const AddPlaceSearchScreen = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<MapboxPlace[]>([
-    {
-      id: 'place.232401077',
-      type: 'Feature',
-      place_type: ['place'],
-      place_name: 'Radom, województwo mazowieckie, Polska',
-      bbox: [21.0530299, 51.3476413, 21.2678626, 51.486287],
-      center: [21.154155, 51.402256],
-      geometry: {
-        type: 'Point',
-        coordinates: [21.154155, 51.402256],
-      },
-    },
-    {
-      id: 'place.232581301',
-      type: 'Feature',
-      place_type: ['place'],
-      place_name: 'Radomsko, powiat radomszczański, województwo łódzkie, Polska',
-      bbox: [19.3632998, 51.017725, 19.5326567, 51.1128746],
-      center: [19.444611, 51.067477],
-      geometry: {
-        type: 'Point',
-        coordinates: [19.444611, 51.067477],
-      },
-    },
-    {
-      id: 'place.63596602',
-      type: 'Feature',
-      place_type: ['place'],
-      place_name: 'Radolfzell am Bodensee, Powiat Konstancja, Badenia-Wirtembergia, Niemcy',
-      bbox: [8.906451, 47.719609, 9.061566, 47.814156],
-      center: [8.9701796, 47.7373084],
-      geometry: {
-        type: 'Point',
-        coordinates: [8.9701796, 47.7373084],
-      },
-    },
-    {
-      id: 'place.18278592',
-      type: 'Feature',
-      place_type: ['place'],
-      place_name: 'Radowce, Okręg Suczawa, Rumunia',
-      bbox: [25.881836, 47.817675, 25.983069, 47.876699],
-      center: [25.918182, 47.846106],
-      geometry: {
-        type: 'Point',
-        coordinates: [25.918182, 47.846106],
-      },
-    },
-    {
-      id: 'place.26306583',
-      type: 'Feature',
-      place_type: ['place'],
-      place_name: 'Radomir, Obwód Pernik, Bułgaria',
-      bbox: [22.942532, 42.517437, 23.029575, 42.58054],
-      center: [22.96291, 42.54616],
-      geometry: {
-        type: 'Point',
-        coordinates: [22.96291, 42.54616],
-      },
-    },
-  ]);
+// THEME
+import Colors from '../../constants/Colors';
 
-  const onChangeSearch = (query: string) => {
-    setSearchQuery(query);
+// COMPONENTS
+import Typography from '../../components/controls/Typography';
+import ScreenTopBar from '../../components/ScreenTopBar';
+import SearchInput from '../../components/controls/SearchInput';
+
+const AddPlaceSearchScreen: MapNavigatorScreen<'AddPlaceSearch'> = ({ navigation }) => {
+  const { t } = useTranslation();
+  const [searchResults, setSearchResults] = useState<MapboxPlace[]>([]);
+
+  const onChangeSearch = async (query: string) => {
     const formattedQuery = query.toLowerCase();
     if (formattedQuery.length > 2) {
-      getForwardGeocoding(formattedQuery);
+      const results = await getForwardGeocoding(formattedQuery);
+      if (results) {
+        setSearchResults(results);
+      }
     } else {
       setSearchResults([]);
     }
@@ -86,29 +32,43 @@ const AddPlaceSearchScreen = () => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <ScreenTopBar />
+      <ScreenTopBar title={t('screens:addPlace:type:search')} />
       <View style={styles.content}>
         <SearchInput
-          placeholder="Search for a place"
+          placeholder={t('screens:addPlace:searchPlaceholder')}
           onChange={onChangeSearch}
-          onReset={() => setSearchResults([])}
-          containerStyle={styles.searchBar}
+          resetResults={() => setSearchResults([])}
         />
         <FlatList
           data={searchResults}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.searchList}
           keyboardShouldPersistTaps="handled"
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.searchItem}
-              onPress={() => {
-                console.log(item);
-              }}
-            >
-              <Typography>{item.place_name}</Typography>
-            </TouchableOpacity>
-          )}
+          renderItem={({ item }) => {
+            const { geometry, context, place_name } = item;
+            const place = context.find((c) => c.id.includes('place'));
+            const country = context.find((c) => c.id.includes('country'));
+
+            const addressName = place_name.split(',')[0] || '';
+            const placeName = place?.text || '';
+            const countryName = country?.text || '';
+
+            const location = {
+              address: addressName,
+              place: placeName,
+              country: countryName,
+              coordinates: geometry.coordinates,
+            };
+
+            return (
+              <TouchableOpacity
+                style={styles.searchItem}
+                onPress={() => navigation.navigate('AddPlaceForm', { location: location })}
+              >
+                <Typography>{item.place_name}</Typography>
+              </TouchableOpacity>
+            );
+          }}
         />
       </View>
     </SafeAreaView>
@@ -124,16 +84,12 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 20,
   },
-  searchBar: {},
-  searchInput: {
-    backgroundColor: 'blue',
-  },
   searchList: {
     paddingTop: 15,
   },
   searchItem: {
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderBottomColor: Colors.primary,
   },
 });

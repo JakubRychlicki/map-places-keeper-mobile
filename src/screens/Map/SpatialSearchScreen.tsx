@@ -217,24 +217,4 @@ const styles = StyleSheet.create({
   searchButton: {
     flex: 1,
   },
-  iconButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.white,
-    borderWidth: 2,
-    borderColor: Colors.border,
-  },
-  icon: {
-    width: 20,
-    height: 20,
-  },
-  active: {
-    backgroundColor: Colors.primary,
-  },
-  disabled: {
-    opacity: 0.6,
-  },
 });

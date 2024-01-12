@@ -41,7 +41,11 @@ const PlacesScreen: MapNavigatorScreen<'Places'> = ({ navigation, route }) => {
         contentContainerStyle={styles.list}
         renderItem={({ item }) => {
           const { name, locality, graphics } = item.attributes;
-          const imageURL = graphics?.data.attributes.formats.medium.url || graphics?.data.attributes.url;
+          let imageURL = null;
+
+          if (graphics.data !== null) {
+            imageURL = graphics.data.attributes.formats.medium.url || graphics.data.attributes.url;
+          }
 
           return (
             <TouchableOpacity activeOpacity={0.6} onPress={() => {}} style={styles.item}>

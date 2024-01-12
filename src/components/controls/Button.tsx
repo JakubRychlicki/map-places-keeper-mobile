@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, StyleSheet, ActivityIndicator, View } from 'react-native';
 
 // THEME
 import Colors from '../../constants/Colors';
@@ -13,9 +13,10 @@ interface Props {
   backgroundColor?: string;
   loading?: boolean;
   disabled?: boolean;
+  icon?: React.ReactNode;
 }
 
-const Button: FC<Props> = ({ title, onPress, backgroundColor, loading, disabled }) => {
+const Button: FC<Props> = ({ title, onPress, backgroundColor, loading, disabled, icon }) => {
   return (
     <TouchableOpacity
       style={[styles.container, disabled && styles.disabled, { backgroundColor: backgroundColor || Colors.primary }]}
@@ -26,9 +27,12 @@ const Button: FC<Props> = ({ title, onPress, backgroundColor, loading, disabled 
       {loading ? (
         <ActivityIndicator size="small" color={Colors.white} />
       ) : (
-        <Typography type={TypographyType.TextM} style={styles.text}>
-          {title}
-        </Typography>
+        <View style={styles.content}>
+          <Typography type={TypographyType.TextM} style={styles.text}>
+            {title}
+          </Typography>
+          {icon && <View style={styles.icon}>{icon}</View>}
+        </View>
       )}
     </TouchableOpacity>
   );
@@ -44,10 +48,19 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 20,
   },
+  content: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 10,
+  },
   text: {
     color: Colors.white,
   },
   disabled: {
     opacity: 0.6,
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });

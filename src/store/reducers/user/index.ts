@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import * as actionTypes from '../../actions/actionTypes';
 import { Storage } from '../../../services/Storage';
 import { User } from '../../types/User.model';
@@ -17,7 +18,7 @@ const initialState: UserState = {
   isUserProfileLoading: true,
 };
 
-const userReducer = (state: UserState = initialState, action: any): UserState => {
+const userReducer = (state: UserState = initialState, action: AnyAction): UserState => {
   switch (action.type) {
     case actionTypes.RegisterActionTypes.REGISTER:
       return {
@@ -35,6 +36,7 @@ const userReducer = (state: UserState = initialState, action: any): UserState =>
       return {
         ...state,
         isRegisterLoading: false,
+        registerErrors: action.error,
       };
     case actionTypes.LoginActionTypes.LOGIN:
       return {
@@ -52,6 +54,7 @@ const userReducer = (state: UserState = initialState, action: any): UserState =>
       return {
         ...state,
         isRegisterLoading: false,
+        loginErrors: action.error,
       };
     case actionTypes.GetUserProfileActionTypes.GET_USER_PROFILE:
       return {

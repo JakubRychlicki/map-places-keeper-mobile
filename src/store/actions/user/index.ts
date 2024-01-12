@@ -13,9 +13,8 @@ export const register = (userData: RegisterPayload): AppThunk => {
       const { data }: AxiosResponse<AuthResponse> = await Api.post(Endpoint.Register, userData);
       Storage.set('token', data.jwt);
       dispatch({ type: RegisterActionTypes.REGISTER_SUCCESS, token: data.jwt, user: data.user });
-    } catch (e: any) {
-      console.log('error register:', e);
-      dispatch({ type: RegisterActionTypes.REGISTER_FAILURE });
+    } catch (error: any) {
+      dispatch({ type: RegisterActionTypes.REGISTER_FAILURE, error: [error.response?.data?.message || ''] });
     }
   };
 };
@@ -27,9 +26,8 @@ export const login = (userData: LoginPayload): AppThunk => {
       const { data }: AxiosResponse<AuthResponse> = await Api.post(Endpoint.Login, userData);
       Storage.set('token', data.jwt);
       dispatch({ type: LoginActionTypes.LOGIN_SUCCESS, token: data.jwt, user: data.user });
-    } catch (e: any) {
-      console.log('error login:', e);
-      dispatch({ type: LoginActionTypes.LOGIN_FAILURE });
+    } catch (error: any) {
+      dispatch({ type: LoginActionTypes.LOGIN_FAILURE, error: [error.response?.data?.message || ''] });
     }
   };
 };

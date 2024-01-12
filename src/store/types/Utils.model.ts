@@ -41,6 +41,6 @@ export interface List<D> {
 export const emptyList: List<any> = {
   data: [],
   start: 0,
-  limit: 10,
+  limit: 25,
   reachEnd: false,
 };

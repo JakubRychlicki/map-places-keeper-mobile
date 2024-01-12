@@ -6,7 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatch';
 import { useInternetStatus } from '../hooks/useInternetStatus';
 import * as actions from '../store/actions';
-import Loader from '../components/controls/Loader';
+import { useTranslation } from 'react-i18next';
+import { Storage } from '../services/Storage';
 
 // THEME
 import Colors from '../constants/Colors';
@@ -16,6 +17,9 @@ import WelcomeScreen from '../screens/Welcome/WelcomeScreen';
 import RegisterScreen from '../screens/User/Register/RegisterScreen';
 import LoginScreen from '../screens/User/Login/LoginScreen';
 import InternetConnectionScreen from '../screens/Helpers/InternetConnectionScreen';
+
+// COMPONENTS
+import Loader from '../components/controls/Loader';
 
 // NAVIGATORS
 import RootNavigator from './RootNavigator';
@@ -36,9 +40,26 @@ const MainStack = createStackNavigator<MainStackParamList>();
 
 const MainNavigator = () => {
   const dispatch = useAppDispatch();
+  const { i18n } = useTranslation();
   const { token, isUserProfileLoading } = useAppSelector((state) => state.user);
   const { isUserPlacesLoading, isCategoriesLoading } = useAppSelector((state) => state.map);
   const isInternet = useInternetStatus();
+
+  // Get language from async storage
+  const getLanguage = async () => {
+    try {
+      const language = await Storage.getString('language');
+      if (language) {
+        i18n.changeLanguage(language);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  useEffect(() => {
+    getLanguage();
+  }, []);
 
   useEffect(() => {
     if (token) {

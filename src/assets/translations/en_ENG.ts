@@ -30,19 +30,22 @@ export default {
         addPlace: 'Add place',
         spatialSearch: 'Spatial search',
       },
+      searchPlaceholder: 'Search',
     },
     addPlace: {
       type: {
         device: 'Device location',
         map: 'Click on the map',
+        search: 'Search for a place',
       },
+      searchPlaceholder: 'Enter the address',
       next: 'NEXT',
-      locationInformation: 'Location Information',
+      locationInformation: 'Information:',
       country: 'Country',
       address: 'Address',
       place: 'Place',
       form: {
-        title: 'Place Form',
+        title: 'Details',
         name: 'Name of place',
         description: 'Description (optional)',
         category: 'Category',
@@ -64,14 +67,23 @@ export default {
       addressHeader: 'Address Details',
       mapHeader: 'Map',
     },
+    settings: {
+      title: 'Settings',
+      language: {
+        title: 'Language',
+        change: 'Change language',
+        english: 'English',
+        polish: 'Polish',
+      },
+      logout: 'Logout',
+    },
   },
   buttons: {
     tryAgain: 'Try again',
-    next: 'NEXT',
   },
   modals: {
     addPlace: {
-      desc: 'Choose how you want to add\n a place on the map?',
+      desc: 'Choose how you want to add\n a place on the map',
       options: {
         device: 'Device location',
         search: 'Search for a place',
@@ -97,6 +109,10 @@ export default {
         delete: 'Delete',
       },
     },
+  },
+  bottomTabs: {
+    map: 'Map',
+    profile: 'Profile',
   },
   errors: {
     name: 'ERROR',
