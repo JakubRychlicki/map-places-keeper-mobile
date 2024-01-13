@@ -13,6 +13,7 @@ import AddPlaceFormScreen from '../screens/Map/AddPlaceFormScreen/AddPlaceFormSc
 import AddPlaceSearchScreen from '../screens/Map/AddPlaceSearchScreen';
 import SpatialSearchScreen from '../screens/Map/SpatialSearchScreen';
 import PlacesScreen from '../screens/Map/PlacesScreen';
+import FoundPlaceDetails from '../screens/Map/FoundPlaceDetails';
 
 export type MapNavigatorScreen<T extends keyof MapStackParamList> = React.FC<{
   navigation: StackNavigationProp<MapStackParamList, T>;
@@ -26,6 +27,7 @@ export type MapStackParamList = {
   AddPlaceForm: { location: LocationDetails };
   SpatialSearch: undefined;
   Places: { area: number[][] };
+  FoundPlaceDetails: { id: number };
 };
 
 const MapStack = createStackNavigator<MapStackParamList>();
@@ -46,6 +48,7 @@ const MapNavigator = () => {
       <MapStack.Screen name="AddPlaceForm" component={AddPlaceFormScreen} />
       <MapStack.Screen name="SpatialSearch" component={SpatialSearchScreen} />
       <MapStack.Screen name="Places" component={PlacesScreen} />
+      <MapStack.Screen name="FoundPlaceDetails" component={FoundPlaceDetails} />
     </MapStack.Navigator>
   );
 };

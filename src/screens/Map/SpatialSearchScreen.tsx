@@ -132,7 +132,7 @@ const SpatialSearchScreen: MapNavigatorScreen<'SpatialSearch'> = ({ navigation }
           <Camera defaultSettings={{ centerCoordinate: [22.5673331, 51.249687], zoomLevel: 14 }} />
           <MapPoints data={userPlaces.data} />
           {features.length >= 4 ? buildPolygon(features) : null}
-          {features.map((f, i) => {
+          {features.map((f) => {
             return (
               <PointAnnotation
                 id={f.id}

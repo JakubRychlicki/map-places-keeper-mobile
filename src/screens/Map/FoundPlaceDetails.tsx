@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ProfileNavigatorScreen } from '../../navigation/ProfileNavigator';
+import { MapNavigatorScreen } from '../../navigation/MapNavigator';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { Camera, MapView, PointAnnotation } from '@rnmapbox/maps';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,7 @@ import * as actions from '../../store/actions';
 
 // THEME
 import Colors from '../../constants/Colors';
+
 // ASSETS
 import MapPointSvg from '../../assets/svg/icons/MapPointSvg';
 import RemoveSvg from '../../assets/svg/icons/RemoveIcon';
@@ -24,7 +25,7 @@ import Typography, { TypographyType } from '../../components/controls/Typography
 import RoundButton from '../../components/controls/RoundButton';
 import PlaceDeleteModal from '../../components/profile/PlaceDeleteModal';
 
-const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, route }) => {
+const FoundPlaceDetails: MapNavigatorScreen<'FoundPlaceDetails'> = ({ navigation, route }) => {
   const { id } = route.params;
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -107,7 +108,7 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
   );
 };
 
-export default PlaceDetails;
+export default FoundPlaceDetails;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
-import { useAppSelector } from '../../hooks/useAppDispatch';
 import { UserPlace } from '../../store/types/Map.model';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../../navigation/ProfileNavigator';
@@ -9,12 +8,11 @@ import { ProfileStackParamList } from '../../navigation/ProfileNavigator';
 import PlacesItem from './PlacesItem';
 
 interface Props {
+  places: UserPlace[];
   navigation: StackNavigationProp<ProfileStackParamList, 'MainProfile'>;
 }
 
-const PlacesList: FC<Props> = ({ navigation }) => {
-  const { userPlaces } = useAppSelector((state) => state.map);
-
+const PlacesList: FC<Props> = ({ navigation, places }) => {
   const renderItem: ListRenderItem<UserPlace> = ({ item }) => {
     const { name, locality, graphics } = item.attributes;
     let imageURL = null;
@@ -35,7 +33,7 @@ const PlacesList: FC<Props> = ({ navigation }) => {
 
   return (
     <FlatList
-      data={userPlaces.data}
+      data={places}
       keyExtractor={(place) => place.id.toString()}
       numColumns={2}
       columnWrapperStyle={styles.row}

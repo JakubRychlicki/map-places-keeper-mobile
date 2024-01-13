@@ -62,6 +62,10 @@ export default {
       reset: 'Reset',
       search: 'Search',
     },
+    places: {
+      title: 'Found places({{value}})',
+      noPlaces: 'No places were found in the search area.',
+    },
     profile: {
       myPlaces: 'My Places',
     },

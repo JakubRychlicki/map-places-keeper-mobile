@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileNavigatorScreen } from '../../navigation/ProfileNavigator';
@@ -16,15 +17,29 @@ import ScreenTopBar from '../../components/ScreenTopBar';
 import RoundButton from '../../components/controls/RoundButton';
 import ProfileInfo from '../../components/profile/ProfileInfo';
 import Typography, { TypographyType } from '../../components/controls/Typography';
+import FilterTab from '../../components/profile/FilterTab';
 
 const ProfileScreen: ProfileNavigatorScreen<'MainProfile'> = ({ navigation }) => {
   const { t } = useTranslation();
   const { user } = useAppSelector((state) => state.user);
   const { userPlaces } = useAppSelector((state) => state.map);
+  const [activeCategoryID, setActiveCategoryID] = useState<number | null>(null);
 
   const openSettings = () => {
     navigation.navigate('Settings');
   };
+
+  const changeCategory = (id: number | null) => {
+    setActiveCategoryID(id);
+  };
+
+  const filterPlaces = userPlaces.data.filter((place) => {
+    if (activeCategoryID === null) {
+      return true;
+    }
+
+    return place.attributes.category.data.id === activeCategoryID;
+  });
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
@@ -35,7 +50,8 @@ const ProfileScreen: ProfileNavigatorScreen<'MainProfile'> = ({ navigation }) =>
           {t('screens:profile:myPlaces')}
         </Typography>
       </View>
-      <PlacesList navigation={navigation} />
+      <FilterTab activeCategoryID={activeCategoryID} changeCategory={changeCategory} />
+      <PlacesList places={filterPlaces} navigation={navigation} />
     </SafeAreaView>
   );
 };

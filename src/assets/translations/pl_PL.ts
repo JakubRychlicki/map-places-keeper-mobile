@@ -50,7 +50,7 @@ export default {
         description: 'Opis (opcjonalnie)',
         category: 'Kategoria',
         categoryChange: 'Zmień',
-        defaultCategory: 'Ogólna',
+        defaultCategory: 'Ogólne',
         removePhoto: 'Usuń dodane zdjęcie',
         submit: 'ZAPISZ',
       },
@@ -61,6 +61,10 @@ export default {
       hint: 'Aby utworzyć obszar wyszukiwania, umieść co najmniej 4 punkty na mapie.',
       reset: 'ZRESETUJ',
       search: 'Szukaj',
+    },
+    places: {
+      title: 'Znalezione miejsca({{value}})',
+      noPlaces: 'Nie znaleziono żadnych miejsc w poszukiwanym obszarze.',
     },
     profile: {
       myPlaces: 'Moje miejsca',
