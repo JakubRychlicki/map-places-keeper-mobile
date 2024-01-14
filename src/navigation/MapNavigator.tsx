@@ -14,6 +14,7 @@ import AddPlaceSearchScreen from '../screens/Map/AddPlaceSearchScreen';
 import SpatialSearchScreen from '../screens/Map/SpatialSearchScreen';
 import PlacesScreen from '../screens/Map/PlacesScreen';
 import FoundPlaceDetails from '../screens/Map/FoundPlaceDetails';
+import { Position } from '@rnmapbox/maps/lib/typescript/types/Position';
 
 export type MapNavigatorScreen<T extends keyof MapStackParamList> = React.FC<{
   navigation: StackNavigationProp<MapStackParamList, T>;
@@ -22,10 +23,10 @@ export type MapNavigatorScreen<T extends keyof MapStackParamList> = React.FC<{
 
 export type MapStackParamList = {
   MainMap: undefined;
-  AddPlace: { type: string };
+  AddPlace: { type: string; bounds?: [Position, Position] };
   AddPlaceSearch: undefined;
   AddPlaceForm: { location: LocationDetails };
-  SpatialSearch: undefined;
+  SpatialSearch: { bounds?: [Position, Position] };
   Places: { area: number[][] };
   FoundPlaceDetails: { id: number };
 };

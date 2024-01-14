@@ -4,6 +4,7 @@ import { Modal } from 'react-native-paper';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MapStackParamList } from '../../navigation/MapNavigator';
 import { useTranslation } from 'react-i18next';
+import { Position } from '@rnmapbox/maps/lib/typescript/types/Position';
 
 // THEME
 import Colors from '../../constants/Colors';
@@ -18,9 +19,10 @@ interface Props {
   visible: boolean;
   hideModal: () => void;
   navigation: StackNavigationProp<MapStackParamList, 'MainMap'>;
+  mapBounds?: [Position, Position];
 }
 
-const ModalAddPlace: FC<Props> = ({ visible, hideModal, navigation }) => {
+const ModalAddPlace: FC<Props> = ({ visible, hideModal, navigation, mapBounds }) => {
   const { t } = useTranslation();
 
   return (
@@ -45,7 +47,7 @@ const ModalAddPlace: FC<Props> = ({ visible, hideModal, navigation }) => {
         <Button
           title={t('modals:addPlace:options:map')}
           onPress={() => {
-            navigation.navigate('AddPlace', { type: 'press_on_the_map' });
+            navigation.navigate('AddPlace', { type: 'press_on_the_map', bounds: mapBounds });
             hideModal();
           }}
           backgroundColor={Colors.tertiary}

@@ -86,6 +86,8 @@ const FoundPlaceDetails: MapNavigatorScreen<'FoundPlaceDetails'> = ({ navigation
           <MapView
             zoomEnabled={true}
             scaleBarEnabled={false}
+            logoEnabled={false}
+            attributionEnabled={false}
             requestDisallowInterceptTouchEvent={true}
             style={styles.map}
           >

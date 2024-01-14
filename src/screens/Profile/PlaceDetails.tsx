@@ -85,6 +85,8 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
           <MapView
             zoomEnabled={true}
             scaleBarEnabled={false}
+            logoEnabled={false}
+            attributionEnabled={false}
             requestDisallowInterceptTouchEvent={true}
             style={styles.map}
           >

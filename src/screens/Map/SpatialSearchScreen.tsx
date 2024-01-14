@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Camera, FillLayer, MapView, PointAnnotation, ShapeSource } from '@rnmapbox/maps';
@@ -34,8 +34,10 @@ type SelectedPoint = {
   color: string;
 };
 
-const SpatialSearchScreen: MapNavigatorScreen<'SpatialSearch'> = ({ navigation }) => {
+const SpatialSearchScreen: MapNavigatorScreen<'SpatialSearch'> = ({ navigation, route }) => {
   const { t } = useTranslation();
+  const { bounds } = route.params;
+  const cameraRef = useRef<Camera | null>(null);
   const { userPlaces } = useAppSelector((state) => state.map);
   const [features, setFeatures] = useState<SelectedPoint[]>([]);
   const [draggableMode, setDraggableMode] = useState(false);
@@ -122,14 +124,21 @@ const SpatialSearchScreen: MapNavigatorScreen<'SpatialSearch'> = ({ navigation }
       <View style={styles.mapContainer}>
         <MapView
           scaleBarEnabled={false}
+          logoEnabled={false}
+          attributionEnabled={false}
           style={styles.map}
           onPress={(_feature: Feature<Geometry, GeoJsonProperties>) => {
             if (features.length < 6) {
               addFeature(_feature);
             }
           }}
+          onDidFinishLoadingMap={() => {
+            if (bounds) {
+              cameraRef.current?.fitBounds(bounds[0], bounds[1]);
+            }
+          }}
         >
-          <Camera defaultSettings={{ centerCoordinate: [22.5673331, 51.249687], zoomLevel: 14 }} />
+          <Camera ref={cameraRef} />
           <MapPoints data={userPlaces.data} />
           {features.length >= 4 ? buildPolygon(features) : null}
           {features.map((f) => {

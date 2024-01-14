@@ -25,8 +25,8 @@ import ModalLocationWarning from '../../components/controls/ModalLocationWarning
 Geolocation.setRNConfiguration({ skipPermissionRequests: false, locationProvider: 'auto' });
 
 const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) => {
-  const { type } = route.params;
   const { t } = useTranslation();
+  const { type, bounds } = route.params;
   const cameraRef = useRef<Camera | null>(null);
   const [isLocationErrorOpen, setIsLocationErrorOpen] = useState(false);
   const [location, setLocation] = useState<LocationDetails>({
@@ -101,10 +101,17 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
       <View style={styles.mapContainer}>
         <Mapbox.MapView
           scaleBarEnabled={false}
+          logoEnabled={false}
+          attributionEnabled={false}
           style={styles.map}
           onPress={(_feature: Feature<Geometry, GeoJsonProperties>) => {
             if (type === 'press_on_the_map') {
               addFeature(_feature);
+            }
+          }}
+          onDidFinishLoadingMap={() => {
+            if (type === 'press_on_the_map' && bounds) {
+              cameraRef.current?.fitBounds(bounds[0], bounds[1]);
             }
           }}
         >
