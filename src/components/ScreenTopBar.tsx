@@ -10,18 +10,30 @@ type ScreenTopBarProps = {
   containerStyle?: StyleProp<ViewStyle>;
   rightIcon?: React.ReactNode;
   hideBackButton?: boolean;
+  isPlaceDetailsView?: boolean;
+  optionsForPlaceDetailsView?: React.ReactNode;
 };
 
-const ScreenTopBar: React.FC<ScreenTopBarProps> = ({ title, rightIcon, containerStyle, hideBackButton }) => {
+const ScreenTopBar: React.FC<ScreenTopBarProps> = ({
+  title,
+  rightIcon,
+  containerStyle,
+  hideBackButton,
+  isPlaceDetailsView,
+  optionsForPlaceDetailsView,
+}) => {
   const navigation = useAppNavigation();
 
   return (
-    <Topbar
-      leftIcon={!hideBackButton ? <RoundButton icon={<BackSvg />} onPress={navigation.goBack} /> : null}
-      title={title}
-      rightIcon={rightIcon}
-      containerStyle={containerStyle}
-    />
+    <>
+      {isPlaceDetailsView && optionsForPlaceDetailsView}
+      <Topbar
+        leftIcon={!hideBackButton ? <RoundButton icon={<BackSvg />} onPress={navigation.goBack} /> : null}
+        title={title}
+        rightIcon={rightIcon}
+        containerStyle={containerStyle}
+      />
+    </>
   );
 };
 

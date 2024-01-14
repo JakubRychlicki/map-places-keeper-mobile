@@ -73,6 +73,14 @@ export default {
       addressHeader: 'Szczegóły adresu',
       mapHeader: 'Mapa',
     },
+    editPlaceDetails: {
+      title: 'Edycja',
+      photo: {
+        new: 'Nowe',
+        old: 'Aktualne',
+      },
+      submit: 'Zaktualizuj',
+    },
     settings: {
       title: 'Ustawienia',
       language: {

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import { Modal } from 'react-native-paper';
+import Modal from 'react-native-modal';
 import { useTranslation } from 'react-i18next';
 
 // COMPONENTS
@@ -18,14 +18,22 @@ const ModalLocationWarning: FC<Props> = ({ visible, tryAgainFcn }) => {
   const { t } = useTranslation();
 
   return (
-    <Modal visible={visible} style={styles.container} contentContainerStyle={styles.content}>
-      <Typography type={TypographyType.MediumHeaderR} style={styles.title}>
-        {t('errors:name')}
-      </Typography>
-      <Typography style={styles.desc}>{t('errors:failToGetLocation')}</Typography>
+    <Modal
+      isVisible={visible}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
+      useNativeDriverForBackdrop={true}
+      style={styles.container}
+    >
+      <View style={styles.content}>
+        <Typography type={TypographyType.MediumHeaderR} style={styles.title}>
+          {t('errors:name')}
+        </Typography>
+        <Typography style={styles.desc}>{t('errors:failToGetLocation')}</Typography>
 
-      <View style={styles.buttons}>
-        <Button title={t('buttons:tryAgain')} onPress={tryAgainFcn} />
+        <View style={styles.buttons}>
+          <Button title={t('buttons:tryAgain')} onPress={tryAgainFcn} />
+        </View>
       </View>
     </Modal>
   );

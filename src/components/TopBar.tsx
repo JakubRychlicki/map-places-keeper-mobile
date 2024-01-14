@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     width: '100%',
     backgroundColor: Colors.primary,
+    zIndex: 1,
   },
   rightSide: {
     alignItems: 'flex-end',

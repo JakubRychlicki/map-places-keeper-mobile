@@ -5,6 +5,8 @@ import { MAPBOX_TOKEN } from '@env';
 import Mapbox from '@rnmapbox/maps';
 import { injectStore } from './src/services/API';
 import store from './src/store/configureStore';
+import { StatusBar } from 'react-native';
+import Colors from './src/constants/Colors';
 
 Mapbox.setAccessToken(MAPBOX_TOKEN);
 
@@ -13,6 +15,7 @@ function App() {
 
   return (
     <I18nextProvider i18n={i18n}>
+      <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
       <MainNavigator />
     </I18nextProvider>
   );

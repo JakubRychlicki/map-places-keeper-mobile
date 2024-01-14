@@ -6,11 +6,37 @@ import {
   DeleteUserPlaceTypes,
   GetPlacesCategoriesActionTypes,
   GetUserPlacesActionTypes,
+  UpdateUserPlaceTypes,
 } from '../actionTypes';
-import { AddPlacePayload, UserPlace } from '../../types/Map.model';
+import { AddPlacePayload, UpdatePlacePayload, UserPlace } from '../../types/Map.model';
 import { API_URL } from '@env';
 import { AxiosResponse } from 'axios';
 import { PlaceCategory } from '../../types/Categories';
+
+export const getUserPlaces = (): AppThunk => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const userPlacesList = state.map.userPlaces;
+
+    dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES });
+    try {
+      const { data }: AxiosResponse<{ data: UserPlace[] }> = await Api.get(
+        `${Endpoint.Places}?populate=graphics,category&pagination[start]=${userPlacesList.start}&pagination[limit]=${userPlacesList.limit}`,
+      );
+
+      const newPlaces = {
+        ...userPlacesList,
+        data: [...userPlacesList.data, ...data.data],
+        start: userPlacesList.start + data.data.length,
+        reachEnd: data.data.length < userPlacesList.limit,
+      };
+
+      dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_SUCCESS, places: newPlaces });
+    } catch (e: any) {
+      dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_FAILURE });
+    }
+  };
+};
 
 export const addPlace = ({ place, file }: AddPlacePayload): AppThunk => {
   return async (dispatch, getState) => {
@@ -45,31 +71,6 @@ export const addPlace = ({ place, file }: AddPlacePayload): AppThunk => {
   };
 };
 
-export const getUserPlaces = (): AppThunk => {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const userPlacesList = state.map.userPlaces;
-
-    dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES });
-    try {
-      const { data }: AxiosResponse<{ data: UserPlace[] }> = await Api.get(
-        `${Endpoint.Places}?populate=graphics,category&pagination[start]=${userPlacesList.start}&pagination[limit]=${userPlacesList.limit}`,
-      );
-
-      const newPlaces = {
-        ...userPlacesList,
-        data: [...userPlacesList.data, ...data.data],
-        start: userPlacesList.start + data.data.length,
-        reachEnd: data.data.length < userPlacesList.limit,
-      };
-
-      dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_SUCCESS, places: newPlaces });
-    } catch (e: any) {
-      dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES_FAILURE });
-    }
-  };
-};
-
 export const deletePlace = (placeId: number): AppThunk => {
   return async (dispatch) => {
     dispatch({ type: DeleteUserPlaceTypes.DELETE_USER_PLACE });
@@ -79,6 +80,38 @@ export const deletePlace = (placeId: number): AppThunk => {
       dispatch({ type: DeleteUserPlaceTypes.DELETE_USER_PLACE_SUCCESS, placeId: placeId });
     } catch (e: any) {
       dispatch({ type: DeleteUserPlaceTypes.DELETE_USER_PLACE_FAILURE });
+    }
+  };
+};
+
+export const updatePlace = ({ placeID, place, file }: UpdatePlacePayload): AppThunk => {
+  return async (dispatch, getState) => {
+    const state = getState();
+
+    dispatch({ type: UpdateUserPlaceTypes.UPDATE_USER_PLACE });
+    try {
+      const placeData = {
+        ...place,
+      };
+
+      const formData = new FormData();
+      if (file) {
+        formData.append('files.graphics', file);
+      }
+      formData.append('data', JSON.stringify(placeData));
+
+      const { data }: AxiosResponse<{ data: UserPlace }> = await Api({
+        method: 'put',
+        url: `${API_URL}/api${Endpoint.Places}/${placeID}?populate=graphics,category`,
+        data: formData,
+        headers: {
+          Authorization: 'Bearer ' + state.user.token,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      dispatch({ type: UpdateUserPlaceTypes.UPDATE_USER_PLACE_SUCCESS, place: data.data });
+    } catch (e: any) {
+      dispatch({ type: UpdateUserPlaceTypes.UPDATE_USER_PLACE_SUCCESS });
     }
   };
 };

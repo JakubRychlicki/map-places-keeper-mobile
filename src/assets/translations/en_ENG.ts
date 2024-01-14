@@ -73,6 +73,14 @@ export default {
       addressHeader: 'Address Details',
       mapHeader: 'Map',
     },
+    editPlaceDetails: {
+      title: 'Edit',
+      photo: {
+        new: 'New',
+        old: 'Old',
+      },
+      submit: 'Update',
+    },
     settings: {
       title: 'Settings',
       language: {

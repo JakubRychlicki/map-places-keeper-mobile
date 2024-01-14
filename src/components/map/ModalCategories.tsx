@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { View, Dimensions, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { Modal } from 'react-native-paper';
+import Modal from 'react-native-modal';
 import { useTranslation } from 'react-i18next';
 import { SvgXml } from 'react-native-svg';
 import { PlaceCategory } from '../../store/types/Categories';
@@ -49,44 +49,53 @@ const ModalCategories: FC<Props> = ({ visible, hideModal, activeCategoryId, chan
   }
 
   return (
-    <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
-      <View style={styles.titleContainer}>
-        <Typography type={TypographyType.TextM} style={styles.title}>
-          {t('modals:categories:title')}
-        </Typography>
-        <TouchableOpacity activeOpacity={0.6} style={styles.closeButton} onPress={hideModal}>
-          <View style={styles.closeButtonIcon}>
-            <CloseSvg stroke={Colors.black} />
-          </View>
-        </TouchableOpacity>
-      </View>
+    <Modal
+      isVisible={visible}
+      onBackdropPress={hideModal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
+      useNativeDriverForBackdrop={true}
+      style={styles.container}
+    >
+      <View style={styles.content}>
+        <View style={styles.titleContainer}>
+          <Typography type={TypographyType.TextM} style={styles.title}>
+            {t('modals:categories:title')}
+          </Typography>
+          <TouchableOpacity activeOpacity={0.6} style={styles.closeButton} onPress={hideModal}>
+            <View style={styles.closeButtonIcon}>
+              <CloseSvg stroke={Colors.black} />
+            </View>
+          </TouchableOpacity>
+        </View>
 
-      {filteredCategories.length > 0 ? (
-        <FlatList
-          data={filteredCategories}
-          numColumns={3}
-          columnWrapperStyle={styles.categoryListColumnWrapper}
-          contentContainerStyle={styles.categoryListContentContainer}
-          renderItem={({ item }) => {
-            const { name, icon } = item.attributes;
-            return (
-              <TouchableOpacity
-                activeOpacity={0.6}
-                style={[styles.category, item.id === activeCategoryId && styles.activeCategory]}
-                onPress={() => changeCategory(item)}
-              >
-                <View style={styles.categoryIcon}>
-                  <SvgXml xml={icon} />
-                </View>
-                <Typography numberOfLines={1}>{name}</Typography>
-              </TouchableOpacity>
-            );
-          }}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      ) : (
-        <Loader />
-      )}
+        {filteredCategories.length > 0 ? (
+          <FlatList
+            data={filteredCategories}
+            numColumns={3}
+            columnWrapperStyle={styles.categoryListColumnWrapper}
+            contentContainerStyle={styles.categoryListContentContainer}
+            renderItem={({ item }) => {
+              const { name, icon } = item.attributes;
+              return (
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  style={[styles.category, item.id === activeCategoryId && styles.activeCategory]}
+                  onPress={() => changeCategory(item)}
+                >
+                  <View style={styles.categoryIcon}>
+                    <SvgXml xml={icon} />
+                  </View>
+                  <Typography numberOfLines={1}>{name}</Typography>
+                </TouchableOpacity>
+              );
+            }}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        ) : (
+          <Loader />
+        )}
+      </View>
     </Modal>
   );
 };

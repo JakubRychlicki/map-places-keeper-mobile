@@ -42,6 +42,12 @@ export interface AddPlacePayload {
   file: Photo | null;
 }
 
+export interface UpdatePlacePayload {
+  placeID: number;
+  place: Partial<PlaceData>;
+  file: Photo | null;
+}
+
 export interface PlaceData {
   name: string;
   description: string;

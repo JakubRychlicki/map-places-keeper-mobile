@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image, ScrollView } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, StyleSheet, Image, ScrollView, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ProfileNavigatorScreen } from '../../navigation/ProfileNavigator';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
@@ -11,9 +11,12 @@ import * as actions from '../../store/actions';
 
 // THEME
 import Colors from '../../constants/Colors';
+
 // ASSETS
 import MapPointSvg from '../../assets/svg/icons/MapPointSvg';
 import RemoveSvg from '../../assets/svg/icons/RemoveIcon';
+import EditSvg from '../../assets/svg/icons/EditSvg';
+import MoreSvg from '../../assets/svg/icons/MoreSvg';
 import PlaceholderImage from '../../assets/images/placeholder.jpg';
 
 // COMPONENTS
@@ -31,13 +34,44 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
   const { userPlaces, isDeletePlaceLoading } = useAppSelector((state) => state.map);
   const currentPlace = userPlaces.data.find((place) => place.id === id);
 
+  // MORE OPTIONS
+  const optionsSlideAnim = useRef(new Animated.Value(0)).current;
+  const [isOptionsVisible, setIsOptionsVisible] = useState(false);
+  const toogleOptionsVisible = () => setIsOptionsVisible(!isOptionsVisible);
+  const hideOptions = () => {
+    slideTo(0);
+    setIsOptionsVisible(false);
+  };
+
+  // PLACE DELETE MODAL
   const [placeDeleteModalVisible, setPlaceDeleteModalVisible] = useState(false);
   const showPlaceDeleteModal = () => setPlaceDeleteModalVisible(true);
-  const hidePlaceDeleteModal = () => setPlaceDeleteModalVisible(false);
+  const hidePlaceDeleteModal = () => {
+    setPlaceDeleteModalVisible(false);
+    hideOptions();
+  };
 
   const deletePlace = () => {
     dispatch(actions.deletePlace(id));
     navigation.goBack();
+  };
+
+  const slideTo = (toValue: number) => {
+    Animated.timing(optionsSlideAnim, {
+      toValue,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const toggleSlide = () => {
+    if (isOptionsVisible) {
+      slideTo(99);
+    } else {
+      slideTo(0);
+    }
+
+    toogleOptionsVisible();
   };
 
   if (!currentPlace) {
@@ -55,7 +89,30 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <ScreenTopBar title={name} rightIcon={<RoundButton icon={<RemoveSvg />} onPress={showPlaceDeleteModal} />} />
+      <ScreenTopBar
+        title={name}
+        rightIcon={<RoundButton icon={<MoreSvg />} onPress={toggleSlide} />}
+        isPlaceDetailsView
+        optionsForPlaceDetailsView={
+          <Animated.View
+            style={[
+              styles.options,
+              {
+                transform: [{ translateY: optionsSlideAnim }],
+              },
+            ]}
+          >
+            <RoundButton
+              icon={<EditSvg />}
+              onPress={() => {
+                hideOptions();
+                navigation.navigate('EditPlaceDetails', { place: currentPlace });
+              }}
+            />
+            <RoundButton icon={<RemoveSvg />} onPress={showPlaceDeleteModal} />
+          </Animated.View>
+        }
+      />
       <ScrollView>
         <View style={styles.imageContainer}>
           <View style={styles.categoryIconContainer}>
@@ -166,5 +223,15 @@ const styles = StyleSheet.create({
   point: {
     width: 30,
     height: 30,
+  },
+  options: {
+    position: 'absolute',
+    top: -50,
+    right: 20,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    zIndex: 1,
+    backgroundColor: Colors.primary,
   },
 });

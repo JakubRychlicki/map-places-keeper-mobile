@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 150,
+    borderRadius: 10,
   },
   descContainer: {
     paddingVertical: 5,

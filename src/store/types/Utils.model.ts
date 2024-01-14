@@ -12,6 +12,7 @@ export interface StrapiPhoto {
       alternativeText: string;
       width: number;
       height: number;
+      mime: string;
       formats: {
         thumbnail: {
           url: string;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
-import { Modal } from 'react-native-paper';
+import Modal from 'react-native-modal';
 import ImagePicker from 'react-native-image-crop-picker';
 import { Photo } from '../../store/types/Utils.model';
 import { useTranslation } from 'react-i18next';
@@ -73,22 +73,31 @@ const ModalPhotoPicker: FC<Props> = ({ visible, hideModal, handlePhoto }) => {
   };
 
   return (
-    <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
-      <Typography style={styles.title}>{t('modals:photoPicker:desc')}</Typography>
-      <View style={styles.options}>
-        <TouchableOpacity activeOpacity={0.6} style={styles.option} onPress={openCamera}>
-          <View style={styles.icon}>
-            <CameraSvg fill={Colors.primary} />
-          </View>
-          <Typography>{t('modals:photoPicker:options:camera')}</Typography>
-        </TouchableOpacity>
-        <Typography>{t('modals:photoPicker:or')}</Typography>
-        <TouchableOpacity activeOpacity={0.6} style={styles.option} onPress={openGallery}>
-          <View style={styles.icon}>
-            <GallerySvg fill={Colors.primary} />
-          </View>
-          <Typography>{t('modals:photoPicker:options:gallery')}</Typography>
-        </TouchableOpacity>
+    <Modal
+      isVisible={visible}
+      onBackdropPress={hideModal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
+      useNativeDriverForBackdrop={true}
+      style={styles.container}
+    >
+      <View style={styles.content}>
+        <Typography style={styles.title}>{t('modals:photoPicker:desc')}</Typography>
+        <View style={styles.options}>
+          <TouchableOpacity activeOpacity={0.6} style={styles.option} onPress={openCamera}>
+            <View style={styles.icon}>
+              <CameraSvg fill={Colors.primary} />
+            </View>
+            <Typography>{t('modals:photoPicker:options:camera')}</Typography>
+          </TouchableOpacity>
+          <Typography>{t('modals:photoPicker:or')}</Typography>
+          <TouchableOpacity activeOpacity={0.6} style={styles.option} onPress={openGallery}>
+            <View style={styles.icon}>
+              <GallerySvg fill={Colors.primary} />
+            </View>
+            <Typography>{t('modals:photoPicker:options:gallery')}</Typography>
+          </TouchableOpacity>
+        </View>
       </View>
     </Modal>
   );

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import { Modal } from 'react-native-paper';
+import Modal from 'react-native-modal';
 import { useTranslation } from 'react-i18next';
 
 // THEME
@@ -23,24 +23,33 @@ const PlaceDeleteModal: FC<Props> = ({ visible, isLoading, hideModal, deletePlac
   const { t } = useTranslation();
 
   return (
-    <Modal visible={visible} onDismiss={hideModal} style={styles.container} contentContainerStyle={styles.content}>
-      <Typography style={styles.title} type={TypographyType.MediumHeaderR}>
-        {t('modals:deletePlace:title')}
-      </Typography>
-      <Typography style={styles.desc}>{t('modals:deletePlace:desc')}</Typography>
-      <View style={styles.buttons}>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <TouchableOpacity onPress={hideModal}>
-              <Typography>{t('modals:deletePlace:options:cancel')}</Typography>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={deletePlace}>
-              <Typography color={Colors.red}>{t('modals:deletePlace:options:delete')}</Typography>
-            </TouchableOpacity>
-          </>
-        )}
+    <Modal
+      isVisible={visible}
+      onBackdropPress={hideModal}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
+      useNativeDriverForBackdrop={true}
+      style={styles.container}
+    >
+      <View style={styles.content}>
+        <Typography style={styles.title} type={TypographyType.MediumHeaderR}>
+          {t('modals:deletePlace:title')}
+        </Typography>
+        <Typography style={styles.desc}>{t('modals:deletePlace:desc')}</Typography>
+        <View style={styles.buttons}>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <TouchableOpacity onPress={hideModal}>
+                <Typography>{t('modals:deletePlace:options:cancel')}</Typography>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={deletePlace}>
+                <Typography color={Colors.red}>{t('modals:deletePlace:options:delete')}</Typography>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
       </View>
     </Modal>
   );
