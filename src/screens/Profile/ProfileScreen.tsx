@@ -50,8 +50,16 @@ const ProfileScreen: ProfileNavigatorScreen<'MainProfile'> = ({ navigation }) =>
           {t('screens:profile:myPlaces')}
         </Typography>
       </View>
-      <FilterTab activeCategoryID={activeCategoryID} changeCategory={changeCategory} />
-      <PlacesList places={filterPlaces} navigation={navigation} />
+      {userPlaces.data.length > 0 ? (
+        <>
+          <FilterTab activeCategoryID={activeCategoryID} changeCategory={changeCategory} />
+          <PlacesList places={filterPlaces} navigation={navigation} />
+        </>
+      ) : (
+        <View style={styles.noPlacesContainer}>
+          <Typography type={TypographyType.Text}>{t('screens:profile:noPlaces')}</Typography>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -68,5 +76,8 @@ const styles = StyleSheet.create({
     height: 100,
     paddingLeft: 20,
     paddingBottom: 10,
+  },
+  noPlacesContainer: {
+    paddingHorizontal: 20,
   },
 });

@@ -2,7 +2,7 @@ export default {
   screens: {
     welcome: {
       title: 'Zachowaj swoje\n ulubione miejsca',
-      desc: 'Zapisz wszystkie ważne informacje o swoich ulubionych miejscach w jednym miejscu. Aplikacja umożliwia dodawanie szczegółów, takich jak nazwa, adres, opis, kategorie i zdjęcie.',
+      desc: 'Zapisz wszystkie ważne informacje o swoich ulubionych miejscach w jednym miejscu. Aplikacja umożliwia dodawanie szczegółów, takich jak nazwa, adres, opis, kategoria i zdjęcie.',
       register: 'Zarejestruj się',
       login: 'Zaloguj się',
     },
@@ -68,6 +68,7 @@ export default {
     },
     profile: {
       myPlaces: 'Moje miejsca',
+      noPlaces: 'Nie masz jeszcze żadnych dodanych miejsc.',
     },
     placeDetails: {
       addressHeader: 'Szczegóły adresu',

@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MapNavigatorScreen } from '../../navigation/MapNavigator';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppDispatch';
 import { Camera, MapView, PointAnnotation } from '@rnmapbox/maps';
 import { useTranslation } from 'react-i18next';
 import { SvgXml } from 'react-native-svg';
 import { API_URL } from '@env';
-import * as actions from '../../store/actions';
 
 // THEME
 import Colors from '../../constants/Colors';
 
 // ASSETS
 import MapPointSvg from '../../assets/svg/icons/MapPointSvg';
-import RemoveSvg from '../../assets/svg/icons/RemoveIcon';
 import PlaceholderImage from '../../assets/images/placeholder.jpg';
 
 // COMPONENTS
@@ -22,24 +20,12 @@ import Loader from '../../components/controls/Loader';
 import ScreenTopBar from '../../components/ScreenTopBar';
 import LocationInfo from '../../components/map/LocationInfo';
 import Typography, { TypographyType } from '../../components/controls/Typography';
-import RoundButton from '../../components/controls/RoundButton';
-import PlaceDeleteModal from '../../components/profile/PlaceDeleteModal';
 
-const FoundPlaceDetails: MapNavigatorScreen<'FoundPlaceDetails'> = ({ navigation, route }) => {
+const FoundPlaceDetails: MapNavigatorScreen<'FoundPlaceDetails'> = ({ route }) => {
   const { id } = route.params;
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const { userPlaces, isDeletePlaceLoading } = useAppSelector((state) => state.map);
+  const { userPlaces } = useAppSelector((state) => state.map);
   const currentPlace = userPlaces.data.find((place) => place.id === id);
-
-  const [placeDeleteModalVisible, setPlaceDeleteModalVisible] = useState(false);
-  const showPlaceDeleteModal = () => setPlaceDeleteModalVisible(true);
-  const hidePlaceDeleteModal = () => setPlaceDeleteModalVisible(false);
-
-  const deletePlace = () => {
-    dispatch(actions.deletePlace(id));
-    navigation.goBack();
-  };
 
   if (!currentPlace) {
     return <Loader />;
@@ -56,7 +42,7 @@ const FoundPlaceDetails: MapNavigatorScreen<'FoundPlaceDetails'> = ({ navigation
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <ScreenTopBar title={name} rightIcon={<RoundButton icon={<RemoveSvg />} onPress={showPlaceDeleteModal} />} />
+      <ScreenTopBar title={name} />
       <ScrollView>
         <View style={styles.imageContainer}>
           <View style={styles.categoryIconContainer}>
@@ -100,12 +86,6 @@ const FoundPlaceDetails: MapNavigatorScreen<'FoundPlaceDetails'> = ({ navigation
           </MapView>
         </View>
       </ScrollView>
-      <PlaceDeleteModal
-        visible={placeDeleteModalVisible}
-        isLoading={isDeletePlaceLoading}
-        hideModal={hidePlaceDeleteModal}
-        deletePlace={deletePlace}
-      />
     </SafeAreaView>
   );
 };

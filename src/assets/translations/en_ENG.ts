@@ -68,6 +68,7 @@ export default {
     },
     profile: {
       myPlaces: 'My Places',
+      noPlaces: 'You don’t have any places added yet.',
     },
     placeDetails: {
       addressHeader: 'Address Details',
