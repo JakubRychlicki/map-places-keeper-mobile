@@ -73,6 +73,13 @@ export default {
     placeDetails: {
       addressHeader: 'Address Details',
       mapHeader: 'Map',
+      share: {
+        buttonText: 'Share location',
+        options: {
+          title: 'Place location',
+          message: 'Check out this place: {{name}}',
+        },
+      },
     },
     editPlaceDetails: {
       title: 'Edit',

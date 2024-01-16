@@ -73,6 +73,13 @@ export default {
     placeDetails: {
       addressHeader: 'Szczegóły adresu',
       mapHeader: 'Mapa',
+      share: {
+        buttonText: 'Udostępnij lokalizację',
+        options: {
+          title: 'Lokalizacja miejsca',
+          message: 'Sprawdź to miejsce: {{name}}',
+        },
+      },
     },
     editPlaceDetails: {
       title: 'Edycja',

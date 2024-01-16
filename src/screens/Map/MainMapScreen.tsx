@@ -33,13 +33,7 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
   const getCurrentPosition = () => {
     Geolocation.getCurrentPosition(
       (pos) => {
-        const { longitude, latitude } = pos.coords;
         setIsModalLocationWarningOpen(false);
-        setTimeout(() => {
-          if (cameraRef.current) {
-            cameraRef.current.flyTo([longitude, latitude], 1000);
-          }
-        }, 1);
       },
       (error) => {
         setIsModalLocationWarningOpen(true);
@@ -61,7 +55,7 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <MapView ref={mapRef} scaleBarEnabled={false} logoEnabled={false} attributionEnabled={false} style={styles.map}>
-        <Camera ref={cameraRef} followUserLocation={true} />
+        <Camera ref={cameraRef} followUserLocation={true} followZoomLevel={12} />
         <MapPoints data={userPlaces.data} />
         <UserLocation renderMode={UserLocationRenderMode.Native} />
       </MapView>

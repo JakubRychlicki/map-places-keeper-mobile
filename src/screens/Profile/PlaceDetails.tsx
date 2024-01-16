@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { SvgXml } from 'react-native-svg';
 import { API_URL } from '@env';
 import * as actions from '../../store/actions';
+import Share from 'react-native-share';
 
 // THEME
 import Colors from '../../constants/Colors';
@@ -26,6 +27,7 @@ import LocationInfo from '../../components/map/LocationInfo';
 import Typography, { TypographyType } from '../../components/controls/Typography';
 import RoundButton from '../../components/controls/RoundButton';
 import PlaceDeleteModal from '../../components/profile/PlaceDeleteModal';
+import Button from '../../components/controls/Button';
 
 const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, route }) => {
   const { id } = route.params;
@@ -56,6 +58,22 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
     navigation.goBack();
   };
 
+  // SHARE
+  const sharePlace = async () => {
+    try {
+      const options = {
+        title: t('screens:placeDetails:share:options:title'),
+        message: t('screens:placeDetails:share:options:message', { name: currentPlace?.attributes.name }),
+        url: `https://www.google.com/maps/search/?api=1&query=${currentPlace?.attributes.latitude},${currentPlace?.attributes.longitude}`,
+      };
+
+      const shareResponse = await Share.open(options);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // ANIMATION OF MORE OPTIONS
   const slideTo = (toValue: number) => {
     Animated.timing(optionsSlideAnim, {
       toValue,
@@ -159,6 +177,9 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
             </PointAnnotation>
           </MapView>
         </View>
+        <View style={styles.shareContainer}>
+          <Button title={t('screens:placeDetails:share:buttonText')} onPress={sharePlace} />
+        </View>
       </ScrollView>
       <PlaceDeleteModal
         visible={placeDeleteModalVisible}
@@ -237,5 +258,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     zIndex: 1,
     backgroundColor: Colors.primary,
+  },
+  shareContainer: {
+    padding: 20,
   },
 });
