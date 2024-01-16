@@ -42,8 +42,11 @@ const EditPlaceDetails: ProfileNavigatorScreen<'EditPlaceDetails'> = ({ navigati
   let imageURL = null;
 
   if (place.attributes.graphics.data !== null) {
-    imageURL =
-      place.attributes.graphics.data.attributes.formats.medium.url || place.attributes.graphics.data.attributes.url;
+    if (place.attributes.graphics.data.attributes.formats.medium?.url) {
+      imageURL = place.attributes.graphics.data.attributes.formats.medium.url;
+    } else {
+      imageURL = place.attributes.graphics.data.attributes.url;
+    }
   }
 
   const category = categories.data.find((item) => item.id === placeCategoryId);

@@ -84,7 +84,11 @@ const PlaceDetails: ProfileNavigatorScreen<'PlaceDetails'> = ({ navigation, rout
   let imageURL = null;
 
   if (graphics.data !== null) {
-    imageURL = graphics.data.attributes.formats.medium.url || graphics.data.attributes.url;
+    if (graphics.data.attributes.formats.medium?.url) {
+      imageURL = graphics.data.attributes.formats.medium.url;
+    } else {
+      imageURL = graphics.data.attributes.url;
+    }
   }
 
   return (
