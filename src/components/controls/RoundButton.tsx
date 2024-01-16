@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { debounce } from 'ts-debounce';
 import { View, TouchableOpacity, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 
@@ -12,7 +12,7 @@ type RoundButtonProps = {
   type?: 'medium';
 };
 
-const RoundButton: React.FC<RoundButtonProps> = ({
+const RoundButton: FC<RoundButtonProps> = ({
   icon,
   containerStyle,
   onPress,

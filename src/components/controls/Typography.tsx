@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
 import { StyleProp, StyleSheet, Text as TextComponent, TextStyle } from 'react-native';
@@ -24,7 +24,7 @@ export enum TypographyType {
   BigHeaderR = 'bigHeaderRoboto',
 }
 
-const Typography: React.FC<TypographyProps> = ({
+const Typography: FC<TypographyProps> = ({
   children,
   type = TypographyType.Text,
   style,

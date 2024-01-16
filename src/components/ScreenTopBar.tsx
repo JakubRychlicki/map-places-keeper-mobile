@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { useAppNavigation } from '../hooks/useAppNavigation';
 import Topbar from './TopBar';
@@ -14,7 +14,7 @@ type ScreenTopBarProps = {
   optionsForPlaceDetailsView?: React.ReactNode;
 };
 
-const ScreenTopBar: React.FC<ScreenTopBarProps> = ({
+const ScreenTopBar: FC<ScreenTopBarProps> = ({
   title,
   rightIcon,
   containerStyle,

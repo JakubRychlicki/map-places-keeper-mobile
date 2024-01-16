@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Button, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Camera, MapView, UserLocation, UserLocationRenderMode } from '@rnmapbox/maps';
 import { MapNavigatorScreen } from '../../navigation/MapNavigator';

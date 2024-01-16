@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, View, ActivityIndicator, StyleProp, ViewStyle } from 'react-native';
 
 // THEME
@@ -9,7 +9,7 @@ type LoaderProps = {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-const Loader: React.FC<LoaderProps> = ({ backgroundColor, containerStyle }) => (
+const Loader: FC<LoaderProps> = ({ backgroundColor, containerStyle }) => (
   <View style={[styles.container, { backgroundColor }, containerStyle]}>
     <ActivityIndicator size="small" color={Colors.primary} />
   </View>

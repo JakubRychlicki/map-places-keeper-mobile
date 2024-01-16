@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, StyleSheet, StyleProp, ViewStyle, Text } from 'react-native';
 import Colors from '../constants/Colors';
 import Typography, { TypographyType } from './controls/Typography';
@@ -10,7 +10,7 @@ type TopbarProps = {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-const Topbar: React.FC<TopbarProps> = ({ leftIcon, rightIcon, title, containerStyle }) => {
+const Topbar: FC<TopbarProps> = ({ leftIcon, rightIcon, title, containerStyle }) => {
   return (
     <View style={[styles.container, containerStyle]}>
       <View style={styles.sideContainer}>{leftIcon}</View>

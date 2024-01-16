@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 // THEME
-import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
+
+// COMPONENTS
 import Typography, { TypographyType } from '../controls/Typography';
 
 interface Props {
