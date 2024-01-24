@@ -16,12 +16,13 @@ import { PlaceCategory } from '../../types/Categories';
 export const getUserPlaces = (): AppThunk => {
   return async (dispatch, getState) => {
     const state = getState();
+    const userId = state.user.user?.id;
     const userPlacesList = state.map.userPlaces;
-
+    
     dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES });
     try {
       const { data }: AxiosResponse<{ data: UserPlace[] }> = await Api.get(
-        `${Endpoint.Places}?populate=graphics,category&pagination[start]=${userPlacesList.start}&pagination[limit]=${userPlacesList.limit}`,
+        `${Endpoint.Places}?filters[user]=${userId}&populate=graphics,category&pagination[start]=${userPlacesList.start}&pagination[limit]=${userPlacesList.limit}`,
       );
 
       const newPlaces = {
