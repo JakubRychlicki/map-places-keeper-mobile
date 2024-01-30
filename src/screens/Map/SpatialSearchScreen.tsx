@@ -85,8 +85,8 @@ const SpatialSearchScreen: MapNavigatorScreen<'SpatialSearch'> = ({ navigation, 
   };
 
   const searchPlaces = () => {
-    const test = features.map((f) => f.coordinates) as number[][];
-    navigation.navigate('Places', { area: test });
+    const area = features.map((f) => f.coordinates) as number[][];
+    navigation.navigate('Places', { area: area });
   };
 
   useEffect(() => {

@@ -1,25 +1,26 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { PointAnnotation } from '@rnmapbox/maps';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { MarkerView  } from '@rnmapbox/maps';
 import { UserPlace } from '../../store/types/Map.model';
 import { SvgXml } from 'react-native-svg';
 
 interface Props {
   data: UserPlace[];
+  showPlace: (place: UserPlace) => void;
 }
 
-const MapPoints: FC<Props> = ({ data }) => {
+const MapPoints: FC<Props> = ({ data, showPlace }) => {
   const points = data.map((place) => {
     const { longitude, latitude, category } = place.attributes;
     const coords = [longitude, latitude];
     const icon = category.data.attributes.icon;
 
     return (
-      <PointAnnotation key={place.id.toString()} id={place.id.toString()} coordinate={coords}>
-        <View style={styles.icon}>
+      <MarkerView key={place.id.toString()} id={place.id.toString()} coordinate={coords}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.icon} onPress={() => showPlace(place)}>
           <SvgXml xml={icon} />
-        </View>
-      </PointAnnotation>
+        </TouchableOpacity>
+      </MarkerView>
     );
   });
 

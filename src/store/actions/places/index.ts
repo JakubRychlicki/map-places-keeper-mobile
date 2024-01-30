@@ -18,7 +18,7 @@ export const getUserPlaces = (): AppThunk => {
     const state = getState();
     const userId = state.user.user?.id;
     const userPlacesList = state.map.userPlaces;
-    
+
     dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES });
     try {
       const { data }: AxiosResponse<{ data: UserPlace[] }> = await Api.get(

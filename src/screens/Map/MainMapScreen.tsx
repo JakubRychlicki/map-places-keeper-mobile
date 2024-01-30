@@ -5,6 +5,7 @@ import { Camera, MapView, UserLocation, UserLocationRenderMode } from '@rnmapbox
 import { MapNavigatorScreen } from '../../navigation/MapNavigator';
 import { useAppSelector } from '../../hooks/useAppDispatch';
 import { Position } from '@rnmapbox/maps/lib/typescript/types/Position';
+import { UserPlace } from '../../store/types/Map.model';
 import Geolocation from '@react-native-community/geolocation';
 
 // COMPONENTS
@@ -13,6 +14,7 @@ import FabGroup from '../../components/map/FabGroup';
 import ModalAddPlace from '../../components/map/ModalAddPlace';
 import MapPoints from '../../components/map/MapPoints';
 import ModalLocationWarning from '../../components/controls/ModalLocationWarning';
+import ModalPlaceInfo from '../../components/map/ModalPlaceInfo';
 
 const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
   const { userPlaces } = useAppSelector((state) => state.map);
@@ -22,6 +24,11 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
   const [isModalAddPlaceOpen, setIsModalAddPlaceOpen] = useState(false);
   const [isModalLocationWarningOpen, setIsModalLocationWarningOpen] = useState(false);
   const [mapBounds, setMapBounds] = useState<[Position, Position] | undefined>(undefined);
+  const [activePlace, setActivePlace] = useState<UserPlace | null>(null);
+
+  const changeActivePlace = (place: UserPlace) => {
+    setActivePlace(place);
+  };
 
   const getBoundsFromMap = async () => {
     const bounds = await mapRef.current?.getVisibleBounds();
@@ -56,7 +63,7 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
     <SafeAreaView edges={['top']} style={styles.container}>
       <MapView ref={mapRef} scaleBarEnabled={false} logoEnabled={false} attributionEnabled={false} style={styles.map}>
         <Camera ref={cameraRef} followUserLocation={true} followZoomLevel={12} />
-        <MapPoints data={userPlaces.data} />
+        <MapPoints data={userPlaces.data} showPlace={changeActivePlace} />
         <UserLocation renderMode={UserLocationRenderMode.Native} />
       </MapView>
       <SearchAddress moveTo={moveToSpecificLocation} />
@@ -72,6 +79,9 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
           navigation.navigate('SpatialSearch', { bounds: bounds });
         }}
       />
+      {activePlace && (
+        <ModalPlaceInfo place={activePlace} hideModal={() => setActivePlace(null)} navigation={navigation} />
+      )}
       <ModalAddPlace
         visible={isModalAddPlaceOpen}
         hideModal={() => setIsModalAddPlaceOpen(false)}

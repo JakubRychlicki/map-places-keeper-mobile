@@ -132,6 +132,9 @@ export default {
         delete: 'Delete',
       },
     },
+    placeInfo: {
+      details: 'Details',
+    },
   },
   bottomTabs: {
     map: 'Map',
