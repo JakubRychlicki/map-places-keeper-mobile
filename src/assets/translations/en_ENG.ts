@@ -29,6 +29,7 @@ export default {
       fab: {
         addPlace: 'Add place',
         spatialSearch: 'Spatial search',
+        fitToPlaces: 'Fit camera to places',
       },
       searchPlaceholder: 'Search',
     },

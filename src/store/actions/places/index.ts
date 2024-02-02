@@ -13,10 +13,9 @@ import { API_URL } from '@env';
 import { AxiosResponse } from 'axios';
 import { PlaceCategory } from '../../types/Categories';
 
-export const getUserPlaces = (): AppThunk => {
+export const getUserPlaces = (userId: string): AppThunk => {
   return async (dispatch, getState) => {
     const state = getState();
-    const userId = state.user.user?.id;
     const userPlacesList = state.map.userPlaces;
 
     dispatch({ type: GetUserPlacesActionTypes.GET_USER_PLACES });

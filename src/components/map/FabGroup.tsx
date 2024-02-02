@@ -9,18 +9,21 @@ import Fonts from '../../constants/Fonts';
 
 interface Props {
   isOpen: boolean;
+  onPress: () => void;
   handleChange: (value: boolean) => void;
   onAddPlace: () => void;
   onSelectArea: () => void;
+  onFitToPlaces: () => void;
 }
 
-const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace, onSelectArea }) => {
+const FabGroup: FC<Props> = ({ isOpen, onPress, handleChange, onAddPlace, onSelectArea, onFitToPlaces }) => {
   const { t } = useTranslation();
 
   return (
     <FAB.Group
       open={isOpen}
       visible
+      onPress={onPress}
       icon={isOpen ? 'arrow-down-thin' : 'arrow-up-thin'}
       backdropColor={Colors.backgroundTransparent}
       style={styles.container}
@@ -43,6 +46,14 @@ const FabGroup: FC<Props> = ({ isOpen, handleChange, onAddPlace, onSelectArea })
           labelStyle: styles.actionLabel,
           style: styles.actionContainer,
           onPress: onSelectArea,
+        },
+        {
+          icon: 'fit-to-screen-outline',
+          color: Colors.white,
+          label: t('screens:mainMap:fab:fitToPlaces'),
+          labelStyle: styles.actionLabel,
+          style: styles.actionContainer,
+          onPress: onFitToPlaces,
         },
       ]}
       onStateChange={({ open }) => handleChange(open)}

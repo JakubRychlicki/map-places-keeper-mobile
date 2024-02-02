@@ -64,7 +64,6 @@ const MainNavigator = () => {
   useEffect(() => {
     if (token) {
       dispatch(actions.getUserProfile());
-      dispatch(actions.getUserPlaces());
       dispatch(actions.getPlacesCategories());
     }
   }, [token]);

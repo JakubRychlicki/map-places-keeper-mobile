@@ -5,6 +5,7 @@ import { AuthResponse, LoginPayload, RegisterPayload, User } from '../../types/U
 import { LOGOUT_SUCCESS, LoginActionTypes, RegisterActionTypes, GetUserProfileActionTypes } from '../actionTypes';
 import { Storage } from '../../../services/Storage';
 import { AxiosResponse } from 'axios';
+import * as actions from '../places';
 
 export const register = (userData: RegisterPayload): AppThunk => {
   return async (dispatch) => {
@@ -45,6 +46,8 @@ export const getUserProfile = (): AppThunk => {
     try {
       const { data }: AxiosResponse<User> = await Api.get(Endpoint.Profile);
       dispatch({ type: GetUserProfileActionTypes.GET_USER_PROFILE_SUCCESS, user: data });
+
+      dispatch(actions.getUserPlaces(data.id));
     } catch (e: any) {
       dispatch({ type: GetUserProfileActionTypes.GET_USER_PROFILE_FAILURE });
     }

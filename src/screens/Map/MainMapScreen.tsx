@@ -28,6 +28,34 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
 
   const changeActivePlace = (place: UserPlace) => {
     setActivePlace(place);
+    cameraRef.current?.setCamera({
+      centerCoordinate: [place.attributes.longitude, place.attributes.latitude],
+      padding: {
+        paddingBottom: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 20,
+      },
+      zoomLevel: 15,
+      animationDuration: 500,
+    });
+  };
+
+  const hideActivePlace = () => {
+    setActivePlace(null);
+  };
+
+  const fitMapToPlaces = () => {
+    const coordinates = userPlaces.data.map((place) => [place.attributes.longitude, place.attributes.latitude]);
+    const lon = coordinates.map((coord) => coord[0]);
+    const lat = coordinates.map((coord) => coord[1]);
+
+    const lon1 = Math.min(...lon);
+    const lat1 = Math.min(...lat);
+    const lon2 = Math.max(...lon);
+    const lat2 = Math.max(...lat);
+
+    cameraRef.current?.fitBounds([lon1, lat1], [lon2, lat2], 20, 500);
   };
 
   const getBoundsFromMap = async () => {
@@ -40,6 +68,12 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
   const getCurrentPosition = () => {
     Geolocation.getCurrentPosition(
       (pos) => {
+        cameraRef.current?.setCamera({
+          centerCoordinate: [pos.coords.longitude, pos.coords.latitude],
+          zoomLevel: 10,
+          animationDuration: 0,
+          animationMode: 'none',
+        });
         setIsModalLocationWarningOpen(false);
       },
       (error) => {
@@ -57,18 +91,19 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
 
   useEffect(() => {
     getCurrentPosition();
-  }, []);
+  }, [cameraRef.current]);
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <MapView ref={mapRef} scaleBarEnabled={false} logoEnabled={false} attributionEnabled={false} style={styles.map}>
-        <Camera ref={cameraRef} followUserLocation={true} followZoomLevel={12} />
+        <Camera ref={cameraRef} followZoomLevel={15} />
         <MapPoints data={userPlaces.data} showPlace={changeActivePlace} />
         <UserLocation renderMode={UserLocationRenderMode.Native} />
       </MapView>
       <SearchAddress moveTo={moveToSpecificLocation} />
       <FabGroup
         isOpen={isOpenFAB}
+        onPress={hideActivePlace}
         handleChange={(value) => setIsOpenFAB(value)}
         onAddPlace={() => {
           setIsModalAddPlaceOpen(true);
@@ -78,10 +113,12 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
           const bounds = await getBoundsFromMap();
           navigation.navigate('SpatialSearch', { bounds: bounds });
         }}
+        onFitToPlaces={() => {
+          fitMapToPlaces();
+          setIsOpenFAB(false);
+        }}
       />
-      {activePlace && (
-        <ModalPlaceInfo place={activePlace} hideModal={() => setActivePlace(null)} navigation={navigation} />
-      )}
+      {activePlace && <ModalPlaceInfo place={activePlace} hideModal={hideActivePlace} navigation={navigation} />}
       <ModalAddPlace
         visible={isModalAddPlaceOpen}
         hideModal={() => setIsModalAddPlaceOpen(false)}
