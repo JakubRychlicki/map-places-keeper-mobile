@@ -90,13 +90,6 @@ const EditPlaceDetails: ProfileNavigatorScreen<'EditPlaceDetails'> = ({ navigati
     setPlaceCategoryId(place.id);
   };
 
-  useEffect(() => {
-    if (categories.data.length > 0) {
-      const generalCategory = categories.data.find((item) => item.attributes.name === 'General');
-      if (generalCategory) setPlaceCategoryId(generalCategory.id);
-    }
-  }, []);
-
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
       <ScreenTopBar title={t('screens:editPlaceDetails:title')} />
