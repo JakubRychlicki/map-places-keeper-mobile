@@ -21,7 +21,7 @@ import Typography, { TypographyType } from '../../../components/controls/Typogra
 const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, route }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { isRegisterLoading } = useAppSelector((state) => state.user);
+  const { isRegisterLoading, registerErrors } = useAppSelector((state) => state.user);
 
   const { values, errors, dirty, setFieldValue, handleSubmit, setFieldError } = useFormik<RegisterForm>({
     initialValues: defaultValuesRegisterForm,
@@ -107,6 +107,13 @@ const RegisterScreen: MainNavigatorScreen<'RegisterScreen'> = ({ navigation, rou
             </Typography>
           </View>
           <Button title={t('screens:register:submit')} onPress={handleSubmit} loading={isRegisterLoading} />
+          {registerErrors?.length && (
+            <View style={styles.registerErrorContainer}>
+              <Typography color={Colors.red} style={styles.registerErrorText}>
+                {t('errors:registerFailed')}
+              </Typography>
+            </View>
+          )}
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
@@ -145,5 +152,11 @@ const styles = StyleSheet.create({
   },
   haveAccountButton: {
     color: Colors.primary,
+  },
+  registerErrorContainer: {
+    paddingHorizontal: 20,
+  },
+  registerErrorText: {
+    textAlign: 'center',
   },
 });

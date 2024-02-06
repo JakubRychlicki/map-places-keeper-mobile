@@ -87,7 +87,7 @@ const SearchAddress: FC<Props> = ({ moveTo }) => {
               style={styles.searchItem}
               onPress={() => {
                 keyboardDidHide();
-                moveTo(item.bbox);
+                moveTo(item.center);
               }}
             >
               <Typography>{item.place_name}</Typography>

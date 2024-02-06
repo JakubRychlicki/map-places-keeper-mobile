@@ -101,8 +101,6 @@ const AddPlaceScreen: MapNavigatorScreen<'AddPlace'> = ({ navigation, route }) =
       <View style={styles.mapContainer}>
         <Mapbox.MapView
           scaleBarEnabled={false}
-          logoEnabled={false}
-          attributionEnabled={false}
           style={styles.map}
           onPress={(_feature: Feature<Geometry, GeoJsonProperties>) => {
             if (type === 'press_on_the_map') {

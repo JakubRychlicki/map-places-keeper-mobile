@@ -150,6 +150,8 @@ export default {
     invalidPassword: 'Invalid password',
     passwordsMustMatch: "Passwords don't match",
     failToGetLocation: 'Failed to get location of device. Make sure you have location enabled on your phone.',
+    loginFailed: 'Incorrect email or password.\n Please try again.',
+    registerFailed: 'Failed to create an account.\n Please try again.',
   },
   internet: {
     noInternet: 'No internet connection was found. Check your connection or try restart application.',

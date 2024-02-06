@@ -21,7 +21,7 @@ const AddPlaceSearchScreen: MapNavigatorScreen<'AddPlaceSearch'> = ({ navigation
   const onChangeSearch = async (query: string) => {
     const formattedQuery = query.toLowerCase();
     if (formattedQuery.length > 2) {
-      const results = await getForwardGeocoding(formattedQuery);
+      const results = await getForwardGeocoding(formattedQuery, 'address');
       if (results) {
         setSearchResults(results);
       }

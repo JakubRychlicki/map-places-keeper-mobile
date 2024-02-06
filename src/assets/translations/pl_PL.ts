@@ -150,6 +150,8 @@ export default {
     invalidPassword: 'Nieprawidłowe hasło',
     passwordsMustMatch: 'Hasła nie pasują do siebie',
     failToGetLocation: 'Nie udało się pobrać lokalizacji. Spróbuj ponownie.',
+    loginFailed: 'Nieprawidłowy email lub hasło.\n Spróbuj ponownie.',
+    registerFailed: 'Nie udało się utworzyć konta.\n Spróbuj ponownie.',
   },
   internet: {
     noInternet: 'Brak dostępu do internetu. Sprawdź swoje połączenie lub spróbuj ponownie uruchomić aplikację.',

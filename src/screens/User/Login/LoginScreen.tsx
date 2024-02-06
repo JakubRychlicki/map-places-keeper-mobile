@@ -21,7 +21,7 @@ import Typography, { TypographyType } from '../../../components/controls/Typogra
 const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { isLoginLoading } = useAppSelector((state) => state.user);
+  const { isLoginLoading, loginErrors } = useAppSelector((state) => state.user);
 
   const { values, errors, dirty, setFieldValue, handleSubmit, setFieldError } = useFormik<LoginForm>({
     initialValues: defaultValuesLoginForm,
@@ -84,6 +84,13 @@ const LoginScreen: MainNavigatorScreen<'LoginScreen'> = ({ navigation, route }) 
             </Typography>
           </View>
           <Button title={t('screens:login:submit')} onPress={handleSubmit} loading={isLoginLoading} />
+          {loginErrors?.length && (
+            <View style={styles.loginErrorContainer}>
+              <Typography color={Colors.red} style={styles.loginErrorText}>
+                {t('errors:loginFailed')}
+              </Typography>
+            </View>
+          )}
         </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
@@ -121,5 +128,11 @@ const styles = StyleSheet.create({
   },
   haveAccountButton: {
     color: Colors.primary,
+  },
+  loginErrorContainer: {
+    paddingHorizontal: 20,
+  },
+  loginErrorText: {
+    textAlign: 'center',
   },
 });

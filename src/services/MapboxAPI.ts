@@ -3,17 +3,22 @@ import axios, { AxiosResponse } from 'axios';
 import { GeocodingResponse, ReverseGeocodingResponse } from '../store/types/Map.model';
 import { formatLocationData } from '../utils/formatLocationData';
 
-export const getForwardGeocoding = async (query: string) => {
+export const getForwardGeocoding = async (query: string, types?: string) => {
+  const params: Record<string, any> = {
+    access_token: MAPBOX_TOKEN,
+    limit: 5,
+    language: 'PL',
+  };
+
+  if (types) {
+    params.types = types;
+  }
+
   try {
     const response: AxiosResponse<GeocodingResponse> = await axios.get(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json`,
       {
-        params: {
-          access_token: MAPBOX_TOKEN,
-          limit: 5,
-          language: 'PL',
-          types: 'address',
-        },
+        params: params,
       },
     );
 

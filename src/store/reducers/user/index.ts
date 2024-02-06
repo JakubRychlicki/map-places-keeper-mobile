@@ -53,7 +53,7 @@ const userReducer = (state: UserState = initialState, action: AnyAction): UserSt
     case actionTypes.LoginActionTypes.LOGIN_FAILURE:
       return {
         ...state,
-        isRegisterLoading: false,
+        isLoginLoading: false,
         loginErrors: action.error,
       };
     case actionTypes.GetUserProfileActionTypes.GET_USER_PROFILE:

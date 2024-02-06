@@ -15,7 +15,10 @@ export const register = (userData: RegisterPayload): AppThunk => {
       Storage.set('token', data.jwt);
       dispatch({ type: RegisterActionTypes.REGISTER_SUCCESS, token: data.jwt, user: data.user });
     } catch (error: any) {
-      dispatch({ type: RegisterActionTypes.REGISTER_FAILURE, error: [error.response?.data?.message || ''] });
+      dispatch({
+        type: RegisterActionTypes.REGISTER_FAILURE,
+        error: [error.response.data.error.message || 'register error'],
+      });
     }
   };
 };
@@ -28,7 +31,7 @@ export const login = (userData: LoginPayload): AppThunk => {
       Storage.set('token', data.jwt);
       dispatch({ type: LoginActionTypes.LOGIN_SUCCESS, token: data.jwt, user: data.user });
     } catch (error: any) {
-      dispatch({ type: LoginActionTypes.LOGIN_FAILURE, error: [error.response?.data?.message || ''] });
+      dispatch({ type: LoginActionTypes.LOGIN_FAILURE, error: [error.response.data.error.message || 'login error'] });
     }
   };
 };

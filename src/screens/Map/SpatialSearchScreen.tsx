@@ -124,8 +124,6 @@ const SpatialSearchScreen: MapNavigatorScreen<'SpatialSearch'> = ({ navigation, 
       <View style={styles.mapContainer}>
         <MapView
           scaleBarEnabled={false}
-          logoEnabled={false}
-          attributionEnabled={false}
           style={styles.map}
           onPress={(_feature: Feature<Geometry, GeoJsonProperties>) => {
             if (features.length < 6) {

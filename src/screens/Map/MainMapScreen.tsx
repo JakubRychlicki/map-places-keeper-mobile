@@ -84,9 +84,11 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
   };
 
   const moveToSpecificLocation = (coordinates: number[]) => {
-    const [lon1, lat1, lon2, lat2] = coordinates;
-
-    cameraRef.current?.fitBounds([lon1, lat1], [lon2, lat2]);
+    cameraRef.current?.setCamera({
+      centerCoordinate: coordinates,
+      zoomLevel: 15,
+      animationDuration: 500,
+    });
   };
 
   useEffect(() => {
@@ -95,9 +97,9 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.container}>
-      <MapView ref={mapRef} scaleBarEnabled={false} logoEnabled={false} attributionEnabled={false} style={styles.map}>
+      <MapView ref={mapRef} scaleBarEnabled={false} style={styles.map}>
         <Camera ref={cameraRef} followZoomLevel={15} />
-        <MapPoints data={userPlaces.data} showPlace={changeActivePlace} />
+        <MapPoints data={userPlaces.data} isInteractive={true} showPlace={changeActivePlace} />
         <UserLocation renderMode={UserLocationRenderMode.Native} />
       </MapView>
       <SearchAddress moveTo={moveToSpecificLocation} />

@@ -81,7 +81,10 @@ const ModalCategories: FC<Props> = ({ visible, hideModal, activeCategoryId, chan
                 <TouchableOpacity
                   activeOpacity={0.6}
                   style={[styles.category, item.id === activeCategoryId && styles.activeCategory]}
-                  onPress={() => changeCategory(item)}
+                  onPress={() => {
+                    changeCategory(item);
+                    hideModal();
+                  }}
                 >
                   <View style={styles.categoryIcon}>
                     <SvgXml xml={icon} />
@@ -145,6 +148,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   activeCategory: {
+    backgroundColor: Colors.lightBlue,
     borderColor: Colors.primary,
   },
   closeButton: {
