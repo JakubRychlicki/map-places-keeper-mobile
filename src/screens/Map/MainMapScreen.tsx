@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Camera, MapView, UserLocation, UserLocationRenderMode } from '@rnmapbox/maps';
@@ -45,7 +45,9 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
     setActivePlace(null);
   };
 
-  const fitMapToPlaces = () => {
+  const fitMapToPlaces = useCallback(() => {
+    if (!userPlaces.data.length) return;
+
     const coordinates = userPlaces.data.map((place) => [place.attributes.longitude, place.attributes.latitude]);
     const lon = coordinates.map((coord) => coord[0]);
     const lat = coordinates.map((coord) => coord[1]);
@@ -56,7 +58,7 @@ const MainMapScreen: MapNavigatorScreen<'MainMap'> = ({ navigation }) => {
     const lat2 = Math.max(...lat);
 
     cameraRef.current?.fitBounds([lon1, lat1], [lon2, lat2], 20, 500);
-  };
+  }, [userPlaces.data]);
 
   const getBoundsFromMap = async () => {
     const bounds = await mapRef.current?.getVisibleBounds();

@@ -29,7 +29,7 @@ export default {
       fab: {
         addPlace: 'Add place',
         spatialSearch: 'Spatial search',
-        fitToPlaces: 'Fit camera to places',
+        fitToPlaces: 'Fit map view to places',
       },
       searchPlaceholder: 'Search',
     },
